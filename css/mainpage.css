@@ -2,6 +2,8 @@
 head, body{
 	margin:0;
 	padding:0;
+    height:100%;
+    width:100%;
 }
 
 body{
@@ -12,7 +14,7 @@ h1, h2, h3, h4, h5, h6, p, div, a{
 }
 
 .header{
-	height:25%;
+	height:120;
 	background-color:#333;
 	color:white;
 }
