@@ -1,0 +1,28 @@
+.main, .interests{
+	padding: 0 70px;
+	text-align:left;
+	height:500px;
+}
+
+.main h1, .interests h1, .projects h1{
+	margin-top:50px;
+}
+.main ul, .interests h1, .interests p, .projects h1, .projects p{
+	color:white;
+}
+.main p, .interests p, .projects p{
+	font-size: 16px;
+}
+
+
+.interests{
+	background: url("../img/fog.jpg") no-repeat center center;
+	background-size:cover;
+	height:500px;
+}
+
+.projects{
+	background: url("../img/road.jpg") no-repeat center center;
+	background-size:cover;
+	height:500px;
+}
