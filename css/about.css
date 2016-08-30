@@ -1,7 +1,7 @@
 .main, .interests{
-	padding: 0 70px;
+	padding: 0 8vw;
 	text-align:left;
-	height:500px;
+	height:50vh;
 }
 
 .main h1, .interests h1, .projects h1{
@@ -18,11 +18,11 @@
 .interests{
 	background: url("../img/fog.jpg") no-repeat center center;
 	background-size:cover;
-	height:500px;
+	height:50vh;
 }
 
 .projects{
 	background: url("../img/road.jpg") no-repeat center center;
 	background-size:cover;
-	height:500px;
+	height:50vh;
 }
