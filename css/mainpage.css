@@ -14,7 +14,7 @@ h1, h2, h3, h4, h5, h6, p, div, a{
 }
 
 .header{
-    height:20vh;
+    height:16vh;
 	background-color:#333;
 	color:white;
 }
@@ -84,7 +84,6 @@ h1, h2, h3, h4, h5, h6, p, div, a{
 .footer{
 	background-color:#333;
 	color:white;
-    height:20vh;
 }
 
 .footer ul{
