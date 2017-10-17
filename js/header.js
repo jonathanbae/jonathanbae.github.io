@@ -1,3 +1,3 @@
-$(function(){
-  $("#header-placeholder").load("header.html");
-});
+	$(document).ready(function(){
+		$("#header-placeholder").load("demo_text.html");
+	});
