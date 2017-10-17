@@ -5,43 +5,31 @@
 	<link type="text/css" rel="stylesheet" href="../css/about.css">
 	<link href="../bootstrap/css/bootstrap.css" rel ="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>
 
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="main_test.html">WebSiteName</a>
-			</div>
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="main_test.html">Home</a></li>
-				<li><a href="second_test.html">Page 1</a></li>
-				<li><a href="third_test.html">Page 2</a></li>
-				</li>
-			</ul>
-		</div>
-	</nav>
-	<div class="header-holder"> </div>
+<div id="header-placeholder"></div>
 
-	<div class="main">
-		<div class="container-fluid">
-			<h1>Welcome to my website</h1>
-			<p>Here you can find out all about me!</p>
-		</div>
+<div class="main">
+	<div class="container-fluid">
+		<h1>Welcome to my website</h1>
+		<p>Here you can find out all about me!</p>
 	</div>
+</div>
 
-	<h2>asdfasdf</h2>
-	<p>asdffsdf</p>
-	<p>asdfasdasdfa</p>
-	<p>asdfasdfasdfasfdasf</p>
-	<script src=”js/bootstrap.js”></script>
-	<script src="../js/jquery-3.2.1.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$('#header-holder').load('header.html');
-		});
-	</script>
+<h2>asdfasdf</h2>
+<p>asdffsdf</p>
+<p>asdfasdasdfa</p>
+<p>asdfasdfasdfasfdasf</p>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+			$("#header-placeholder").load("demo_text.html");
+	});
+</script>
 
 </body>
 

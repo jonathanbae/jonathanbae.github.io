@@ -5,29 +5,31 @@
 	<link type="text/css" rel="stylesheet" href="../css/about.css">
 	<link href="../bootstrap/css/bootstrap.css" rel ="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>
-	<div class="header-holder"> </div>
 
-	<div class="main">
-		<div class="container-fluid">
-			<h1>Welcome to my website</h1>
-			<p>Here you can find out all about me!</p>
-		</div>
+<div id="header-placeholder"></div>
+
+<div class="main">
+	<div class="container-fluid">
+		<h1>Welcome to page 1</h1>
+		<p>Here you can find out all about me!</p>
 	</div>
+</div>
 
-	<h2>asdfasdf</h2>
-	<p>asdffsdf</p>
-	<p>asdfasdasdfa</p>
-	<p>asdfasdfasdfasfdasf</p>
-	<script src=”js/bootstrap.js”></script>
-	<script src="../js/jquery-3.2.1.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$('#header-holder').load('header.html');
-		});
-	</script>
+<h2>asdfasdf</h2>
+<p>asdffsdf</p>
+<p>asdfasdasdfa</p>
+<p>asdfasdfasdfasfdasf</p>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+			$("#header-placeholder").load("demo_text.html");
+	});
+</script>
 
 </body>
 
