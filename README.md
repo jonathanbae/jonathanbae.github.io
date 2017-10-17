@@ -6,9 +6,10 @@ Here I will feature some stuff all about me.
 
 https://jonathanbae.github.io/index.html
 
-To launch website on local host: https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server 
-Change to directory,
-cmd line: python -m http.server
+To launch website on local host: https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server
+Change to directory, on desktop:
+cd /d D:\Bae\Documents\jonathanbae.github.io
+cmd line: py -m http.server
 default to local host 8000
 
 To-Do List:
@@ -18,5 +19,3 @@ To-Do List:
 [ ] Host domain on own elsewhere
 [ ] Store weight usage on an a database/cloud db
     [ ] run automatic graphs (potential gui for data)
-
-
