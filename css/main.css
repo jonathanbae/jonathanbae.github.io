@@ -1,0 +1,42 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+html, body{
+	margin:0;
+	padding:0;
+  height:100%;
+}
+
+body{
+	background-color:#333;
+}
+h1, h2, h3, h4, h5, h6, p, div, a{
+	font-family: 'Raleway', sans-serif;
+}
+/* Main Section */
+.main-section{
+	background: url("../img/city1.jpg") no-repeat center center;
+	height:40%;
+	color: #FFFFFF;
+	text-align: center;
+	padding-top: 13%;
+	font-size: 3em;
+}
+/* About Me */
+.about-section{
+	background-color: #FFFFFF;
+	height:50%;
+}
+/* Resume */
+.resume-section{
+	background-color: #999999;
+	height:50%;
+}
+/* Photo */
+.photo-section{
+	background-color: #555555;
+	height:50%;
+}
+/* Contact */
+.contact-section{
+	background-color: #111111;
+	height:50%;
+}

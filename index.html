@@ -1,56 +1,52 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
 	<title>Jonathan Bae's Website</title>
-	<link type="text/css" rel="stylesheet" href="css/mainpage.css">
-	<link href="bootstrap/css/bootstrap.min.css" rel ="stylesheet">
-<!--	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
--->
+	<link type="text/css" rel="stylesheet" href="css/main.css">
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 </head>
+
 <body>
-	<div class="header">
-		<div class="container-fluid">
-			<div class ="col-md-4">
-				<h2>Jonathan Bae </h2>
-			</div>
-			<div class="col-md-8">
-				<ul class="nav nav-pills pull-right">
-					<li class="active">
-						<a href="index.html" target="_self">Main</a>
-					<li>
-						<a href="pages/about_me.html" target="_self">About Me</a>
-					</li>
-					<li>
-						<a href="pages/resume.html" target="_self">Resume</a>
-					</li>
-					<li>
-						<a href="pages/contact.html" target="_self">Contact</a>
-					</li>
-				</ul>
-			</div>
-		</div>
+	<!-- Navigation section -->
+	<nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+		<a class="navbar-brand" href="#main">Jonathan Bae</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+	    <div class="navbar-nav">
+	      <a class="nav-item nav-link active" href="#main">Home <span class="sr-only">(current)</span></a>
+	      <a class="nav-item nav-link" href="#about">About</a>
+	      <a class="nav-item nav-link" href="#photo">Photos</a>
+	      <a class="nav-item nav-link" href="#resume">Resume</a>
+				<a class="nav-item nav-link" href="#contact">Contact</a>
+	    </div>
+	  </div>
+	</nav>
+	<div class="container-fluid main-section" id="main">
+		Jonathan Bae
 	</div>
-	
-	<div class="main">
-		<div class="container-fluid">
-			<h1>Welcome to my website</h1>
-			<p>Here you can find out all about me!</p>
-		</div>
+	<!-- About Me Section -->
+	<div class="about-section" id="about">
+		about
 	</div>
-	
-	<div class="footer">
-		<div class="container-fluid">
-			<ul>
-				<li>Contact me:</li>
-				<li class="contact"><a href="mailto:jonathanbae7@gmail.com?subject=Website_Contact">Email</a></li>
-				<li class="contact"><a href=https://www.linkedin.com/in/jonathan-bae-856b06b5>LinkedIn</a></li>
-			</ul>
-		</div>
+	<!-- Photo Section -->
+	<div class="photo-section" id="photo">
+		photo
 	</div>
+	<!-- Resume Section -->
+	<div class="resume-section" id="resume">
+		resume
+	</div>
+	<!-- Contact Section -->
+	<div class="contact-section" id="contact">
+		contact
+	</div>
+
+	<script src="js/header.js"></script>
 </body>
-
-<script src="../js/jquery-3.2.1.js"></script>
-<script src=”js/bootstrap.js”></script>
-
 
 </html>
