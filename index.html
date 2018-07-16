@@ -1,51 +1,47 @@
 <!DOCTYPE HTML>
 <html>
-
 <head>
 	<title>Jonathan Bae's Website</title>
 	<link type="text/css" rel="stylesheet" href="css/main.css">
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 </head>
 
 <body>
 	<!-- Navigation section -->
-	<nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+	<nav class="navbar fixed-top navbar-expand-lg navbar-dark" id="topNav" style="background:transparent;">
 		<a class="navbar-brand" href="#main">Jonathan Bae</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-	    <span class="navbar-toggler-icon"></span>
-	  </button>
-
-	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+		<button class="navbar-toggler" type="button" onclick="closeToggler()" type="button">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	  <div class="collapse navbar-collapse" id="navbar-main-collapse">
 	    <div class="navbar-nav">
-	      <a class="nav-item nav-link active" href="#main">Home <span class="sr-only">(current)</span></a>
-	      <a class="nav-item nav-link" href="#about">About</a>
-	      <a class="nav-item nav-link" href="#photo">Photos</a>
-	      <a class="nav-item nav-link" href="#resume">Resume</a>
-				<a class="nav-item nav-link" href="#contact">Contact</a>
+	      <a class="nav-item nav-link" href="#main" onclick="closeToggler()">Home <span class="sr-only">(current)</span></a>
+	      <a class="nav-item nav-link" href="#about" onclick="closeToggler()">About</a>
+	      <a class="nav-item nav-link" href="#photo" onclick="closeToggler()">Photos</a>
+	      <a class="nav-item nav-link" href="#resume" onclick="closeToggler()">Resume</a>
+				<a class="nav-item nav-link" href="#contact" onclick="closeToggler()">Contact</a>
 	    </div>
 	  </div>
 	</nav>
+	<!-- Main Section -->
 	<div class="container-fluid main-section" id="main">
 		Jonathan Bae
 	</div>
 	<!-- About Me Section -->
 	<div class="about-section" id="about">
-		about
 	</div>
 	<!-- Photo Section -->
 	<div class="photo-section" id="photo">
-		photo
 	</div>
 	<!-- Resume Section -->
 	<div class="resume-section" id="resume">
-		resume
 	</div>
 	<!-- Contact Section -->
 	<div class="contact-section" id="contact">
-		contact
 	</div>
 
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery.visible.js"></script>
 	<script src="js/header.js"></script>
 </body>
 

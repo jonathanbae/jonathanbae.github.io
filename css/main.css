@@ -11,6 +11,20 @@ body{
 h1, h2, h3, h4, h5, h6, p, div, a{
 	font-family: 'Raleway', sans-serif;
 }
+
+/* Navigation Bar */
+.bottom-shadow{
+	-webkit-box-shadow: 0 8px 6px -6px #999;
+	-moz-box-shadow: 0 8px 6px -6px #999;
+	box-shadow: 0 8px 6px -6px #999;
+}
+.navbar-inner {
+    background:transparent;
+}
+.nav-item:hover{
+	background-color: #333333;
+	color: #FFFFFF;
+}
 /* Main Section */
 .main-section{
 	background: url("../img/city1.jpg") no-repeat center center;
@@ -22,7 +36,7 @@ h1, h2, h3, h4, h5, h6, p, div, a{
 }
 /* About Me */
 .about-section{
-	background-color: #FFFFFF;
+	background-color: #CCCCCC;
 	height:50%;
 }
 /* Resume */
