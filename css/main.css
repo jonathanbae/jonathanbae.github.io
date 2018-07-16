@@ -18,8 +18,11 @@ h1, h2, h3, h4, h5, h6, p, div, a{
 	-moz-box-shadow: 0 8px 6px -6px #999;
 	box-shadow: 0 8px 6px -6px #999;
 }
-.navbar-inner {
+.transparent-bg {
     background:transparent;
+}
+.dark-color-bg {
+    background:#333333;
 }
 .nav-item:hover{
 	background-color: #333333;

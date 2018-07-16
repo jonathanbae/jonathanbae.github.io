@@ -45,9 +45,15 @@ $.fn.isInViewport = function() {
 * if main (name) is in view, do not show bottom shadow border
 */
 $(window).on('resize scroll', function() {
+	// main not in view
 	if($('#main').isInViewport()){
 		$('#topNav').removeClass('bottom-shadow');
+		$('#topNav').removeClass('dark-color-bg');
+		$('#topNav').addClass('transparent-bg');
 	} else{
 		$('#topNav').addClass('bottom-shadow');
+		$('#topNav').removeClass('transparent-bg');
+		$('#topNav').addClass('dark-color-bg');
 	}
+
 });
