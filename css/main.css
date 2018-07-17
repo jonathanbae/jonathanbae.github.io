@@ -14,7 +14,7 @@ h1, h2, h3, h4, h5, h6, p, div, a{
 
 /* Navigation Bar */
 .navbar{
-	font-size: 1.2em;
+	font-size:  1.2em;
 	transition: 500ms;
 }
 .navbar .navbar-brand {
