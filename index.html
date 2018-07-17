@@ -2,18 +2,21 @@
 <html>
 <head>
 	<title>Jonathan Bae's Website</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<link type="text/css" rel="stylesheet" href="css/main.css">
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
 	<!-- Navigation section -->
-	<nav class="navbar fixed-top navbar-expand-lg transparent-bg" id="topNav">
+	<nav class="navbar fixed-top navbar-expand-md transparent-bg" id="topNav">
 		<a class="navbar-brand" href="#main">Jonathan Bae</a>
-		<button class="navbar-toggler" type="button" onclick="closeToggler()" type="button">
+		<button class="navbar-toggler" type="button" onclick="toggleToggler()" type="button">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-	  <div class="collapse navbar-collapse" id="navbar-main-collapse">
+	  <div class="collapse navbar-collapse" id="navbar-main-collapse" style="transition:500ms;">
 	    <div class="navbar-nav">
 	      <a class="nav-item nav-link" href="#main" onclick="closeToggler()">Home <span class="sr-only">(current)</span></a>
 	      <a class="nav-item nav-link" href="#about" onclick="closeToggler()">About</a>

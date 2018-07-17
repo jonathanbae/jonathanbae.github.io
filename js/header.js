@@ -1,37 +1,53 @@
-
-
 /**
-* Open the Link
-*/
-function openResult(link){
-	location.href=link;
+ * Open the Link
+ */
+function openResult(link) {
+  location.href = link;
 }
 
 /**
-* Closes Open/close the toggle button
-*/
-function closeToggler(){
-	$('#navbar-main-collapse').toggleClass('collapse');
+ * Toggle the toggle menu
+ */
+function toggleToggler() {
+  $('#navbar-main-collapse').toggleClass('collapse');
+}
+/**
+ * Closes the toggle button
+ */
+function closeToggler() {
+  if(!$('#navbar-main-collapse').hasClass('collapse')){
+		$('#navbar-main-collapse').addClass('collapse');
+	}
 }
 
+
+$(document).click(function(e) {
+  if (!$('navbar-main-collapse').hasClass("collapse")) {
+		if($('.navbar').is(e.target)){
+			console.log("yes");
+		}
+  }
+});
+
+
 /**
-* open the ID selected from navigation bar
-*/
+ * open the ID selected from navigation bar
+ */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
 
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth',
-						block: 'start',
-						inline: 'nearest'
-        });
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest'
     });
+  });
 });
 
 /**
-* Check what div by ID is in view
-*/
+ * Check what div by ID is in view
+ */
 $.fn.isInViewport = function() {
   var elementTop = $(this).offset().top;
   var elementBottom = elementTop + $(this).outerHeight();
@@ -42,18 +58,17 @@ $.fn.isInViewport = function() {
   return elementBottom > viewportTop && elementTop < viewportBottom;
 };
 /**
-* if main (name) is in view, do not show bottom shadow border
-*/
+ * if main (name) is in view, do not show bottom shadow border
+ */
 $(window).on('resize scroll', function() {
-	// main not in view
-	if($('#main').isInViewport()){
-		$('#topNav').removeClass('bottom-shadow');
-		$('#topNav').removeClass('dark-color-bg');
-		$('#topNav').addClass('transparent-bg');
-	} else{
-		$('#topNav').addClass('bottom-shadow');
-		$('#topNav').removeClass('transparent-bg');
-		$('#topNav').addClass('dark-color-bg');
-	}
-
+  // main not in view
+  if ($('#main').isInViewport()) {
+    $('#topNav').removeClass('bottom-shadow');
+    $('#topNav').removeClass('dark-color-bg');
+    $('#topNav').addClass('transparent-bg');
+  } else {
+    $('#topNav').addClass('bottom-shadow');
+    $('#topNav').removeClass('transparent-bg');
+    $('#topNav').addClass('dark-color-bg');
+  }
 });
