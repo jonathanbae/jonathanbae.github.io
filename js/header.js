@@ -2,6 +2,7 @@
 ///// Main JS file /////
 ////////////////////////
 
+var images;
 
 /**
  * Open the Link
@@ -81,7 +82,7 @@ function setBackgroundImage() {
       for (var i in val) {
         if( randomImage == i ){
           document.getElementById('main').style.backgroundImage = "url(" + val[i] + ")";
-          break; 
+          break;
         }
       }
       break;
@@ -90,7 +91,10 @@ function setBackgroundImage() {
   }
 }
 
+// setInterval("setBackgroundImage();", 5000);
+
 function initialize() {
+  images = imagesFolders;
   setBackgroundImage();
 }
 

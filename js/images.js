@@ -1,4 +1,4 @@
-var images = {
+var imagesOnline = {
   "Stars": [
     "https://drive.google.com/uc?id=1QVzJmNKERTEKNtXIENXwYCJzeUSa6B2U"
   ],
@@ -17,7 +17,7 @@ var images = {
     "https://drive.google.com/uc?id=1hFPRvzoW_5pStlGzRNmlmc7Izo6b-IEo",
     "https://drive.google.com/uc?id=1lZc7wrw00l1Ta8H_llKyLJbSL7z4uov2"
   ],
-  "Iceland": ["https://drive.google.com/uc?id1S0nDiy2Y_ueRj85NWBpurjAO5ciduAkP",
+  "Iceland": ["https://drive.google.com/uc?id=1S0nDiy2Y_ueRj85NWBpurjAO5ciduAkP",
     "https://drive.google.com/uc?id=1w49c4oMKzGRkAC6KAT2qe0uE4Baxv3jP",
     "https://drive.google.com/uc?id=1W6Q2p9IrrPf1iiu6zKambVnF0WSJrota",
     "https://drive.google.com/uc?id=1XOJ-EuZS-EBbGQfqnVc2mSM2e5R520Ps"
@@ -68,5 +68,81 @@ var images = {
   "Glacier National Park": ["https://drive.google.com/uc?id=108mNb23uBM9Qilurbbpba_QxM-ILDqh8",
     "https://drive.google.com/uc?id=1q0CAGG4TfiI8yQhp-bGSTMeuDQm_z2Hi"
   ]
+}
 
+var imagesFolders = {
+  "Stars": [
+    "img/milk--3.jpg"
+  ],
+  "Joshua Tree": [
+    "img/joshtree-3328.jpg",
+    "img/joshtree-3484.jpg",
+    "img/joshtree-3525.jpg",
+    "img/joshtree-3560.jpg"
+  ],
+  "San Francisco": [
+    "img/goldencity-1580.jpg",
+    "img/goldencity-1620.jpg",
+    "img/goldencity-1683.jpg"
+  ],
+  "Great Falls": [
+    "img/greatfalls-0040.jpg",
+    "img/greatfalls-0045.jpg"
+  ],
+  "Iceland": [
+    "img/frozenland-101241.jpg",
+    "img/frozenland-153317-3.jpg",
+    "img/frozenland-184229.jpg",
+    "img/frozenland-184436.jpg"
+  ],
+  "Shenandoah": [
+    "img/hawksbill-0099.jpg",
+    "img/maryrock-0709.jpg",
+    "img/maryrock-0724.jpg",
+    "img/maryrock-0741.jpg",
+    "img/memorial-2131.jpg",
+    "img/memoiral-2153.jpg",
+    "img/memorial-2639.jpg",
+    "img/memorial-2659.jpg",
+    "img/memorial-2963.jpg",
+    "img/memorial-3003.jpg",
+    "img/moon-0778.jpg"
+  ],
+  "Smoky Mountains": [
+    "img/smokymountain-0346-2.jpg",
+    "img/smokymountain-0368.jpg"
+  ],
+  "Utah": [
+    "img/bryce-1247.jpg",
+    "img/bryce-1267.jpg",
+    "img/bryce-1315.jpg",
+    "img/capitolreef-1379.jpg",
+    "img/capitolreef-1425.jpg",
+    "img/capitolreef-1436.jpg",
+    "img/capitolreef-1450.jpg",
+    "img/zion-0924.jpg",
+    "img/zion-1008.jpg",
+    "img/zion-1040.jpg",
+    "img/zion-1088.jpg"
+  ],
+  "Alberta, Canada": [
+    "img/alberta-095933.jpg",
+    "img/alberta-102012.jpg",
+    "img/alberta-104032.jpg",
+    "img/alberta-110929.jpg",
+    "img/alberta-115626.jpg",
+    "img/alberta-115758.jpg",
+    "img/alberta-130800.jpg",
+    "img/alberta-133836.jpg",
+    "img/alberta-162215.jpg",
+    "img/alberta-164014.jpg",
+    "img/alberta-164527.jpg",
+    "img/alberta-165127.jpg",
+    "img/alberta-173345.jpg",
+    "img/alberta-190831.jpg"
+  ],
+  "Glacier National Park": [
+    "img/gnp-1000.jpg",
+    "img/gnp-1001.jpg"
+  ]
 }
