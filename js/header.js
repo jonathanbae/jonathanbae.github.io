@@ -1,3 +1,8 @@
+////////////////////////
+///// Main JS file /////
+////////////////////////
+
+
 /**
  * Open the Link
  */
@@ -15,20 +20,10 @@ function toggleToggler() {
  * Closes the toggle button
  */
 function closeToggler() {
-  if(!$('#navbar-main-collapse').hasClass('collapse')){
-		$('#navbar-main-collapse').addClass('collapse');
-	}
-}
-
-
-$(document).click(function(e) {
-  if (!$('navbar-main-collapse').hasClass("collapse")) {
-		if($('.navbar').is(e.target)){
-			console.log("yes");
-		}
+  if (!$('#navbar-main-collapse').hasClass('collapse')) {
+    $('#navbar-main-collapse').addClass('collapse');
   }
-});
-
+}
 
 /**
  * open the ID selected from navigation bar
@@ -72,3 +67,31 @@ $(window).on('resize scroll', function() {
     $('#topNav').addClass('dark-color-bg');
   }
 });
+
+/**
+ * set background image randomly
+ */
+function setBackgroundImage() {
+  var randomGroup = Math.floor(Math.random() * Object.keys(images).length),
+    num = 0;
+  for (var key in images) {
+    if (num == randomGroup && images.hasOwnProperty(key)) {
+      var val = images[key],
+        randomImage = Math.floor(Math.random() * val.length);
+      for (var i in val) {
+        if( randomImage == i ){
+          document.getElementById('main').style.backgroundImage = "url(" + val[i] + ")";
+          break; 
+        }
+      }
+      break;
+    }
+    num++;
+  }
+}
+
+function initialize() {
+  setBackgroundImage();
+}
+
+initialize();

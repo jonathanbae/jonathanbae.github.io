@@ -66,9 +66,11 @@ h1, h2, h3, h4, h5, h6, p, div, a{
 }
 /* Main Section */
 .main-section{
-	/* background: url("../img/city1.jpg") no-repeat center center; */
-	background-color:#15f309;
-	height:40%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: scroll;
+	height:100%;
 	color: #FFFFFF;
 	text-align: center;
 	padding-top: 13%;
