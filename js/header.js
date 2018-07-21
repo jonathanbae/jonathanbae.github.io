@@ -94,7 +94,7 @@ function setBackgroundImage() {
 // setInterval("setBackgroundImage();", 5000);
 
 function initialize() {
-  images = imagesFolders;
+  images = imagesOnline;
   setBackgroundImage();
 }
 
