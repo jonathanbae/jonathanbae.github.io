@@ -53,6 +53,7 @@ $.fn.isInViewport = function() {
 
   return elementBottom > viewportTop && elementTop < viewportBottom;
 };
+
 /**
  * if main (name) is in view, do not show bottom shadow border
  */
@@ -68,34 +69,3 @@ $(window).on('resize scroll', function() {
     $('#topNav').addClass('dark-color-bg');
   }
 });
-
-/**
- * set background image randomly
- */
-function setBackgroundImage() {
-  var randomGroup = Math.floor(Math.random() * Object.keys(images).length),
-    num = 0;
-  for (var key in images) {
-    if (num == randomGroup && images.hasOwnProperty(key)) {
-      var val = images[key],
-        randomImage = Math.floor(Math.random() * val.length);
-      for (var i in val) {
-        if( randomImage == i ){
-          document.getElementById('main').style.backgroundImage = "url(" + val[i] + ")";
-          break;
-        }
-      }
-      break;
-    }
-    num++;
-  }
-}
-
-// setInterval("setBackgroundImage();", 5000);
-
-function initialize() {
-  images = imagesOnline;
-  setBackgroundImage();
-}
-
-initialize();
