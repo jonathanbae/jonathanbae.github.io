@@ -6,6 +6,11 @@ Here I will feature some stuff all about me.
 
 https://jonathanbae.github.io/index.html
 
+tree growth: https://codepen.io/anon/pen/GBmzoW
+
+watercan svg:
+waterdrop svg: pixel buddha from flaticon.com
+
 To-Do List:
 [x] when past main - switch nav bar to dark https://stackoverflow.com/questions/18529274/change-navbar-color-in-twitter-bootstrap
   [x]shadow

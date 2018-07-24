@@ -59,7 +59,7 @@ $.fn.isInViewport = function() {
  */
 $(window).on('resize scroll', function() {
   // main not in view
-  if ($('#main').isInViewport()) {
+  if ( $('#main') && $('#main').isInViewport()) {
     $('#topNav').removeClass('bottom-shadow');
     $('#topNav').removeClass('dark-color-bg');
     $('#topNav').addClass('transparent-bg');
