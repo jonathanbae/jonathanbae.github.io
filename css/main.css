@@ -132,7 +132,9 @@ header {
 	color: #FFFFFF;
 	text-align: center;
 	font-size: 3em;
-	padding-top: 35%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 /*Content*/
@@ -161,19 +163,36 @@ header {
 /* Photo */
 .photo-section{
 	background-color: #FFFFFF;
-	height:50%;
+	height:100%;
+	width:100%;
+	padding-bottom:5%;
 }
 .thumbnail{
+	position: relative;
 	width:100%;
-	height:300px;
+	height:90%;
 }
-#photo0{
-	background: url("https://drive.google.com/uc?id=1QVzJmNKERTEKNtXIENXwYCJzeUSa6B2U") no-repeat fixed center;
+.photo0{
+	background: url("https://drive.google.com/uc?id=1QVzJmNKERTEKNtXIENXwYCJzeUSa6B2U");
+	background-position: center center;
+	background-repeat: no-repeat;
 	background-size: cover;
 }
-#photo1{
-	background: url("https://drive.google.com/uc?id=1hFPRvzoW_5pStlGzRNmlmc7Izo6b-IEo") no-repeat fixed center;
+.photo1{
+	background: url("https://drive.google.com/uc?id=1hFPRvzoW_5pStlGzRNmlmc7Izo6b-IEo");
+	background-position: center center;
+	background-repeat: no-repeat;
 	background-size: cover;
+}
+.photo2{
+	background: url("https://drive.google.com/uc?id=1hFPRvzoW_5pStlGzRNmlmc7Izo6b-IEo");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.photo-header{
+	text-align:center;
 }
 /* Contact */
 .contact-section{

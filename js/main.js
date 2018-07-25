@@ -35,10 +35,10 @@ function initialize() {
   images = imagesOnline;
   setBackgroundImage();
   if (document.getElementById('main') && window.mobilecheck(this)) {
-    var elements = document.getElementsByClassName('content');
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].style.paddingTop = '18%';
-    }
+    // var elements = document.getElementsByClassName('content');
+    // for (var i = 0; i < elements.length; i++) {
+    //   elements[i].style.paddingTop = '18%';
+    // }
     document.getElementById('main').style.paddingTop = '60%';
   }
 }
