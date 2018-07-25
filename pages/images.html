@@ -1,78 +1,70 @@
 <<!DOCTYPE HTML>
-<html>
+	<html>
 
-<head>
-	<title>Jonathan Bae's Images</title>
+	<head>
+		<title>Jonathan Bae's Images</title>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link type="text/css" rel="stylesheet" href="../css/main.css">
-	<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-	<!-- Navigation section -->
-	<nav class="navbar fixed-top navbar-expand-md transparent-bg" id="topNav">
-		<a class="navbar-brand" href="../index.html">Jonathan Bae</a>
-		<button class="navbar-toggler" type="button" onclick="toggleToggler()" type="button">
+		<link type="text/css" rel="stylesheet" href="../css/main.css">
+		<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="loading-container" id="loadingContainer">
+			<iframe marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" style="width:100vw; height: 100vh; overflow:hidden;" src="../pages/loader.html"></iframe>
+		</div>
+
+		<!-- Navigation section -->
+		<nav class="navbar fixed-top navbar-expand-md transparent-bg" id="topNav">
+			<a class="navbar-brand" href="../index.html">Jonathan Bae</a>
+			<button class="navbar-toggler" type="button" onclick="toggleToggler()" type="button">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="collapse navbar-collapse" id="navbar-main-collapse" style="transition:500ms;">
-			<div class="navbar-nav">
-				<a class="nav-item nav-link" href="../index.html" onclick="closeToggler()">Home <span class="sr-only">(current)</span></a>
-				<a class="nav-item nav-link" href="#photo" onclick="closeToggler()">Photos</a>
-				<a class="nav-item nav-link" href="#contact" onclick="closeToggler()">Contact</a>
-			</div>
-		</div>
-	</nav>
-	<!-- Photo Section -->
-	<div class="photo-section" id="photo">
-		<div class="row">
-			<div class="col-md-4">
-				<div class="thumbnail">
-					<a href="/pages/images.html">
-			 <img src="https://drive.google.com/uc?id=1QVzJmNKERTEKNtXIENXwYCJzeUSa6B2U" alt="Lights" style="width:100%">
-			 <div class="caption">
-				 <p>Lorem ipsum...</p>
-			 </div>
-		 </a>
+			<div class="collapse navbar-collapse" id="navbar-main-collapse" style="transition:500ms;">
+				<div class="navbar-nav">
+					<a class="nav-item nav-link" href="../index.html" onclick="closeToggler()">Home <span class="sr-only">(current)</span></a>
+					<a class="nav-item nav-link" href="#photo" onclick="closeToggler()">Photos</a>
+					<a class="nav-item nav-link" href="#contact" onclick="closeToggler()">Contact</a>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="thumbnail">
-					<a href="/w3images/nature.jpg">
-			 <img src="https://drive.google.com/uc?id=1hFPRvzoW_5pStlGzRNmlmc7Izo6b-IEo" alt="Nature" style="width:100%">
-			 <div class="caption">
-				 <p>Lorem ipsum...</p>
-			 </div>
-		 </a>
+		</nav>
+		<!-- Photo Section -->
+		<div class="photo-section" id="photo">
+			<div class="row" style="width:100%;">
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<a href="/pages/images.html">
+				 			<img src="https://drive.google.com/uc?id=1QVzJmNKERTEKNtXIENXwYCJzeUSa6B2U" alt="Lights" style="width:100%">
+				 			<div class="caption">
+					 			<p>Lorem ipsum...</p>
+				 			</div>
+		 				</a>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="thumbnail">
-					<a href="/w3images/fjords.jpg">
-			 <img src="https://drive.google.com/uc?id=1S0nDiy2Y_ueRj85NWBpurjAO5ciduAkP" alt="Fjords" style="width:100%">
-			 <div class="caption">
-				 <p>Lorem ipsum...</p>
-			 </div>
-		 </a>
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<a href="/w3images/nature.jpg">
+			 				<img src="https://drive.google.com/uc?id=1hFPRvzoW_5pStlGzRNmlmc7Izo6b-IEo" alt="Nature" style="width:100%">
+			 				<div class="caption">
+				 				<p>Lorem ipsum...</p>
+			 				</div>
+		 				</a>
+					</div>
 				</div>
 			</div>
 		</div>
+		<!-- Contact Section -->
+		<div class="contact-section" id="contact">
+		</div>
 
-	</div>
-	<!-- Contact Section -->
-	<div class="contact-section" id="contact">
-	</div>
+		<script src="../js/jquery-3.3.1.min.js"></script>
+		<script src="../js/fontawesome.js"></script>
 
-	<script src="../js/jquery-3.3.1.min.js"></script>
-	<script src="../js/TweenMax.min.js"></script>
-	<script src="../js/animation.js"></script>
+		<script type="text/javascript" src="../js/images.js"></script>
+		<script src="../js/header.js"></script>
+		<script src="../js/main.js"></script>
+		<script src="../js/imagepage.js"></script>
+	</body>
 
-	<script src="../js/fontawesome.js"></script>
-	<script src="../js/images.js"></script>
-	<script src="../js/header.js"></script>
-	<script src="../js/main.js"></script>
-  <script src="../js/imagepage.js"></script>
-</body>
-
-</html>
+	</html>
