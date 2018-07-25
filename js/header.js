@@ -69,3 +69,13 @@ $(window).on('resize scroll', function() {
     $('#topNav').addClass('dark-color-bg');
   }
 });
+
+function initialize(){
+  if(!document.getElementById('main')){
+    $('#topNav').addClass('bottom-shadow');
+    $('#topNav').removeClass('transparent-bg');
+    $('#topNav').addClass('dark-color-bg');
+  }
+}
+
+initialize();

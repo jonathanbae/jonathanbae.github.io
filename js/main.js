@@ -59,6 +59,6 @@ $(window).on('load', function() {
   }, 1000);
 });
 
-window.addEventListener('mouseover', function(e) {
-  console.log(e.target.classList)
-})
+// window.addEventListener('mouseover', function(e) {
+//   console.log(e.target.classList)
+// })

@@ -216,7 +216,7 @@ header {
 }
 
 .photo1 {
-  background: url("https://drive.google.com/uc?id=1hFPRvzoW_5pStlGzRNmlmc7Izo6b-IEo");
+  background: url("https://drive.google.com/uc?id=1QTmUPVWwNGkx3ELwt1xrP0F3pm8YmrZn");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -228,6 +228,50 @@ header {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.photo3 {
+  background: url("https://drive.google.com/uc?id=1xx0hhbzeefF2kmBbHw2T6bASiMqcZ3XX");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.photo4 {
+  background: url("https://drive.google.com/uc?id=1bQ8S8s4oH-m195SsSHG8BfC7YIg1lzdO");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.photo5 {
+  background: url("https://drive.google.com/uc?id=1hFPRvzoW_5pStlGzRNmlmc7Izo6b-IEo");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.photo6 {
+  background: url("https://drive.google.com/uc?id=1S0nDiy2Y_ueRj85NWBpurjAO5ciduAkP");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.photo7 {
+  background: url("https://drive.google.com/uc?id=12aO7v4xvWDhGsJ7OtUIQEF80Y3REfqHN");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.photo8 {
+  background: url("https://drive.google.com/uc?id=1bAL1PezG2Zz-sY9so9ykzUdMPZO9Todk");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.photo9 {
+  background: url("https://drive.google.com/uc?id=1q0CAGG4TfiI8yQhp-bGSTMeuDQm_z2Hi");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .card-container{
 	height:100%;
 	opacity:0;
@@ -258,17 +302,34 @@ header {
 }
 
 .button-card {
-  color: white;
+  color: #FFFFFF;
   padding: 2vh 3vw;
   border-style: solid;
   border-color: #FFFFFF;
   font-size: 0.8em;
-  transition: 1000ms;
+  transition: 500ms;
 }
 
 .button-card:hover {
   background-color: #FFFFFF;
   color: #000000;
+  cursor: pointer;
+}
+
+.button-card-dark{
+	color: #000000;
+	padding: 2vh 3vw;
+	border-style: solid;
+	border-color: #000000;
+	font-size: 1em;
+	transition: 500ms;
+	width: 20%;
+	display: block;
+	margin: 0 auto;
+}
+.button-card-dark:hover {
+  background-color: #000000;
+  color: #FFFFFF;
   cursor: pointer;
 }
 

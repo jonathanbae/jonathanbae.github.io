@@ -1,70 +1,205 @@
-<<!DOCTYPE HTML>
-	<html>
+<!DOCTYPE HTML>
+<html>
 
-	<head>
-		<title>Jonathan Bae's Images</title>
+<head>
+	<title>Jonathan Bae's Website</title>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link type="text/css" rel="stylesheet" href="../css/main.css">
-		<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	</head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<body>
-		<div class="loading-container" id="loadingContainer">
-			<iframe marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" style="width:100vw; height: 100vh; overflow:hidden;" src="../pages/loader.html"></iframe>
-		</div>
+	<link type="text/css" rel="stylesheet" href="../css/main.css">
+	<link type="text/css" rel="stylesheet" href="../css/images.css">
+</head>
 
-		<!-- Navigation section -->
-		<nav class="navbar fixed-top navbar-expand-md transparent-bg" id="topNav">
-			<a class="navbar-brand" href="../index.html">Jonathan Bae</a>
-			<button class="navbar-toggler" type="button" onclick="toggleToggler()" type="button">
+<body>
+	<div class="loading-container" id="loadingContainer">
+		<iframe marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" style="width:100vw; height: 100vh; overflow:hidden;" src="../pages/loader.html"></iframe>
+	</div>
+
+	<!-- Navigation section -->
+	<nav class="navbar fixed-top navbar-expand-md transparent-bg" id="topNav">
+		<a class="navbar-brand" href="#main">Jonathan Bae</a>
+		<button class="navbar-toggler" type="button" onclick="toggleToggler()" type="button">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-			<div class="collapse navbar-collapse" id="navbar-main-collapse" style="transition:500ms;">
-				<div class="navbar-nav">
-					<a class="nav-item nav-link" href="../index.html" onclick="closeToggler()">Home <span class="sr-only">(current)</span></a>
-					<a class="nav-item nav-link" href="#photo" onclick="closeToggler()">Photos</a>
-					<a class="nav-item nav-link" href="#contact" onclick="closeToggler()">Contact</a>
-				</div>
-			</div>
-		</nav>
-		<!-- Photo Section -->
-		<div class="photo-section" id="photo">
-			<div class="row" style="width:100%;" >
-				<div class="col-md-4">
-					<div class="thumbnail">
-						<a href="/pages/images.html">
-				 			<img src="https://drive.google.com/uc?id=1QVzJmNKERTEKNtXIENXwYCJzeUSa6B2U" alt="Lights" style="width:100%">
-				 			<div class="caption">
-					 			<p>Lorem ipsum...</p>
-				 			</div>
-		 				</a>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="thumbnail">
-						<a href="/w3images/nature.jpg">
-			 				<img src="https://drive.google.com/uc?id=1hFPRvzoW_5pStlGzRNmlmc7Izo6b-IEo" alt="Nature" style="width:100%">
-			 				<div class="caption">
-				 				<p>Lorem ipsum...</p>
-			 				</div>
-		 				</a>
-					</div>
-				</div>
+		<div class="collapse navbar-collapse" id="navbar-main-collapse" style="transition:500ms;">
+			<div class="navbar-nav">
+				<a class="nav-item nav-link" href="../index.html" onclick="closeToggler()">Home <span class="sr-only">(current)</span></a>
+				<a class="nav-item nav-link" href="../index.html#about" onclick="closeToggler()">About</a>
+				<a class="nav-item nav-link" href="#photo" onclick="closeToggler()">Photos</a>
+				<a class="nav-item nav-link" href="../index.html#resume" onclick="closeToggler()">Resume</a>
+				<a class="nav-item nav-link" href="../index.html#contact" onclick="closeToggler()">Contact</a>
 			</div>
 		</div>
-		<!-- Contact Section -->
-		<div class="contact-section" id="contact">
+	</nav>
+	<!-- Photo Section -->
+	<div class="photo-section content" id="photo" style="height:200%;">
+		<h1> My Photo Portfolio </h1>
+		<div class="container-fluid" id="photoContainer">
+			<div class="row" style="height:30%">
+				<div class="col-sm">
+					<div class="thumbnail photo0 ">
+						<!-- Card to go to photos page -->
+						<div class="card-container">
+							<div class="card text-center text-white" style="height:100%; background:rgba(0,0,0,0.5);">
+								<div class="card-body card-section">
+									<h5 class="card-title card-trans">Stars</h5>
+									<p class="card-text card-trans">Pictures of the Galaxy.</p>
+									<div class="button-card" onclick="openResult('pages/images.html')">SEE MORE</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm">
+					<div class="thumbnail photo1 ">
+						<!-- Card to go to photos page -->
+						<div class="card-container">
+							<div class="card text-center text-white" style="height:100%; background:rgba(0,0,0,0.5);">
+								<div class="card-body card-section">
+									<h5 class="card-title card-trans">Shenandoah National Park</h5>
+									<p class="card-text card-trans">Photos from the Park in Shenandoah, Virginia</p>
+									<div class="button-card" onclick="openResult('pages/images.html')">SEE MORE</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm">
+					<div class="thumbnail photo2 ">
+						<!-- Card to go to photos page -->
+						<div class="card-container">
+							<div class="card text-center text-white" style="height:100%; background:rgba(0,0,0,0.5);">
+								<div class="card-body card-section">
+									<h5 class="card-title card-trans">Alberta, Canada</h5>
+									<p class="card-text card-trans">Banff, Yoho, and Jasper National Park</p>
+									<div class="button-card" onclick="openResult('pages/images.html')">SEE MORE</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm">
+					<div class="thumbnail photo3 ">
+						<!-- Card to go to photos page -->
+						<div class="card-container">
+							<div class="card text-center text-white" style="height:100%; background:rgba(0,0,0,0.5);">
+								<div class="card-body card-section">
+									<h5 class="card-title card-trans">Alberta, Canada</h5>
+									<p class="card-text card-trans">Banff, Yoho, and Jasper National Park</p>
+									<div class="button-card" onclick="openResult('pages/images.html')">SEE MORE</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="height:30%">
+				<div class="col-sm">
+					<div class="thumbnail photo4 ">
+						<!-- Card to go to photos page -->
+						<div class="card-container">
+							<div class="card text-center text-white" style="height:100%; background:rgba(0,0,0,0.5);">
+								<div class="card-body card-section">
+									<h5 class="card-title card-trans">Alberta, Canada</h5>
+									<p class="card-text card-trans">Banff, Yoho, and Jasper National Park</p>
+									<div class="button-card" onclick="openResult('pages/images.html')">SEE MORE</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm">
+					<div class="thumbnail photo5 ">
+						<!-- Card to go to photos page -->
+						<div class="card-container">
+							<div class="card text-center text-white" style="height:100%; background:rgba(0,0,0,0.5);">
+								<div class="card-body card-section">
+									<h5 class="card-title card-trans">Alberta, Canada</h5>
+									<p class="card-text card-trans">Banff, Yoho, and Jasper National Park</p>
+									<div class="button-card" onclick="openResult('pages/images.html')">SEE MORE</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm">
+					<div class="thumbnail photo6 ">
+						<!-- Card to go to photos page -->
+						<div class="card-container">
+							<div class="card text-center text-white" style="height:100%; background:rgba(0,0,0,0.5);">
+								<div class="card-body card-section">
+									<h5 class="card-title card-trans">Alberta, Canada</h5>
+									<p class="card-text card-trans">Banff, Yoho, and Jasper National Park</p>
+									<div class="button-card" onclick="openResult('pages/images.html')">SEE MORE</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm">
+					<div class="thumbnail photo7 ">
+						<!-- Card to go to photos page -->
+						<div class="card-container">
+							<div class="card text-center text-white" style="height:100%; background:rgba(0,0,0,0.5);">
+								<div class="card-body card-section">
+									<h5 class="card-title card-trans">Alberta, Canada</h5>
+									<p class="card-text card-trans">Banff, Yoho, and Jasper National Park</p>
+									<div class="button-card" onclick="openResult('pages/images.html')">SEE MORE</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="height:30%">
+				<div class="col-sm">
+					<div class="thumbnail photo8 ">
+						<!-- Card to go to photos page -->
+						<div class="card-container">
+							<div class="card text-center text-white" style="height:100%; background:rgba(0,0,0,0.5);">
+								<div class="card-body card-section">
+									<h5 class="card-title card-trans">Alberta, Canada</h5>
+									<p class="card-text card-trans">Banff, Yoho, and Jasper National Park</p>
+									<div class="button-card" onclick="openResult('pages/images.html')">SEE MORE</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm">
+					<div class="thumbnail photo9 ">
+						<!-- Card to go to photos page -->
+						<div class="card-container">
+							<div class="card text-center text-white" style="height:100%; background:rgba(0,0,0,0.5);">
+								<div class="card-body card-section">
+									<h5 class="card-title card-trans">Alberta, Canada</h5>
+									<p class="card-text card-trans">Banff, Yoho, and Jasper National Park</p>
+									<div class="button-card" onclick="openResult('pages/images.html')">SEE MORE</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="button-card-dark" onclick="openResult('pages/images.html')">See All Photos<i class="fa fa-hand-point-right"></i>
+			</div>
 		</div>
+	</div>
+	<!-- Contact Section -->
+	<div class="contact-section" id="contact">
+	</div>
 
-		<script src="../js/jquery-3.3.1.min.js"></script>
-		<script src="../js/fontawesome.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-load/8.11.0/load.min.js"></script>
 
-		<script type="text/javascript" src="../js/images.js"></script>
-		<script src="../js/header.js"></script>
-		<script src="../js/main.js"></script>
-		<script src="../js/imagepage.js"></script>
-	</body>
+	<script type="text/javascript" src="../js/images.js"></script>
+	<script src="..//js/header.js"></script>
+	<script src="../js/main.js"></script>
+</body>
 
-	</html>
+</html>
