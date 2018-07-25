@@ -13,6 +13,68 @@ h1, h2, h3, h4, h5, h6, p, div, a{
 	font-family: 'Raleway', sans-serif;
 }
 
+/*Loader*/
+.container-animation {
+  display: flex;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: center;
+  height: 100%;
+  padding: 2em;
+  @media screen and (min-width: 500px) {
+    flex-direction: row;
+  }
+}
+
+#animation {
+  width: 100%;
+  height: 100%;
+  margin: 2em auto 0;
+  @media screen and (min-width: 800px) {
+    height: 90%;
+  }
+}
+
+header {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 1em 0.5em 2em;
+
+  h1 {
+    font-size: 1.5em;
+  }
+}
+
+.play-again {
+  $color: #4391f1;
+  display: inline-block;
+  padding: 0.5em 1em;
+  border: 1px solid $color;
+  color: $color;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 2em;
+
+  &:hover {
+    background-color: $color;
+    color: #fff;
+  }
+}
+
+.loading-container{
+ position:fixed;
+ z-index:10000000;
+ background:#FFFFFF;
+ overflow:hidden;
+}
+
 /* Navigation Bar */
 .navbar{
 	font-size:  1.2em;
@@ -98,73 +160,23 @@ h1, h2, h3, h4, h5, h6, p, div, a{
 }
 /* Photo */
 .photo-section{
-	background-color: #555555;
+	background-color: #FFFFFF;
 	height:50%;
+}
+.thumbnail{
+	width:100%;
+	height:300px;
+}
+#photo0{
+	background: url("https://drive.google.com/uc?id=1QVzJmNKERTEKNtXIENXwYCJzeUSa6B2U") no-repeat fixed center;
+	background-size: cover;
+}
+#photo1{
+	background: url("https://drive.google.com/uc?id=1hFPRvzoW_5pStlGzRNmlmc7Izo6b-IEo") no-repeat fixed center;
+	background-size: cover;
 }
 /* Contact */
 .contact-section{
 	background-color: #111111;
 	height:50%;
-}
-
-/*Loader*/
-.container-animation {
-  display: flex;
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  box-sizing: border-box;
-  flex: 1 1 auto;
-  flex-direction: column;
-  align-items: center;
-  vertical-align: center;
-  height: 100%;
-  padding: 2em;
-  @media screen and (min-width: 500px) {
-    flex-direction: row;
-  }
-}
-
-#animation {
-  width: 100%;
-  height: 100%;
-  margin: 2em auto 0;
-  @media screen and (min-width: 800px) {
-    height: 90%;
-  }
-}
-
-header {
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  box-sizing: border-box;
-  padding: 1em 0.5em 2em;
-
-  h1 {
-    font-size: 1.5em;
-  }
-}
-
-.play-again {
-  $color: #4391f1;
-  display: inline-block;
-  padding: 0.5em 1em;
-  border: 1px solid $color;
-  color: $color;
-  background-color: rgba(255, 255, 255, 0.6);
-  border-radius: 2em;
-
-  &:hover {
-    background-color: $color;
-    color: #fff;
-  }
-}
-
-.loading-container{
- position:fixed;
- z-index:10000000;
- background:#FFFFFF;
- overflow:hidden;
 }
