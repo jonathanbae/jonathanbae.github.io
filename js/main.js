@@ -35,11 +35,13 @@ function initialize() {
   images = imagesOnline;
   setBackgroundImage();
   if (document.getElementById('main') && window.mobilecheck(this)) {
-    // var elements = document.getElementsByClassName('content');
-    // for (var i = 0; i < elements.length; i++) {
-    //   elements[i].style.paddingTop = '18%';
-    // }
+    var elements = document.getElementsByClassName('content');
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].style.paddingTop = '18%';
+    }
     document.getElementById('main').style.paddingTop = '60%';
+    document.getElementById('photoContainer').style.height = '85%';
+    document.getElementById('photo').style.height="200%";
   }
 }
 initialize();
@@ -56,3 +58,7 @@ $(window).on('load', function() {
     })
   }, 1000);
 });
+
+window.addEventListener('mouseover', function(e) {
+  console.log(e.target.classList)
+})
