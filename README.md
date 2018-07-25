@@ -16,17 +16,14 @@ To-Do List:
 - [x]shadow
 - [x] load in images from google drive
 - [ ] store link to download resume pdf
-- [x] add about me section
 - [ ] add contact section
 - [ ] add resume section
+- [x] add about me section
 - [x] get it working on mobile
 - [ ]
-- [ ]use these links for image on home page:
-- [ ] fit the images to a square
-- [ ] randomly select images
-
-
-    example: https://www.devonstank.com/
-    cards: https://getbootstrap.com/docs/4.0/components/card/
-      hiding cards: https://stackoverflow.com/questions/49830079/how-to-hide-and-show-bootstrap-4-cards-by-hovering-over-navigation-menu-through
-    grids: https://getbootstrap.com/docs/4.0/layout/grid/
+- [x] use these links for image on home page:
+- [x] fit the images to a square
+- [x] randomly select images
+- [ ] compress images and store in github
+- [ ] load background urls for image page
+- [ ] 
