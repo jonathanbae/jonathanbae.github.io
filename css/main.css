@@ -180,8 +180,8 @@ header {
   padding: 0 10% 0 10%;
   font-size: 1.3em;
 }
-/* Photo */
 
+/* Photo */
 .photo-section {
   background-color: #FFFFFF;
   height: 100%;
@@ -189,7 +189,6 @@ header {
   padding-bottom: 5%;
   text-align: center;
 }
-
 #photoContainer {
   height: 100%;
 }
@@ -197,37 +196,11 @@ header {
 .thumbnail {
   position: relative;
   width: 100%;
-  height: 90%;
-}
-
-.photo0 {
-  /* background: url("https://drive.google.com/uc?id=1QVzJmNKERTEKNtXIENXwYCJzeUSa6B2U"); */
-  background: url("https://drive.google.com/uc?id=1vMSfZX7Cl96EIyroeE36hYBcJS-mAHUw");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.photo1 {
-  /* background: url("https://drive.google.com/uc?id=1QTmUPVWwNGkx3ELwt1xrP0F3pm8YmrZn"); */
-  background: url("https://drive.google.com/uc?id=1KiNzmQuyO4KmFWRIq1xtLWJ1-GaI3w45");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.photo2 {
-  /* background: url("https://drive.google.com/uc?id=1fY6TnpeDjcSpAhpiv6GL9XfvBbxBQrW9"); */
-  background: url("https://drive.google.com/uc?id=16x1uWCiU8lFOceb2zTO2RtOGu5mlrgoJ");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  height: 80%;
 }
 
 .card-container{
 	height:100%;
-	opacity:0;
-	transition:opacity 1000ms;
 }
 
 .card-body {
@@ -235,22 +208,6 @@ header {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-}
-
-.card-trans {
-  margin-bottom: 2rem;
-  transition: 1000ms;
-}
-
-.thumbnail:hover .card-container{
-	opacity:1;
-}
-
-.card:hover .card-body .card-title{
-	margin-top:2rem !important;
-}
-.card:hover .card-body .card-text, .card:hover .card-body .card-title {
-  margin-bottom: 1rem !important;
 }
 
 .button-card {
@@ -267,24 +224,6 @@ header {
   color: #000000;
   cursor: pointer;
 }
-
-.button-card-dark{
-	color: #000000;
-	padding: 2vh 3vw;
-	border-style: solid;
-	border-color: #000000;
-	font-size: 1em;
-	transition: 500ms;
-	width: 20%;
-	display: block;
-	margin: 0 auto;
-}
-.button-card-dark:hover {
-  background-color: #000000;
-  color: #FFFFFF;
-  cursor: pointer;
-}
-
 
 /* Resume */
 
