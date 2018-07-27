@@ -180,14 +180,6 @@ header {
   padding: 0 10% 0 10%;
   font-size: 1.3em;
 }
-
-/* Resume */
-
-.resume-section {
-  background-color: #999999;
-  height: 50%;
-}
-
 /* Photo */
 
 .photo-section {
@@ -293,8 +285,33 @@ header {
   cursor: pointer;
 }
 
+
+/* Resume */
+
+.resume-section {
+  background-color: #999999;
+  height: 50%;
+}
+
 /* Contact */
 .contact-section {
   background-color: #111111;
-  height: 50%;
+  height: 30%;
+  text-align:center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color:#FFFFFF;
+}
+.contact-buttons {
+  padding: 0 8px;
+  display:inline-block;
+  font-size:1.3em;
+  background:transparent;
+  border:none;
+}
+.contact-buttons:hover{
+  color:#999999;
+  cursor:pointer;
 }
