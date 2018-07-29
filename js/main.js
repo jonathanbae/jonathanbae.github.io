@@ -62,3 +62,29 @@ $(window).on('load', function() {
 // window.addEventListener('mouseover', function(e) {
 //   console.log(e.target.classList)
 // })
+
+function openPhotoViewer(value){
+  var pswpElement = document.querySelectorAll('.pswp')[0];
+
+  // build items array
+  var items = [];
+  var temp = images[value];
+  var tempSize = imagesSize[value];
+  for(var i = 0; i<temp.length; i++){
+    items.push({
+      src: temp[i],
+      w: tempSize[i].w,
+      h: tempSize[i].h
+    });
+  }
+  // define options (if needed)
+  var options = {
+      // optionName: 'option value'
+      // for example:
+      index: 0 // start at first slide
+  };
+  // Initializes and opens PhotoSwipe
+  var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+  gallery.init();
+
+}

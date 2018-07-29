@@ -24,17 +24,16 @@ var imagesOnline = {
     "https://drive.google.com/uc?id=1XOJ-EuZS-EBbGQfqnVc2mSM2e5R520Ps"
   ],
   "Shenandoah": [
+    "https://drive.google.com/uc?id=1KMM13MVQPqmZ8fG91wez71XDHnS_Y42h",
+    "https://drive.google.com/uc?id=1QTmUPVWwNGkx3ELwt1xrP0F3pm8YmrZn",
+    "https://drive.google.com/uc?id=1QoGChAqX0Oxrf_UEjLHBEdP19SWGJpO3",
+    "https://drive.google.com/uc?id=19XN836UVR34Vta0erLv3tjuWL02J34Uj",
     "https://drive.google.com/uc?id=19ny94hYpBWQGs8DlK1eOIJ-rryKcSTjl",
     "https://drive.google.com/uc?id=1MXtnPErUTXyKI-wFv7WO3OjRq_PeOa8b",
     "https://drive.google.com/uc?id=19R3XpzFiAh_uiQBCBAneFJVFe0hN2Nav",
     "https://drive.google.com/uc?id=1YWBcdKAZsSR7oiyDvlFlIkz2rVufZQ8H",
     "https://drive.google.com/uc?id=1lkN1YPg3AVH8ni1vpxkjZgsGBYDrvkGQ",
     "https://drive.google.com/uc?id=1ug7YE-y_Mt8YA9P4_HuLw6rEn3OJOoTk",
-    "https://drive.google.com/uc?id=1KMM13MVQPqmZ8fG91wez71XDHnS_Y42h",
-    "https://drive.google.com/uc?id=1YwbyDPJY61xsxGkwcEt3xttEAZbyLsgu",
-    "https://drive.google.com/uc?id=1QTmUPVWwNGkx3ELwt1xrP0F3pm8YmrZn",
-    "https://drive.google.com/uc?id=1QoGChAqX0Oxrf_UEjLHBEdP19SWGJpO3",
-    "https://drive.google.com/uc?id=19XN836UVR34Vta0erLv3tjuWL02J34Uj",
     "https://drive.google.com/uc?id=1CkgWkvq5w7gQpmQWb_Xa1PcehzO7HQxC"
   ],
   "Smoky Mountains": [
@@ -74,6 +73,97 @@ var imagesOnline = {
     "https://drive.google.com/uc?id=108mNb23uBM9Qilurbbpba_QxM-ILDqh8",
     "https://drive.google.com/uc?id=1q0CAGG4TfiI8yQhp-bGSTMeuDQm_z2Hi"
   ]
+}
+
+var imagesSize = {
+  "Stars": [{
+    w: 3016.5,
+    h: 1505
+  }],
+  "Joshua Tree": [],
+  "San Francisco": [],
+  "Great Falls": [],
+  "Iceland": [],
+  "Shenandoah": [{
+    w: 4896,
+    h: 3264
+  }, {
+    w: 4620,
+    h: 2599
+  }, {
+    w: 4873,
+    h: 2741
+  }, {
+    w: 4587,
+    h: 2580
+  }, {
+    w: 4896,
+    h: 3264
+  }, {
+    w: 4896,
+    h: 3264
+  }, {
+    w: 4227,
+    h: 2870
+  }, {
+    w: 4896,
+    h: 3264
+  }, {
+    w: 2630,
+    h: 4064
+  }, {
+    w: 4896,
+    h: 3264
+  }, {
+    w: 4804,
+    h: 3264
+  }],
+  "Smoky Mountains": [],
+  "Utah": [],
+  "Alberta, Canada": [{
+    w: 3264,
+    h: 1836
+  }, {
+    w: 3264,
+    h: 1836
+  }, {
+    w: 3264,
+    h: 1836
+  }, {
+    w: 5312,
+    h: 2988
+  }, {
+    w: 5312,
+    h: 2045
+  }, {
+    w: 5312,
+    h: 2988
+  }, {
+    w: 3264,
+    h: 1836
+  }, {
+    w: 3264,
+    h: 1365
+  }, {
+    w: 5312,
+    h: 2988
+  }, {
+    w: 3264,
+    h: 1836
+  }, {
+    w: 3264,
+    h: 1836
+  }, {
+    w: 3264,
+    h: 1479
+  }, {
+    w: 3264,
+    h: 1836
+  }, {
+    w: 3264,
+    h: 1663
+  }],
+  "Glacier National Park": []
 }
 
 var imagesFolders = {
