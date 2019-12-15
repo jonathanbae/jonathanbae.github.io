@@ -4,13 +4,9 @@
 <!-- <p [innerText]="serverName"></p> -->
 <button type="button" class="btn btn-primary" [disabled]="!allowNewServer" (click)="onCreateServer()">Add
   Server</button>
-<p [innerText]="serverCreationStatus"></p>
-<app-server></app-server>
-<app-server></app-server>
-<hr>
-<label>Username</label>
-<input type="text" name="username" id="inputusername" class="form-control" [(ngModel)]="username">
-<p [innerText]="username"></p>
+<p [innerText]="serverCreationStatus" *ngIf="serverCreated; else noServer"></p>
+<ng-template #noServer>
+    <p>No server was created</p>
+</ng-template>
 
-<button type="button" class="btn btn-primary" [disabled]="username ===''" (click)="resetUsername()">Reset Username</button>
-<hr>
+<app-server *ngFor="let server of servers"></app-server>
