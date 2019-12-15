@@ -1,3 +1,5 @@
+import { CourseProjectModule } from './course-project/course-project.module';
+import { CourseProjectComponent } from './course-project/course-project.component';
 import { ServerComponent } from './server/server.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -14,13 +16,14 @@ import { SuccessAlertComponent } from './success-alert/success-alert.component';
     ServerComponent,
     ServersComponent,
     WarningAlertComponent,
-    SuccessAlertComponent
+    SuccessAlertComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    CourseProjectModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, CourseProjectComponent]
 })
 export class AppModule { }
