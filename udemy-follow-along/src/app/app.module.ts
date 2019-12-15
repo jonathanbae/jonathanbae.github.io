@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { ServersComponent } from './servers/servers.component';
 import { WarningAlertComponent } from './warning-alert/warning-alert.component';
 import { SuccessAlertComponent } from './success-alert/success-alert.component';
+import { AppDataBindingComponent } from './data-binding/app-data-binding.component';
+import { AppDataBindingModule } from './data-binding/app-data-binding.module';
 
 @NgModule({
   declarations: [
@@ -21,9 +23,10 @@ import { SuccessAlertComponent } from './success-alert/success-alert.component';
   imports: [
     BrowserModule,
     FormsModule,
-    CourseProjectModule
+    CourseProjectModule,
+    AppDataBindingModule
   ],
   providers: [],
-  bootstrap: [AppComponent, CourseProjectComponent]
+  bootstrap: [AppComponent, CourseProjectComponent, AppDataBindingComponent]
 })
 export class AppModule { }
