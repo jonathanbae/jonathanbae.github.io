@@ -6,21 +6,22 @@
 
 body { 
     min-height: 100%; 
-    border: 4px solid #c4c4ff;
-    background: #c4c4ff;
+    border: 4px solid #feffff;
+    background: #feffff;
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-template-areas:
-    "title title"
-    "header header"
-    "sidebar sidebar"
-    "jobcontent jobcontent"
-    "photocontent photocontent"
-    "footer footer";
-    color: #000
+    "title"
+    "header"
+    "sidebar"
+    "jobcontent"
+    "projectcontent"
+    "photocontent"
+    "footer";
+    color: #17252a
 }
 
 .grid > div{
@@ -28,23 +29,24 @@ body {
 }
 
 .title {
-    background: #333;
+    background: #17252a;
     grid-area: title;
     text-align: center;
     font-size: 4rem;
-    color: #fff;
+    color: #FEFFFF;
 }
 
 .header {
-    color: #ffc4c4;
-    background: #555;
+    color: #DEF2F1;
+    background: #2B7A78;
     grid-area: header;
     text-align: center;
 }
 
 .sidebar {
+    background: #3aafa9;
     grid-area: sidebar;
-
+    text-align: center;
 }
 
 .sidebar a{
@@ -52,6 +54,15 @@ body {
     text-decoration: none;
     font-size: 1.3rem;
 }
+
+.sidebar a:hover{
+    text-decoration: underline;
+}
+
+.sidebar a:visited {
+    color: #17252a;
+}
+
 
 .job-content {
     grid-area: jobcontent;
@@ -66,12 +77,12 @@ body {
 }
 
 .photo-content a {
-    text-decoration: none;
+    color: #17252a;
 }
 
 .footer {
-    background: #333;
-    color: #c4c4ff;
+    background: #17252a;
+    color: #3AAFA9;
     grid-area: footer;
     display: grid;
     grid-template-columns: 1fr;
@@ -80,7 +91,7 @@ body {
 }
 
 .footer-icons > a{
-    color: #fff;
+    color: #FEFFFF;
     text-decoration: none;
 }
 
