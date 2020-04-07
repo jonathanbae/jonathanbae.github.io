@@ -10,6 +10,16 @@ body {
     background: #feffff;
 }
 
+h4 {
+    color: #2B7A78;
+    font-size: 1.5rem;
+}
+h5 {
+    color: #3aafa9;
+    font-size: 1.25rem;
+}
+
+
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -43,6 +53,14 @@ body {
     text-align: center;
 }
 
+img{
+    position: relative;
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
 .sidebar {
     background: #3aafa9;
     grid-area: sidebar;
@@ -51,6 +69,7 @@ body {
 
 .sidebar a{
     display: block;
+    color: #DEF2F1;
     text-decoration: none;
     font-size: 1.3rem;
 }
@@ -63,9 +82,18 @@ body {
     color: #17252a;
 }
 
-
 .job-content {
     grid-area: jobcontent;
+}
+
+.job-content li{
+    margin-left: 20px;
+}
+
+.job-content > div {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #17252a;
 }
 
 .project-content {
@@ -98,15 +126,15 @@ body {
 @media screen and (min-width: 736px) {
     .grid {
         display: grid;
-        grid-template-columns: 1fr 4fr;
-        grid-template-rows: 600px 1fr 3fr 1fr 1fr;
+        grid-template-columns: 1fr 3fr 1fr;
+        grid-template-rows: 6fr 1fr 6fr 1fr 1fr;
         grid-template-areas:
-        "title title"
-        "header header"
-        "sidebar jobcontent"
-        "sidebar projectcontent"
-        "sidebar photocontent"
-        "footer footer";
+        "title title title"
+        "header header header"
+        "sidebar jobcontent jobcontent"
+        "sidebar projectcontent projectcontent"
+        "sidebar photocontent photocontent"
+        "footer footer footer";
     }
 
     .title {
@@ -123,6 +151,22 @@ body {
     }
 
     .header {
-        font-size: 2rem;
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-areas: "headerempty headercontent headerempty1";
     }
+
+
+    .header-content {
+        grid-area: headercontent;
+    }
+
+    .header-empty {
+        grid-area: headerempty;
+    }
+
+    .header-empty1 {
+        grid-area: headerempty1;
+    }
+
 }
