@@ -1,45 +1,74 @@
 * {
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
     font-family: 'Muli', sans-serif;
+    text-decoration: none;
 }
 
-body { 
-    min-height: 100%; 
+body {
+    min-height: 100%;
     border: 4px solid #feffff;
     background: #feffff;
 }
 
 h2 {
-    color: #2B7A78;
-    font-size: 1.75rem;
+    color: #17252a;
+    text-decoration: bold;
+    font-size: 2rem;
 }
 
 h4 {
     color: #2B7A78;
     font-size: 1.5rem;
 }
+
 h5 {
-    color: #3aafa9;
+    color: #3AAFA9;
     font-size: 1.25rem;
 }
 
+.header {
+    padding: 0;
+    grid-area: header;
+    background-color: #DEF2F1;
+    display: grid;
+    grid-template-rows: repeat(auto-fit, minmax(50px, 1fr));
+    grid-template-areas: "headerbrand" "headerlinks"
+}
+
+.header-brand {
+    grid-area: headerbrand;
+    font-family: 'Catamaran', sans-serif;
+    font-size: 1.6rem;
+    color: #17252a;
+    font-weight: 900;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.header-links {
+    grid-area: headerlinks;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+    justify-items: center;
+}
+
+.header-links>a {
+    font-family: 'Catamaran', sans-serif;
+    font-size: 1.2rem;
+    color: #17252a;
+    font-weight: 600;
+}
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    grid-template-areas:
-    "title"
-    "header"
-    "sidebar"
-    "jobcontent"
-    "projectcontent"
-    "photocontent"
-    "footer";
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    grid-template-areas: "header" "title" "about" "jobcontent" "projectcontent" "photocontent" "footer";
     color: #17252a
 }
 
-.grid > div{
+.grid>div {
     padding: 1em;
 }
 
@@ -51,14 +80,14 @@ h5 {
     color: #FEFFFF;
 }
 
-.header {
+.about {
     color: #DEF2F1;
     background: #2B7A78;
-    grid-area: header;
+    grid-area: about;
     text-align: center;
 }
 
-.title img{
+.title img {
     position: relative;
     width: 30vw;
     height: auto;
@@ -72,30 +101,15 @@ h5 {
     text-align: center;
 }
 
-.sidebar a{
-    display: block;
-    color: #DEF2F1;
-    text-decoration: none;
-    font-size: 1.3rem;
-}
-
-.sidebar a:hover{
-    text-decoration: underline;
-}
-
-.sidebar a:visited {
-    color: #17252a;
-}
-
 .job-content {
     grid-area: jobcontent;
 }
 
-.job-content li{
+.job-content>li {
     margin-left: 20px;
 }
 
-.job-content > div {
+.job-content>div {
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid #17252a;
@@ -107,10 +121,23 @@ h5 {
 
 .photo-content {
     grid-area: photocontent;
+    align-self: center;
 }
 
 .photo-content a {
     color: #17252a;
+}
+
+.photo-container {
+    display: grid;
+    grid-gap: 1em;
+}
+
+.photo-container>div {
+    display: inline-block;
+    width: 100%;
+    height: 300px;
+    background-size: cover;
 }
 
 .footer {
@@ -123,69 +150,76 @@ h5 {
     text-align: center;
 }
 
-.footer-icons > a{
+.footer-icons>a {
     color: #FEFFFF;
-    text-decoration: none;
 }
 
 @media screen and (min-width: 736px) {
+    .header {
+        padding: 0;
+        grid-area: header;
+        background-color: #DEF2F1;
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr;
+        grid-template-areas: "headerbrand headerlinks . ";
+        align-items: center;
+    }
+    .header-brand {
+        grid-area: headerbrand;
+        font-family: 'Catamaran', sans-serif;
+        font-size: 1.6rem;
+        color: #17252a;
+        font-weight: 900;
+    }
+    .header-links {
+        grid-area: headerlinks;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+        justify-items: left;
+    }
     .grid {
         display: grid;
-        grid-template-columns: 1fr 3fr 1fr;
-        grid-template-rows: 7fr 1fr 7fr 3fr 7fr 1fr;
-        grid-template-areas:
-        "title title title"
-        "header header header"
-        "sidebar jobcontent jobcontent"
-        "sidebar projectcontent projectcontent"
-        "sidebar photocontent photocontent"
-        "footer footer footer";
+        grid-template-columns: 1fr 5fr 1fr;
+        grid-template-rows: 5fr 1fr 7fr 3fr 6fr 1fr;
+        grid-template-areas: "title title title" "about about about" ". jobcontent ." ". projectcontent ." ". photocontent ." "footer footer footer";
     }
-
     .title {
         font-size: 4rem;
         font-weight: 500;
         display: grid;
         grid-template-columns: 1fr 2fr;
     }
-    
-    .title > div, h3{
+    .title>div,
+    h3 {
         justify-content: center;
         align-items: center;
-        display: flex;      
+        display: flex;
     }
-
-    .header {
+    .about {
         display: grid;
         grid-template-columns: 1fr 2fr 1fr;
-        grid-template-areas: "headerempty headercontent headerempty1";
+        grid-template-areas: "aboutempty aboutcontent aboutempty1";
     }
-
-
-    .header-content {
-        grid-area: headercontent;
+    .about-content {
+        grid-area: aboutcontent;
     }
-
-    .header-empty {
-        grid-area: headerempty;
+    .about-empty {
+        grid-area: aboutempty;
     }
-
-    .header-empty1 {
-        grid-area: headerempty1;
+    .about-empty1 {
+        grid-area: aboutempty1;
     }
-
     .photo-content {
         align-self: center;
     }
     .photo-container {
         display: grid;
         grid-gap: 1em;
-        grid-template-columns: repeat( auto-fit, minmax(400px, 1fr) );
+        grid-template-columns: repeat( auto-fit, minmax(350px, 1fr));
     }
-
-    .photo-container > div{
+    .photo-container>div {
         display: inline-block;
-        width: 400px;
+        width: 350px;
         height: 300px;
         background-size: cover;
     }
