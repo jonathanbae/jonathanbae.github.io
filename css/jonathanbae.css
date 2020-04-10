@@ -180,7 +180,7 @@ h5 {
     .grid {
         display: grid;
         grid-template-columns: 1fr 5fr 1fr;
-        grid-template-rows: 5fr 1fr 7fr 3fr 6fr 1fr;
+        grid-template-rows: repeat(auto-fit, minmax(20px, 1fr));
         grid-template-areas: "title title title" "about about about" ". jobcontent ." ". projectcontent ." ". photocontent ." "footer footer footer";
     }
     .title {
