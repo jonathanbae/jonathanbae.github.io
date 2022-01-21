@@ -1,0 +1,17 @@
+<div class="button-container">
+  <ng-container class="initial-selection" *ngIf="selection !== 'CATEGORY'">
+    <button mat-raised-button (click)="selectCategory()">
+      Select Category
+    </button>
+    <button mat-raised-button (click)="selectRandom()">Random</button>
+  </ng-container>
+  <ng-container
+    class="category-metadata-selection"
+    *ngIf="selection === 'CATEGORY'"
+  >
+    <button mat-raised-button>Select Category</button>
+  </ng-container>
+  <ng-container class="reset-selection">
+    <button mat-raised-button (click)="reset()">Reset Selections</button>
+  </ng-container>
+</div>

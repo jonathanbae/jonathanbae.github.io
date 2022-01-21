@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LearnComponent } from './components/learn/learn.component';
 import { PracticeComponent } from './components/practice/practice.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CategorySelectorComponent } from './components/common/category-selector/category-selector.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeComponent,
     LearnComponent,
     PracticeComponent,
+    CategorySelectorComponent,
   ],
   imports: [
     BrowserModule,

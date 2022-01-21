@@ -1,1 +1,12 @@
-<p>learn works!</p>
+<app-category-selector
+  *ngIf="learnDrugs.length === 0"
+  (selectionChange)="checkSelection($event)"
+  (resetChange)="reset()"
+></app-category-selector>
+
+<div *ngIf="learnDrugs.length !== 0">
+  <button mat-raised-button (click)="getNextDrug()">Next</button>
+  <div>
+    {{ currentLearnDrug.generic }}
+  </div>
+</div>

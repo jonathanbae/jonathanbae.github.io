@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { drugList } from 'src/assets/data/drugs';
-import { BlackBoxWarning, Contraindication, DrugDetail, Formulation, SideEffect } from 'src/assets/models/drug-models';
+import {
+  BlackBoxWarning,
+  Contraindication,
+  DrugDetail,
+  Formulation,
+  SideEffect,
+} from 'src/assets/models/drug-models';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +15,22 @@ export class DrugService {
   private readonly drugList = drugList;
   private drugClassMap: Map<string, string[]> = new Map<string, string[]>();
   private formulationMap: Map<string, string[]> = new Map<string, string[]>();
-  private commonSideEffectsMap: Map<string, string[]> = new Map<string, string[]>();
-  private rareSideEffectsMap: Map<string, string[]> = new Map<string, string[]>();
-  private contraindicationsMap: Map<string, string[]> = new Map<string, string[]>();
-  private blackBoxWarningsMap: Map<string, string[]> = new Map<string, string[]>();
+  private commonSideEffectsMap: Map<string, string[]> = new Map<
+    string,
+    string[]
+  >();
+  private rareSideEffectsMap: Map<string, string[]> = new Map<
+    string,
+    string[]
+  >();
+  private contraindicationsMap: Map<string, string[]> = new Map<
+    string,
+    string[]
+  >();
+  private blackBoxWarningsMap: Map<string, string[]> = new Map<
+    string,
+    string[]
+  >();
 
   constructor() {
     this.buildDrugCategoryMaps();
@@ -38,7 +56,7 @@ export class DrugService {
           this.formulationMap.get(val)?.push(drugKey);
         }
       });
-      
+
       drugDetail.commonSideEfects.forEach((commonSideEfect: SideEffect) => {
         const val = commonSideEfect.valueOf();
         if (!this.commonSideEffectsMap.has(val)) {
@@ -57,14 +75,16 @@ export class DrugService {
         }
       });
 
-      drugDetail.contraindication.forEach((contraindication: Contraindication) => {
-        const val = contraindication.valueOf();
-        if (!this.contraindicationsMap.has(val)) {
-          this.contraindicationsMap.set(val, [drugKey]);
-        } else {
-          this.contraindicationsMap.get(val)?.push(drugKey);
+      drugDetail.contraindication.forEach(
+        (contraindication: Contraindication) => {
+          const val = contraindication.valueOf();
+          if (!this.contraindicationsMap.has(val)) {
+            this.contraindicationsMap.set(val, [drugKey]);
+          } else {
+            this.contraindicationsMap.get(val)?.push(drugKey);
+          }
         }
-      });
+      );
 
       drugDetail.blackBoxWarning.forEach((blackBoxWarning: BlackBoxWarning) => {
         const val = blackBoxWarning.valueOf();
@@ -74,7 +94,6 @@ export class DrugService {
           this.blackBoxWarningsMap.get(val)?.push(drugKey);
         }
       });
-
     });
   }
 
@@ -113,6 +132,11 @@ export class DrugService {
     console.log(this.getRareSideEffectsMap());
     console.log(this.getContraindicationsMap());
     console.log(this.getBlackBoxWarningsMap());
+  }
 
+  public getRandomDrug(): DrugDetail {
+    const keys = Object.keys(drugList);
+
+    return drugList[keys[keys.length * Math.random() << 0]];
   }
 }
