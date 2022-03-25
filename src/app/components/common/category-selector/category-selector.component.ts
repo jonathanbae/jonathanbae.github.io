@@ -22,7 +22,7 @@ export enum MetadataCategorySelection {
 export class CategorySelectorComponent implements OnInit {
   selection: CategorySelection | undefined;
   metadataSelection: MetadataCategorySelection | undefined;
-
+  metadataCategorySelections = MetadataCategorySelection;
   @Output()
   selectionChange = new EventEmitter<CategorySelection>();
   @Output()

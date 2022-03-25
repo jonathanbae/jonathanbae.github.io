@@ -1,15 +1,21 @@
 <div class="button-container">
   <ng-container class="initial-selection" *ngIf="selection !== 'CATEGORY'">
     <button mat-raised-button (click)="selectCategory()">
-      Select Category
+      Pick by a Specific Category
     </button>
-    <button mat-raised-button (click)="selectRandom()">Random</button>
+    <button mat-raised-button (click)="selectRandom()">Random Drug</button>
   </ng-container>
   <ng-container
     class="category-metadata-selection"
     *ngIf="selection === 'CATEGORY'"
   >
-    <button mat-raised-button>Select Category</button>
+  <mat-form-field class="selection">
+    <mat-label>Select a Category</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let option of metadataCategorySelections | keyvalue" value="option.key">{{option.value}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  
   </ng-container>
   <ng-container class="reset-selection">
     <button mat-raised-button (click)="reset()">Reset Selections</button>
