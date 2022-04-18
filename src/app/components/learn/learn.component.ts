@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DrugService } from 'src/app/services/drug.service';
 import { DrugDetail } from 'src/assets/models/drug-models';
-import { CategorySelection } from '../common/category-selector/category-selector.component';
+
+export enum LearnSelection {
+  BY_NAME = 'Select by Name',
+  BY_CATEGORY = 'Pick a specific Category',
+  RANDOM = 'Random Drug',
+}
+
 
 @Component({
   selector: 'app-learn',
@@ -9,25 +15,23 @@ import { CategorySelection } from '../common/category-selector/category-selector
   styleUrls: ['./learn.component.scss'],
 })
 export class LearnComponent implements OnInit {
-  selection: CategorySelection | undefined;
+  selection: LearnSelection | undefined;
   learnDrugs: DrugDetail[] = [];
   drugIndex = 0;
 
   constructor(private drugService: DrugService) {}
 
-  ngOnInit(): void {
-    this.drugService.printAll();
-  }
-  
+  ngOnInit(): void {}
+
   reset() {
     this.selection = undefined;
     this.learnDrugs = [];
     this.drugIndex = 0;
   }
 
-  checkSelection(selectionValue: CategorySelection) {
+  checkSelection(selectionValue: LearnSelection) {
     this.selection = selectionValue;
-    if(this.selection === CategorySelection.RANDOM) {
+    if (this.selection === LearnSelection.RANDOM) {
       this.learnDrugs.push(this.drugService.getRandomDrug());
     }
   }
@@ -37,7 +41,7 @@ export class LearnComponent implements OnInit {
   }
 
   getNextDrug() {
-    if(this.selection === CategorySelection.RANDOM) {
+    if (this.selection === LearnSelection.RANDOM) {
       this.learnDrugs.push(this.drugService.getRandomDrug());
       this.drugIndex++;
     }
