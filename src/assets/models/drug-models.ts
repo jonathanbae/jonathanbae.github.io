@@ -4,8 +4,8 @@ export interface DrugDetail {
 }
 
 export interface Detail {
-  brand: string;
-  drugClass: string;
+  brand: string[];
+  drugClass: string[];
   formulation: string[];
   commonSideEfects: string[];
   rareSideEffects: string[];

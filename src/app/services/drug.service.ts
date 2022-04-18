@@ -6,6 +6,11 @@ import { DrugDetail } from 'src/assets/models/drug-models';
   providedIn: 'root',
 })
 export class DrugService {
+  private readonly CSV_COLUMN_SPLIT_REGEX = /,(?=(?:(?:[^\"]*"){2})*[^\"]*$)/;
+  private readonly COMMA_SPACE_SPLIT_REGEX = /\s*,\s*/;
+  private readonly BLACKBOX_WARNING_SPLIT_REGEX = /(BW:)/;
+  private readonly SEMICOLON_SPACE_SPLIT_REGEX = /;/;
+
   private drugRecord: Record<string, DrugDetail> = {};
   private readonly drugCSV = drugCSV;
   private drugClassMap: Map<string, string[]> = new Map<string, string[]>();
@@ -150,46 +155,94 @@ export class DrugService {
    */
   private convertDrugListCSVtoJSON(): void {
     const rowSplit: string[] = this.drugCSV.split('\n');
-    let i = 1;
-    for (; i < rowSplit.length; i++) {
-      const colSplit: string[] = rowSplit[i].split(
-        /,(?=(?:(?:[^\"]*"){2})*[^\"]*$)/
-      );
+    for (let row of rowSplit) {
+      const colSplit: string[] = row.split(this.CSV_COLUMN_SPLIT_REGEX);
       const key = colSplit[0];
-
-      if (!this.drugRecord.hasOwnProperty(key)) {
-        this.drugRecord[key] = { generic: key, details: [] };
-      }
-
-      this.drugRecord[key].details.push({
-        brand: colSplit[1],
-        drugClass: colSplit[2],
-        formulation: [colSplit[3]],
-        commonSideEfects: [colSplit[4]],
-        rareSideEffects: [colSplit[5]],
-        contraindication: this.parseContraindication(colSplit[6]),
-        blackBoxWarning: this.parseBlackBoxWarning(colSplit[6]),
-      });
+      this.addDrug(key, colSplit);
     }
 
     console.log(this.drugRecord);
   }
 
-  /**
-   *
-   * @param val string column of the CSV that contains prefix with CI
-   * @returns string array of contraindication warnings
-   */
-  private parseContraindication(val: string): string[] {
-    return [];
+  private addDrug(key: string, colSplit: string[]): void {
+    if (!this.drugRecord.hasOwnProperty(key)) {
+      this.drugRecord[key] = { generic: key, details: [] };
+    }
+
+    const { contraindication, blackBoxWarning } =
+      this.parseContraindicationBlackBoxWarning(colSplit[6]);
+
+    this.drugRecord[key].details.push({
+      brand: this.trimSplitColumn(colSplit[1]),
+      drugClass: this.lowerCaseTrimSplitColumn(colSplit[2]),
+      formulation: this.lowerCaseTrimSplitColumn(colSplit[3]),
+      commonSideEfects: this.lowerCaseTrimSplitColumn(colSplit[4]),
+      rareSideEffects: this.lowerCaseTrimSplitColumn(colSplit[5]),
+      contraindication: contraindication,
+      blackBoxWarning: blackBoxWarning,
+    });
+  }
+
+  private trimReplace(s: string): string {
+    return s.replace('"', '').trim();
+  }
+
+  private trimSplitColumn(colString: string): string[] {
+    return this.trimReplace(colString).split(this.COMMA_SPACE_SPLIT_REGEX);
+  }
+
+  private lowerCaseTrimSplitColumn(colString: string): string[] {
+    return this.trimSplitColumn(colString.toLowerCase());
   }
 
   /**
    *
-   * @param val string column of the CSV that contains prefix with BW
-   * @returns string array of blackbox warnings
+   * @param val string column of the CSV that contains prefix with CI and BW
+   * @returns string array of contraindication warnings
    */
-  private parseBlackBoxWarning(val: string): string[] {
-    return [];
+  private parseContraindicationBlackBoxWarning(val: string) {
+    const bwSplit: string[] = this.trimReplace(val).split(
+      this.BLACKBOX_WARNING_SPLIT_REGEX
+    );
+
+    let b: string[] = [];
+    let c: string[] = [];
+    if (bwSplit[0].startsWith('CI')) {
+      this.processCIString(bwSplit[0], c);
+      if (bwSplit.length === 3) {
+        this.processBWString(bwSplit[2], b);
+      } else {
+        b.push('none');
+      }
+    } else if (bwSplit.length === 3) {
+      this.processBWString(bwSplit[2], b);
+    } else {
+      b.push('none');
+      c.push('none');
+    }
+    return {
+      contraindication: c,
+      blackBoxWarning: b,
+    };
+  }
+
+  private processCIString(ci: string, c: string[]): void {
+    //TODO: when adding to CI map, check if the values are valid and are equal, or else need to split further
+    const ciSplit = this.trimReplace(ci)
+      .replace('CI:', '')
+      .split(this.SEMICOLON_SPACE_SPLIT_REGEX);
+    for (let ciVal of ciSplit) {
+      c.push(ciVal.trim());
+    }
+  }
+
+  private processBWString(bw: string, b: string[]): void {
+    //TODO: when adding to BW map, check if the values are valid and are equal, or else need to split further
+    const bwSplit = this.trimReplace(bw).split(
+      this.SEMICOLON_SPACE_SPLIT_REGEX
+    );
+    for (let bwVal of bwSplit) {
+      b.push(bwVal.trim());
+    }
   }
 }
