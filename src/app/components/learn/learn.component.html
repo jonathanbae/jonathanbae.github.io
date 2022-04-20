@@ -1,12 +1,11 @@
 <app-category-selector
-  *ngIf="learnDrugs.length === 0"
   (selectionChange)="checkSelection($event)"
   (resetChange)="reset()"
+  (randomChange)="selectRandomDrug($event)"
 ></app-category-selector>
 
-<div *ngIf="learnDrugs.length !== 0">
-  <button mat-raised-button (click)="getNextDrug()">Next</button>
-  <div>
-    {{ currentLearnDrug.generic }}
-  </div>
+<div *ngIf="learnDrugs.length !== 0" class="drug-container">
+  <!-- TODO look into reviewing all the drugs that were selected -->
+  <!-- <learned-drug-list [learnedDrugs]="learnDrugs"></learned-drug-list> -->
+  <drug-card [drug]="currentLearnDrug"></drug-card>
 </div>

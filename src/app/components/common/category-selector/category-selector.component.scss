@@ -1,9 +1,23 @@
 .button-container {
-    display: grid;
-    height: 30vh;
+  display: grid;
 
-    button, .selection {
-        margin: 1vh 20vw;
-        font-size: 2em;
+  button,
+  .selection {
+    margin: 1vh 20vw;
+    font-size: 2em;
+    height: 7vh;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .button-container {
+    display: grid;
+
+    button,
+    .selection {
+      margin: 1vh 20vw;
+      font-size: 1em;
+      height: 6vh;
     }
+  }
 }

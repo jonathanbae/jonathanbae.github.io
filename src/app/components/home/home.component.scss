@@ -1,9 +1,21 @@
 .button-container {
+  display: grid;
+  height: 60vh;
+
+  button {
+    margin: 1vh 1vw;
+    font-size: 4em;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .button-container {
     display: grid;
-    height: 60vh;
+    height: 45vh;
 
     button {
-        margin: 1vh 1vw;
-        font-size: 4em;
+      margin: 2vh 2vw;
+      font-size: 2em;
     }
+  }
 }

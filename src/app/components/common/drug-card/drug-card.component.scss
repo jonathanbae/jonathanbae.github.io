@@ -1,0 +1,23 @@
+.drug-card {
+  margin: 1vh 20vw;
+
+  .drug-card-subtitle {
+    margin-top: 4px;
+    font-size: 1.2em;
+  }
+
+  .drug-category-label {
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+
+  .data-row {
+    margin: 4px 16px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .drug-card {
+    margin: 1vh 20vw;
+  }
+}

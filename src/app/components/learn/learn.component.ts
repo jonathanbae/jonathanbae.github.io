@@ -8,14 +8,12 @@ export enum LearnSelection {
   RANDOM = 'Random Drug',
 }
 
-
 @Component({
   selector: 'app-learn',
   templateUrl: './learn.component.html',
   styleUrls: ['./learn.component.scss'],
 })
 export class LearnComponent implements OnInit {
-  selection: LearnSelection | undefined;
   learnDrugs: DrugDetail[] = [];
   drugIndex = 0;
 
@@ -24,15 +22,21 @@ export class LearnComponent implements OnInit {
   ngOnInit(): void {}
 
   reset() {
-    this.selection = undefined;
     this.learnDrugs = [];
     this.drugIndex = 0;
   }
 
-  checkSelection(selectionValue: LearnSelection) {
-    this.selection = selectionValue;
-    if (this.selection === LearnSelection.RANDOM) {
-      this.learnDrugs.push(this.drugService.getRandomDrug());
+  checkSelection(selectionValue: string) {
+    switch (selectionValue) {
+      case 'BY_CATEGORY':
+        break;
+      case 'BY_NAME':
+        break;
+      case 'RANDOM':
+        this.selectRandomDrug();
+        break;
+      default:
+        break;
     }
   }
 
@@ -40,10 +44,10 @@ export class LearnComponent implements OnInit {
     return this.learnDrugs[this.drugIndex];
   }
 
-  getNextDrug() {
-    if (this.selection === LearnSelection.RANDOM) {
-      this.learnDrugs.push(this.drugService.getRandomDrug());
-      this.drugIndex++;
-    }
+  selectRandomDrug(count = 0) {
+    this.drugIndex += count;
+    this.learnDrugs.push(this.drugService.getRandomDrug());
   }
+
+  getNextDrug() {}
 }

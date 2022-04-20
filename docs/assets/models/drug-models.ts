@@ -4,10 +4,10 @@ export interface DrugDetail {
 }
 
 export interface Detail {
-  brand: string;
-  drugClass: string;
+  brand: string[];
+  drugClass: string[];
   formulation: string[];
-  commonSideEfects: string[];
+  commonSideEffects: string[];
   rareSideEffects: string[];
   contraindication: string[];
   blackBoxWarning: string[];

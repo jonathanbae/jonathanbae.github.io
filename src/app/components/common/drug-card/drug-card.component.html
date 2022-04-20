@@ -1,0 +1,53 @@
+<mat-card class="drug-card">
+  <mat-card-title>{{ drug?.generic }}</mat-card-title>
+  <ng-container *ngFor="let d of drug?.details">
+    <mat-card-subtitle class="drug-card-subtitle"
+      ><span class="drug-category-label">Brand: </span>
+      {{ d.brand.join(", ") }}</mat-card-subtitle
+    >
+    <hr class="solid" />
+
+    <mat-card-content>
+      <div>
+        <div class="drug-category-label">Drug Class</div>
+        <ul class="data-row" *ngFor="let drugClass of d.drugClass">
+          <li>{{ prettify(drugClass) }}</li>
+        </ul>
+      </div>
+      <div>
+        <div class="drug-category-label">Formulation</div>
+        <ul class="data-row" *ngFor="let f of d.formulation">
+          <li>{{ prettify(f) }}</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="drug-category-label">Common Side Effects</div>
+        <ul class="data-row" *ngFor="let c of d.commonSideEffects">
+          <li>{{ prettify(c) }}</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="drug-category-label">Rare Side Effects</div>
+        <ul class="data-row" *ngFor="let r of d.rareSideEffects">
+          <li>{{ prettify(r) }}</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="drug-category-label">Contraindications</div>
+        <ul class="data-row" *ngFor="let c of d.contraindication">
+          <li>{{ prettify(c) }}</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="drug-category-label">Black Box Warnings</div>
+        <ul class="data-row" *ngFor="let b of d.blackBoxWarning">
+          <li>{{ prettify(b) }}</li>
+        </ul>
+      </div>
+    </mat-card-content>
+  </ng-container>
+</mat-card>

@@ -123,7 +123,7 @@ export class DrugService {
         key,
         this.formulationMap
       ),
-      commonSideEfects: this.buildDrugMaps(
+      commonSideEffects: this.buildDrugMaps(
         this.lowerCaseTrimSplitColumn(colSplit[4]),
         key,
         this.commonSideEffectsMap

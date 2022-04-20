@@ -9,27 +9,26 @@
     </button>
   </ng-container>
 
-
   <ng-container [ngSwitch]="selection">
-    <div *ngSwitchCase="'BY_CATEGORY'">hello</div>
-    <div *ngSwitchCase="'BY_NAME'">WORLD</div>
-    <div *ngSwitchCase="'RANDOM'">random</div>
+    <ng-container *ngSwitchCase="'BY_CATEGORY'">
+      <mat-form-field class="selection">
+        <mat-label>Select a Category</mat-label>
+        <mat-select>
+          <mat-option
+            *ngFor="let option of MetadataCategorySelection | keyvalue"
+            value="option.key"
+            >{{ option.value }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+    <ng-container *ngSwitchCase="'BY_NAME'">WORLD</ng-container>
+    <ng-container *ngSwitchCase="'RANDOM'">
+      <button mat-raised-button (click)="selectAnotherRandom()">
+        Another Random Drug
+      </button>
+    </ng-container>
   </ng-container>
-  <!-- <ng-container
-    class="category-metadata-selection"
-    *ngIf="selection === LearnSelection.BY_CATEGORY"
-  >
-    <mat-form-field class="selection">
-      <mat-label>Select a Category</mat-label>
-      <mat-select>
-        <mat-option
-          *ngFor="let option of metadataCategorySelections | keyvalue"
-          value="option.key"
-          >{{ option.value }}</mat-option
-        >
-      </mat-select>
-    </mat-form-field>
-  </ng-container> -->
   <ng-container class="reset-selection">
     <button mat-raised-button (click)="reset()">Reset Selections</button>
   </ng-container>
