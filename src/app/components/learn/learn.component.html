@@ -4,8 +4,41 @@
   (randomChange)="selectRandomDrug($event)"
 ></app-category-selector>
 
-<div *ngIf="learnDrugs.length !== 0" class="drug-container">
+<div
+  *ngIf="!alphabetLearning && learnDrugs.length !== 0"
+  class="drug-container"
+>
   <!-- TODO look into reviewing all the drugs that were selected -->
   <!-- <learned-drug-list [learnedDrugs]="learnDrugs"></learned-drug-list> -->
   <drug-card [drug]="currentLearnDrug"></drug-card>
+</div>
+
+<div *ngIf="alphabetLearning" class="alphabet-container">
+  <!-- <mat-form-field>
+    <mat-label>Letter</mat-label>
+    <input matInput placeholder="Ex. A" value="letter" />
+  </mat-form-field> -->
+
+  <div class="accordian-container">
+    <mat-accordion *ngFor="let letter of alphabet">
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{ letter }} </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="accordian-button-container">
+          <button
+            mat-raised-button
+            *ngFor="let d of getDrugNamesByLetter(letter)"
+            class="accordian-button"
+            (click)="openDrugDialog(d)"
+          >
+            {{ d }}
+          </button>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 </div>

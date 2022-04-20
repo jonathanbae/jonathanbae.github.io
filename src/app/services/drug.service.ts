@@ -99,8 +99,6 @@ export class DrugService {
       const key = colSplit[0];
       this.addDrug(key, colSplit);
     }
-
-    // console.log(this.drugRecord);
   }
 
   private addDrug(key: string, colSplit: string[]): void {
@@ -177,6 +175,7 @@ export class DrugService {
         b.push('none');
       }
     } else if (bwSplit.length === 3) {
+      c.push('none');
       this.processBWString(bwSplit[2], b);
     } else {
       b.push('none');

@@ -10,6 +10,9 @@ export class DrugCardComponent implements OnInit {
   @Input()
   drug: DrugDetail | undefined;
 
+  @Input()
+  fullWidth = false;
+
   constructor() {}
 
   ngOnInit(): void {}

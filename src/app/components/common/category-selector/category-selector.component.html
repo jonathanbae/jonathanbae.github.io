@@ -22,7 +22,6 @@
         </mat-select>
       </mat-form-field>
     </ng-container>
-    <ng-container *ngSwitchCase="'BY_NAME'">WORLD</ng-container>
     <ng-container *ngSwitchCase="'RANDOM'">
       <button mat-raised-button (click)="selectAnotherRandom()">
         Another Random Drug
@@ -30,6 +29,6 @@
     </ng-container>
   </ng-container>
   <ng-container class="reset-selection">
-    <button mat-raised-button (click)="reset()">Reset Selections</button>
+    <button mat-raised-button class="reset-selection-button" (click)="reset()">Reset Selections</button>
   </ng-container>
 </div>

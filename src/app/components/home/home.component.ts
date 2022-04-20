@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DrugService } from 'src/app/services/drug.service';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +7,7 @@ import { DrugService } from 'src/app/services/drug.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private router: Router, private drugService: DrugService) {
-    this.drugService.printAll();
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
