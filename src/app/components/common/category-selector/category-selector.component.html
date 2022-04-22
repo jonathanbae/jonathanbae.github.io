@@ -4,19 +4,20 @@
       mat-raised-button
       *ngFor="let l of LearnSelection | keyvalue"
       (click)="selectLearn(l.key)"
+      class="mat-elevation-z3"
     >
       {{ l.value }}
     </button>
   </ng-container>
 
   <ng-container [ngSwitch]="selection">
-    <ng-container *ngSwitchCase="'BY_CATEGORY'">
+    <ng-container *ngSwitchCase="'X_BY_CATEGORY'">
       <mat-form-field class="selection">
         <mat-label>Select a Category</mat-label>
-        <mat-select>
+        <mat-select (selectionChange)="selectCategory($event.value)">
           <mat-option
             *ngFor="let option of MetadataCategorySelection | keyvalue"
-            value="option.key"
+            [value]="option.key"
             >{{ option.value }}</mat-option
           >
         </mat-select>
@@ -29,6 +30,6 @@
     </ng-container>
   </ng-container>
   <ng-container class="reset-selection">
-    <button mat-raised-button class="reset-selection-button" (click)="reset()">Reset Selections</button>
+    <button mat-raised-button class="reset-selection-button mat-elevation-z3" (click)="reset()">Reset Selections</button>
   </ng-container>
 </div>

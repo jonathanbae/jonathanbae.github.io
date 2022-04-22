@@ -1,4 +1,4 @@
-<mat-card [ngClass]="{'drug-card': !fullWidth, 'drug-card-dialog': fullWidth}">
+<mat-card [ngClass]="{'drug-card': !fullWidth, 'drug-card-dialog': fullWidth, 'drug-card-category-dialog': categoryWidth}">
   <mat-card-title>{{ drug?.generic }}</mat-card-title>
   <ng-container *ngFor="let d of drug?.details">
     <mat-card-subtitle class="drug-card-subtitle"

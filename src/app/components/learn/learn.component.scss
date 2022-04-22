@@ -8,13 +8,16 @@
   .accordian-container {
     height: 70vh;
     overflow: auto;
-    .accordian-button-container {
-      display: grid;
+    .accordian-expansion {
+      margin: 10px 0;
+      .accordian-button-container {
+        display: grid;
 
-      .accordian-button {
-        text-align: left;
-        margin: 5px 10px;
-        width: 50%;
+        .accordian-button {
+          text-align: left;
+          margin: 5px 10px;
+          width: 50%;
+        }
       }
     }
   }
@@ -26,14 +29,15 @@
     .accordian-container {
       height: 70vh;
       overflow: auto;
+      .accordian-expansion {
+        .accordian-button-container {
+          display: grid;
 
-      .accordian-button-container {
-        display: grid;
-
-        .accordian-button {
-          text-align: left;
-          margin: 5px 10px;
-          width:95%;
+          .accordian-button {
+            text-align: left;
+            margin: 5px 10px;
+            width: 95%;
+          }
         }
       }
     }

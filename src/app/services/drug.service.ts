@@ -32,12 +32,88 @@ export class DrugService {
     string[]
   >();
 
+  //alphabet
+  private alphabetDrugMap: Map<string, string[]> = new Map();
+  private alphabetDrugClassMap: Map<string, string[]> = new Map();
+  private alphabetFormulationMap: Map<string, string[]> = new Map();
+  private alphabetCommonSideEffectsMap: Map<string, string[]> = new Map();
+  private alphabetRareSideEffectsMap: Map<string, string[]> = new Map();
+
   constructor() {
     this.convertDrugListCSVtoJSON();
+
+    this.buildAlphabetObjects();
+  }
+
+  buildAlphabetObjects() {
+    for (let i = 0; i < 26; i++) {
+      const letter = String.fromCharCode(65 + i);
+      //DRUG
+      const drugKeys = Object.keys(this.getDrugRecord()).filter((d) =>
+        d.toLowerCase().startsWith(letter.toLowerCase())
+      );
+      if (drugKeys.length > 0) {
+        this.alphabetDrugMap.set(letter, drugKeys);
+      }
+
+      this.buildAlphabetCategoryMap(
+        this.getDrugClassMap(),
+        letter,
+        this.alphabetDrugClassMap
+      );
+      this.buildAlphabetCategoryMap(
+        this.getFormulationMap(),
+        letter,
+        this.alphabetFormulationMap
+      );
+      this.buildAlphabetCategoryMap(
+        this.getCommonSideEffectsMap(),
+        letter,
+        this.alphabetCommonSideEffectsMap
+      );
+      this.buildAlphabetCategoryMap(
+        this.getRareSideEffectsMap(),
+        letter,
+        this.alphabetRareSideEffectsMap
+      );
+    }
+  }
+
+  buildAlphabetCategoryMap(
+    iter: Map<string, string[]>,
+    letter: string,
+    alphabetMap: Map<string, string[]>
+  ) {
+    const keys = Array.from(iter.keys()).filter((d) =>
+      d.toLowerCase().startsWith(letter.toLowerCase())
+    );
+    if (keys.length > 0) {
+      alphabetMap.set(letter, keys);
+    }
   }
 
   public getDrugRecord(): Record<string, DrugDetail> {
     return this.drugRecord;
+  }
+
+  public getAlphabetDrugMap(): Map<string, string[]> {
+    return this.alphabetDrugMap;
+  }
+
+  public getAlphabetDrugClassMap(): Map<string, string[]> {
+    return this.alphabetDrugClassMap;
+  }
+
+  public getAlphabetFormulationMap(): Map<string, string[]> {
+    return this.alphabetFormulationMap;
+  }
+
+  public getAlphabetCommonSideEffectsMap(): Map<string, string[]> {
+    return this.alphabetCommonSideEffectsMap;
+  }
+
+  public getAlphabetRareSideEffectsMap(): Map<string, string[]> {
+    return this.alphabetRareSideEffectsMap;
   }
 
   public getDrugClassMap() {

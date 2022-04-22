@@ -1,0 +1,23 @@
+<h1>{{ categoryKey }}</h1>
+<mat-dialog-content class="category-dialog-container">
+  <ng-container *ngIf="!drug">
+    <button
+      mat-raised-button
+      *ngFor="let d of drugKeys"
+      class="category-drug-key-button mat-elevation-z1"
+      (click)="selectDrug(d)"
+    >
+      {{ d }}
+    </button>
+  </ng-container>
+  <ng-container *ngIf="drug">
+    <button mat-raised-button aria-label="Back Button" class="back-button" (click)="goBack()">
+      <mat-icon>arrow_left</mat-icon>
+      Back
+    </button>
+    <drug-card [drug]="drug" [categoryWidth]="true"></drug-card>
+  </ng-container>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="closeDialog()">Close</button>
+</mat-dialog-actions>

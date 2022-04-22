@@ -1,0 +1,19 @@
+.category-dialog-container {
+  display: grid;
+  width: 60vw;
+
+  .category-drug-key-button {
+      margin: 10px 20px;
+  }
+
+  .back-button {
+      width: 100px;
+      margin: 10px 0;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .category-dialog-container {
+      width: 100%;
+  }
+}

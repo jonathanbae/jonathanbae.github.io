@@ -6,8 +6,8 @@ export enum MetadataCategorySelection {
   FORMULATION = 'Formulation',
   COMMON_SIDE_EFFECTS = 'Common Side Effects',
   RARE_SIDE_EFFECTS = 'Rare Side Effects',
-  CONTRAINDICATIONS = 'Contraindications',
-  BLACK_BOX_WARNINGS = 'Black Box Warnings',
+  // CONTRAINDICATIONS = 'Contraindications',
+  // BLACK_BOX_WARNINGS = 'Black Box Warnings',
 }
 
 @Component({
@@ -29,6 +29,8 @@ export class CategorySelectorComponent implements OnInit {
   // Variables for selecting the Category if BY_CATEGORY selected
   readonly MetadataCategorySelection = MetadataCategorySelection;
   metadataCategorySelection: MetadataCategorySelection | undefined;
+  @Output()
+  metadataCategorySelectionChange = new EventEmitter<MetadataCategorySelection>();
 
   constructor() {}
 
@@ -47,5 +49,10 @@ export class CategorySelectorComponent implements OnInit {
 
   selectAnotherRandom() {
     this.randomChange.emit(1);
+  }
+
+  selectCategory(val: MetadataCategorySelection) {
+    this.metadataCategorySelection = val;
+    this.metadataCategorySelectionChange.emit(val);
   }
 }

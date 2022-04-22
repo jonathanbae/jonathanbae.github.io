@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -18,6 +19,7 @@ import { CategorySelectorComponent } from './components/common/category-selector
 import { DrugCardComponent } from './components/common/drug-card/drug-card.component';
 import { LearnedDrugListComponent } from './components/learn/learned-drug-list/learned-drug-list.component';
 import { DrugDialogComponent } from './components/common/drug-dialog/drug-dialog.component';
+import { CategoryDialogComponent } from './components/common/category-dialog/category-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { DrugDialogComponent } from './components/common/drug-dialog/drug-dialog
     DrugCardComponent,
     LearnedDrugListComponent,
     DrugDialogComponent,
+    CategoryDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +44,7 @@ import { DrugDialogComponent } from './components/common/drug-dialog/drug-dialog
     MatExpansionModule,
     MatInputModule,
     MatDialogModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

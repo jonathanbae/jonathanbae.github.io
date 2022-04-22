@@ -13,6 +13,9 @@ export class DrugCardComponent implements OnInit {
   @Input()
   fullWidth = false;
 
+  @Input()
+  categoryWidth = false;
+
   constructor() {}
 
   ngOnInit(): void {}
