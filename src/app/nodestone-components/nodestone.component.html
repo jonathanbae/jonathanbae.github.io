@@ -1,5 +1,36 @@
 <div class="nodestone-container">
   <h1>Nodestone Solver</h1>
+  <div class="nodestone-input-container">
+    <div class="skill-form">
+      <mat-form-field appearance="fill" class="skills-input">
+        <mat-label>Skill Names</mat-label>
+        <textarea
+          matInput
+          rows="10"
+          [(ngModel)]="skillNamesInput"
+          placeholder="Add Skill Name - one to each line"
+        ></textarea>
+      </mat-form-field>
+    </div>
+    <div class="trio-selector-container">
+      <mat-form-field appearance="fill" class="trio-input">
+        <mat-label
+          >Skill Trios Input (You can paste the comma separated list in
+          here)</mat-label
+        >
+        <textarea
+          matInput
+          rows="5"
+          [(ngModel)]="trioInput"
+          placeholder="Add Skill Trio - one to each line, split by comma"
+        ></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="input-button-container">
+    <button (click)="saveSkillNamesInput()" class="save-button">Save Skill Names</button>
+    <button (click)="parseTrios()" class="save-button">Save Trios Input</button>
+  </div>
 
   <div class="pre-solve-container">
     <div class="skills-container">

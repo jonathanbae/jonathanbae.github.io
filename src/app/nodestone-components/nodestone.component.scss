@@ -70,3 +70,36 @@
 .skill-8 {
   color: mediumblue;
 }
+
+.nodestone-input-container {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  justify-content: center;
+  .skill-form {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 100%;
+    .skills-input {
+      width: 100%;
+    }
+  }
+
+  .trio-selector-container {
+    padding: 10px;
+    .trio-input {
+      width: 100%;
+    }
+  }
+}
+
+.input-button-container {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  .save-button {
+    margin: 0 15px;
+    font-size: 2em;
+    border: 2px solid rgb(59, 122, 59);
+    background-color: rgba(59, 122, 59, 0.2);
+    border-radius: 10px;
+  }
+}

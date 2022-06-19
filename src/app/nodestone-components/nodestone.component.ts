@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { CORSAIR_SKILLS, EXISTING_CORSAIR_TRIOS } from 'src/assets/data/nodestone';
+import { FormControl } from '@angular/forms';
+import {
+  CORSAIR_SKILLS_STRING,
+  EXISTING_CORSAIR_TRIOS,
+} from 'src/assets/data/nodestone';
 
 export interface Trio {
   mainSkill: string;
@@ -25,43 +29,24 @@ export interface SkillColor {
   styleUrls: ['./nodestone.component.scss'],
 })
 export class NodeStoneComponent {
-  skills = CORSAIR_SKILLS;
-  colors = [
-    'aqua',
-    'black',
-    'blueViolet',
-    'yellow',
-    'crimson',
-    'darkGreen',
-    'chartreuse',
-    'lightPink',
-    'mediumBlue',
-  ];
-  backgroundColors = [
-    'gray',
-    'white',
-    'white',
-    'gray',
-    'white',
-    'white',
-    'gray',
-    'gray',
-    'lightGray',
-  ];
+  skills: string[] = [];
   colorSkills: { [key: string]: string } = {};
   trios: Trio[] = [];
 
   solutionStorage: Trio[] = [];
   foundSolution = false;
 
+  skillNamesInput = CORSAIR_SKILLS_STRING;
+  trioInput = EXISTING_CORSAIR_TRIOS;
+
   constructor() {
-    this.buildColorSkills();
+    this.saveSkillNamesInput();
     this.parseTrios();
   }
 
-  /**=================== 
+  /**===================
    * ===================
-   * Initialize Section 
+   * Initialize Section
    * ===================
    * ===================*/
   buildColorSkills() {
@@ -72,8 +57,9 @@ export class NodeStoneComponent {
   }
 
   parseTrios() {
-    const splitTrios = EXISTING_CORSAIR_TRIOS.split('\n');
+    const splitTrios = this.trioInput.split('\n');
 
+    this.trios = [];
     for (let trio of splitTrios) {
       const row = trio.split(',');
       this.trios.push({
@@ -84,9 +70,9 @@ export class NodeStoneComponent {
     }
   }
 
-  /**=================== 
+  /**===================
    * ===================
-   * Solve Section 
+   * Solve Section
    * ===================
    * ===================*/
   clear() {
@@ -95,13 +81,11 @@ export class NodeStoneComponent {
   }
   solve() {
     console.log('solving');
-    console.log(this.trios);
     for (let i = 0; i < this.trios.length; i++) {
       const trio = this.trios[i];
       const visited: boolean[] = [];
       if (!this.foundSolution) {
         this.solutionStorage.push(trio);
-        console.log(this.solutionStorage);
       }
       visited[i] = true;
       const solutionMap = this.countSkill(
@@ -211,9 +195,9 @@ export class NodeStoneComponent {
     return solutionMap;
   }
 
-  /**=================== 
+  /**===================
    * ===================
-   * Template Section 
+   * Template Section
    * ===================
    * ===================*/
 
@@ -233,5 +217,15 @@ export class NodeStoneComponent {
       skill,
       mainSkill,
     };
+  }
+
+  /**===================
+   * ===================
+   * Template Section
+   * ===================
+   * ===================*/
+  saveSkillNamesInput() {
+    this.skills = this.skillNamesInput.split('\n');
+    this.buildColorSkills();
   }
 }
