@@ -1,0 +1,63 @@
+<div class="nodestone-container">
+  <h1>Nodestone Solver</h1>
+
+  <div class="pre-solve-container">
+    <div class="skills-container">
+      <h2>Needed Skills</h2>
+      <div *ngFor="let skill of skills">
+        <span [ngClass]="setColor(skill)">{{ skill }}</span>
+      </div>
+    </div>
+
+    <div>
+      <h2>Existing Trios</h2>
+      <div class="existing-trio-container">
+        <div *ngFor="let trio of trios">
+          <ng-container
+            [ngTemplateOutlet]="trioContainer"
+            [ngTemplateOutletContext]="{ trio: trio }"
+          ></ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="button-container">
+    <button class="solve-button" (click)="solve()">Solve</button>
+    <button class="clear-button" (click)="clear()">Clear</button>
+  </div>
+  <div class="solution-container">
+    <div *ngIf="foundSolution; else noSolution">
+      <h1>Solution</h1>
+      <div *ngFor="let trio of solutionStorage">
+        <mat-checkbox>
+          <ng-container
+            [ngTemplateOutlet]="trioContainer"
+            [ngTemplateOutletContext]="{ trio: trio }"
+          ></ng-container>
+        </mat-checkbox>
+      </div>
+    </div>
+    <ng-template #noSolution>
+      <span>No Solution Found. Click Solve above to attempt to solve </span>
+    </ng-template>
+  </div>
+
+  <ng-template #trioContainer let-trio="trio">
+    <ng-container
+      [ngTemplateOutlet]="skillRow"
+      [ngTemplateOutletContext]="buildTemplateContext(trio.mainSkill, true)"
+    ></ng-container>
+    <ng-container
+      [ngTemplateOutlet]="skillRow"
+      [ngTemplateOutletContext]="buildTemplateContext(trio.secondSkill)"
+    ></ng-container>
+    <ng-container
+      [ngTemplateOutlet]="skillRow"
+      [ngTemplateOutletContext]="buildTemplateContext(trio.thirdSkill)"
+    ></ng-container>
+  </ng-template>
+
+  <ng-template #skillRow let-skill="skill" let-mainSkill="mainSkill">
+    <span [ngClass]="setClass(skill, mainSkill)">{{ skill }}</span>
+  </ng-template>
+</div>

@@ -9,6 +9,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -20,6 +21,8 @@ import { DrugCardComponent } from './components/common/drug-card/drug-card.compo
 import { LearnedDrugListComponent } from './components/learn/learned-drug-list/learned-drug-list.component';
 import { DrugDialogComponent } from './components/common/drug-dialog/drug-dialog.component';
 import { CategoryDialogComponent } from './components/common/category-dialog/category-dialog.component';
+import { NodeStoneComponent } from './nodestone-components/nodestone.component';
+import { StudyMainComponent } from './components/study-main/study-main.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,8 @@ import { CategoryDialogComponent } from './components/common/category-dialog/cat
     LearnedDrugListComponent,
     DrugDialogComponent,
     CategoryDialogComponent,
+    NodeStoneComponent,
+    StudyMainComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +44,7 @@ import { CategoryDialogComponent } from './components/common/category-dialog/cat
     BrowserAnimationsModule,
 
     MatButtonModule,
+    MatCheckboxModule,
     MatSelectModule,
     MatCardModule,
     MatExpansionModule,

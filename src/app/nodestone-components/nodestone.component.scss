@@ -1,0 +1,72 @@
+.nodestone-container {
+  margin: 10px;
+}
+.pre-solve-container {
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
+
+.existing-trio-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.button-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin: 20px 0;
+
+  .solve-button {
+    margin: 0 15px;
+    font-size: 2em;
+    border: 2px solid rgb(59, 122, 59);
+    background-color: rgba(59, 122, 59, 0.2);
+    border-radius: 10px;
+  }
+  .clear-button {
+    margin: 0 15px;
+    font-size: 2em;
+    border: 2px solid rgb(134, 57, 57);
+    background-color: rgba(134, 57, 57, 0.2);
+    border-radius: 10px;
+  }
+}
+.main-trio-skill {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.trio-skill-row {
+  margin: 0 4px;
+}
+
+.skill-0 {
+  color: aqua;
+  background-color: gray;
+}
+.skill-1 {
+  color: black;
+}
+.skill-2 {
+  color: blueViolet;
+}
+.skill-3 {
+  color: yellow;
+  background-color: gray;
+}
+.skill-4 {
+  color: crimson;
+}
+.skill-5 {
+  color: darkGreen;
+}
+.skill-6 {
+  color: chartreuse;
+  background-color: gray;
+}
+.skill-7 {
+  color: lightPink;
+  background-color: gray;
+}
+.skill-8 {
+  color: mediumblue;
+}

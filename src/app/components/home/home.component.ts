@@ -12,10 +12,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {}
 
   goLearn() {
-    this.router.navigate(['/', 'learn']);
+    this.router.navigate(['study', 'learn']);
   }
 
   goPractice() {
-    this.router.navigate(['/', 'practice']);
+    this.router.navigate(['study', 'practice']);
   }
 }
