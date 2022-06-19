@@ -1,14 +1,12 @@
-export const CORSAIR_SKILLS = [
-  'Rapid Fire',
-  'Brain Scrambler',
-  'Majestic Presence',
-  'Seige Bomber',
-  'Broadside',
-  'Scurvy Summons',
-  'Nautilus Strike',
-  'Ugly Bomb',
-  'Eight Legs Easton',
-];
+export const CORSAIR_SKILLS_STRING = `Rapid Fire
+Brain Scrambler
+Majestic Presence
+Seige Bomber
+Broadside
+Scurvy Summons
+Nautilus Strike
+Ugly Bomb
+Eight Legs Easton`;
 
 export const EXISTING_CORSAIR_TRIOS = `Brain Scrambler,Rapid Fire,Nautilus Strike
 Brain Scrambler,Eight Legs Easton,Scurvy Summons
