@@ -2,8 +2,12 @@
   margin: 10px;
 }
 .pre-solve-container {
+  margin-top: 10px;
   display: grid;
   grid-template-columns: 25% 75%;
+  border: 1px solid black;
+  padding: 8px;
+  border-radius: 10px;
 }
 
 .existing-trio-container {
@@ -21,14 +25,12 @@
     font-size: 2em;
     border: 2px solid rgb(59, 122, 59);
     background-color: rgba(59, 122, 59, 0.2);
-    border-radius: 10px;
   }
   .clear-button {
     margin: 0 15px;
     font-size: 2em;
     border: 2px solid rgb(134, 57, 57);
     background-color: rgba(134, 57, 57, 0.2);
-    border-radius: 10px;
   }
 }
 .main-trio-skill {
@@ -71,35 +73,82 @@
   color: mediumblue;
 }
 
-.nodestone-input-container {
-  display: grid;
-  grid-template-columns: 40% 60%;
-  justify-content: center;
-  .skill-form {
-    padding: 10px;
+.selections-container {
+  border: 1px solid black;
+  padding: 8px;
+  border-radius: 10px;
+
+  .nodestone-input-container {
     display: grid;
-    grid-template-columns: 100%;
-    .skills-input {
-      width: 100%;
+    grid-template-columns: 40% 60%;
+    justify-content: center;
+    .skill-form {
+      padding: 10px;
+      .skills-input {
+        width: 100%;
+      }
+    }
+
+    .trio-selector-container {
+      padding: 10px;
+      display: grid;
+      grid-template-columns: 100%;
+      .trio-input {
+        width: 100%;
+      }
+    }
+    .add-trio-error {
+      color: red;
     }
   }
 
-  .trio-selector-container {
-    padding: 10px;
-    .trio-input {
-      width: 100%;
+  .input-button-container {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    .save-button {
+      margin: 0 15px;
+      font-size: 2em;
+      border: 2px solid rgb(59, 122, 59);
+      background-color: rgba(59, 122, 59, 0.2);
     }
   }
 }
 
-.input-button-container {
+.trio-select-row-container {
   display: grid;
-  grid-template-columns: 40% 60%;
-  .save-button {
-    margin: 0 15px;
-    font-size: 2em;
-    border: 2px solid rgb(59, 122, 59);
-    background-color: rgba(59, 122, 59, 0.2);
-    border-radius: 10px;
+  grid-template-columns: 20% 20% 20% 20%;
+  align-items: center;
+
+  .trio-select {
+    margin: 0 5px;
   }
+
+  .add-button {
+    // margin: 0 15px;
+    font-size: 1em;
+    border: 2px solid rgb(110, 110, 110);
+    background-color: rgba(59, 122, 59, 0.2);
+  }
+}
+
+.nodestone-solving-steps {
+  display: grid;
+  grid-template-columns: 100%;
+  .text-indent {
+    margin-left: 24px;
+  }
+}
+
+button {
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.website-header {
+  text-align: center;
+  width: 100%;
+  font-size: 3em;
+  background-color: rgba(128, 128, 128, 0.2);
+  border-radius: 10px;
+  padding: 20px 0;
 }

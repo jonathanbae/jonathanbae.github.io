@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import {
   CORSAIR_SKILLS_STRING,
   EXISTING_CORSAIR_TRIOS,
@@ -38,10 +37,16 @@ export class NodeStoneComponent {
 
   skillNamesInput = CORSAIR_SKILLS_STRING;
   trioInput = EXISTING_CORSAIR_TRIOS;
-
+  selectedMainSkill: string;
+  selectedSecondSkill: string;
+  selectedThirdSkill: string;
+  showAddTrioError = false;
   constructor() {
     this.saveSkillNamesInput();
     this.parseTrios();
+    this.selectedMainSkill = this.skills[0];
+    this.selectedSecondSkill = this.skills[0];
+    this.selectedThirdSkill = this.skills[0];
   }
 
   /**===================
@@ -78,7 +83,15 @@ export class NodeStoneComponent {
   clear() {
     this.foundSolution = false;
     this.solutionStorage = [];
+    this.skillNamesInput = '';
+    this.trioInput = '';
+    this.saveSkillNamesInput();
+    this.parseTrios();
+    this.selectedMainSkill = this.skills[0];
+    this.selectedSecondSkill = this.skills[0];
+    this.selectedThirdSkill = this.skills[0];
   }
+
   solve() {
     console.log('solving');
     for (let i = 0; i < this.trios.length; i++) {
@@ -221,11 +234,40 @@ export class NodeStoneComponent {
 
   /**===================
    * ===================
-   * Template Section
+   * Input Section
    * ===================
    * ===================*/
   saveSkillNamesInput() {
+    this.skillNamesInput = this.skillNamesInput.trim();
     this.skills = this.skillNamesInput.split('\n');
     this.buildColorSkills();
+    this.selectedMainSkill = this.skills[0];
+    this.selectedSecondSkill = this.skills[0];
+    this.selectedThirdSkill = this.skills[0];
+  }
+
+  addTrioSkill() {
+    if (
+      this.selectedMainSkill === this.selectedSecondSkill ||
+      this.selectedMainSkill === this.selectedThirdSkill ||
+      this.selectedSecondSkill === this.selectedThirdSkill
+    ) {
+      this.showAddTrioError = true;
+      return;
+    }
+
+    const newRow = `${this.selectedMainSkill},${this.selectedSecondSkill},${this.selectedThirdSkill}`;
+    const alternateNewRow = `${this.selectedMainSkill},${this.selectedThirdSkill},${this.selectedSecondSkill}`;
+
+    if (
+      this.trioInput.includes(newRow) ||
+      this.trioInput.includes(alternateNewRow)
+    ) {
+      this.showAddTrioError = true;
+      return;
+    }
+
+    this.trioInput = `${newRow}\n${this.trioInput}`;
+    this.showAddTrioError = false;
   }
 }
