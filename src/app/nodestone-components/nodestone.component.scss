@@ -134,9 +134,10 @@
 .nodestone-solving-steps {
   display: grid;
   grid-template-columns: 100%;
-  .text-indent {
-    margin-left: 24px;
-  }
+}
+
+.text-indent {
+  margin-left: 24px;
 }
 
 button {

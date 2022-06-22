@@ -55,6 +55,7 @@ import { StudyMainComponent } from './components/study-main/study-main.component
     MatInputModule,
     MatDialogModule,
     MatIconModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
