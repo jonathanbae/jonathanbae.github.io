@@ -1,6 +1,7 @@
 export interface DrugDetail {
   generic: string;
   details: Detail[];
+  index: number;
 }
 
 export interface Detail {

@@ -1,4 +1,11 @@
-<mat-dialog-content> <drug-card [drug]="drug" [fullWidth]="true"></drug-card> </mat-dialog-content>
+<div class="dialog-navigation">
+  <button mat-button (click)="onPreviousClick()">Previous</button>
+  <button mat-button (click)="onNextClick()">Next</button>
+</div>
+
+<mat-dialog-content>
+  <drug-card [drug]="drug" [fullWidth]="true"></drug-card>
+</mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Close</button>
 </mat-dialog-actions>

@@ -19,6 +19,7 @@ export enum LearnSelection {
 })
 export class LearnComponent implements OnInit {
   learnDrugs: DrugDetail[] = [];
+  learnDrugIndices: Set<number> = new Set();
   drugIndex = 0;
   //Alphabet Stuff
   alphabetLearning = false;
@@ -52,6 +53,7 @@ export class LearnComponent implements OnInit {
     this.alphabetCategoryMap = undefined;
     this.currentCategoryMap = undefined;
     this.learnDrugs = [];
+    this.learnDrugIndices = new Set();
     this.drugIndex = 0;
   }
 
@@ -114,12 +116,33 @@ export class LearnComponent implements OnInit {
   }
 
   openDrugDialog(drugKey: string) {
-    const drug: DrugDetail = this.drugService.getDrugRecord()[drugKey];
+    let drug: DrugDetail = this.drugService.getDrugRecord()[drugKey];
     const dialogRef = this.dialog.open(DrugDialogComponent, { data: drug });
+
+    dialogRef.componentInstance.onNext.subscribe(() => {
+      let nextIndex = drug.index + 1;
+      if (nextIndex >= this.drugService.drugListLength) {
+        nextIndex = 0;
+      }
+      drug = this.drugService.drugList[nextIndex];
+      dialogRef.componentInstance.drug = drug;
+      this.learnDrugIndices.add(drug.index);
+    });
+
+    dialogRef.componentInstance.onPrevious.subscribe(() => {
+      let prevIndex = drug.index - 1;
+      if (prevIndex < 0) {
+        prevIndex = this.drugService.drugListLength - 1;
+      }
+      drug = this.drugService.drugList[prevIndex];
+      dialogRef.componentInstance.drug = drug;
+      this.learnDrugIndices.add(drug.index);
+    });
 
     dialogRef.afterClosed().subscribe(() => {
       this.drugIndex++;
       this.learnDrugs.push(drug);
+      this.learnDrugIndices.add(drug.index);
     });
   }
 
@@ -130,12 +153,12 @@ export class LearnComponent implements OnInit {
       data: {
         categoryKey,
         drugKeys,
-        drugRecord: this.drugService.getDrugRecord()
-      }
+        drugRecord: this.drugService.getDrugRecord(),
+      },
     });
 
     dialogRef.afterClosed().subscribe((data: DrugDetail[]) => {
-      this.drugIndex += data.length;;
+      this.drugIndex += data.length;
       this.learnDrugs.concat(data);
     });
   }

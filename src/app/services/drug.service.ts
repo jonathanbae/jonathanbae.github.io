@@ -12,6 +12,7 @@ export class DrugService {
   private readonly SEMICOLON_SPACE_SPLIT_REGEX = /;/;
 
   private drugRecord: Record<string, DrugDetail> = {};
+  drugList: DrugDetail[] = [];
   private readonly drugCSV = drugCSV;
   private drugClassMap: Map<string, string[]> = new Map<string, string[]>();
   private formulationMap: Map<string, string[]> = new Map<string, string[]>();
@@ -155,6 +156,10 @@ export class DrugService {
     return this.drugRecord[keys[(keys.length * Math.random()) << 0]];
   }
 
+  public get drugListLength() {
+    return this.drugList.length;
+  }
+
   /**
    * Takes in the drugCSV and builds the drugRecord JSON Object
    *
@@ -170,16 +175,19 @@ export class DrugService {
   private convertDrugListCSVtoJSON(): void {
     const rowSplit: string[] = this.drugCSV.split('\n');
     rowSplit.shift();
+    let index = 0;
     for (let row of rowSplit) {
       const colSplit: string[] = row.split(this.CSV_COLUMN_SPLIT_REGEX);
       const key = colSplit[0];
-      this.addDrug(key, colSplit);
+      this.addDrug(key, colSplit, index);
+      this.drugList.push(this.getDrugRecord()[key]);
+      index++;
     }
   }
 
-  private addDrug(key: string, colSplit: string[]): void {
+  private addDrug(key: string, colSplit: string[], index: number): void {
     if (!this.drugRecord.hasOwnProperty(key)) {
-      this.drugRecord[key] = { generic: key, details: [] };
+      this.drugRecord[key] = { generic: key, details: [], index };
     }
 
     const { contraindication, blackBoxWarning } =
