@@ -1,4 +1,10 @@
-<mat-card [ngClass]="{'drug-card': !fullWidth, 'drug-card-dialog': fullWidth, 'drug-card-category-dialog': categoryWidth}">
+<mat-card
+  [ngClass]="{
+    'drug-card': !fullWidth,
+    'drug-card-dialog': fullWidth,
+    'drug-card-category-dialog': categoryWidth
+  }"
+>
   <mat-card-title>{{ drug?.generic }}</mat-card-title>
   <ng-container *ngFor="let d of drug?.details">
     <mat-card-subtitle class="drug-card-subtitle"
@@ -8,46 +14,54 @@
     <hr class="solid" />
 
     <mat-card-content>
-      <div>
-        <div class="drug-category-label">Drug Class</div>
+      <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Drug Class</mat-panel-title>
+        </mat-expansion-panel-header>
         <ul class="data-row" *ngFor="let drugClass of d.drugClass">
           <li>{{ prettify(drugClass) }}</li>
         </ul>
-      </div>
-      <div>
-        <div class="drug-category-label">Formulation</div>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Formulation</mat-panel-title>
+        </mat-expansion-panel-header>
         <ul class="data-row" *ngFor="let f of d.formulation">
           <li>{{ prettify(f) }}</li>
         </ul>
-      </div>
-
-      <div>
-        <div class="drug-category-label">Common Side Effects</div>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Common Side Effects</mat-panel-title>
+        </mat-expansion-panel-header>
         <ul class="data-row" *ngFor="let c of d.commonSideEffects">
           <li>{{ prettify(c) }}</li>
         </ul>
-      </div>
-
-      <div>
-        <div class="drug-category-label">Rare Side Effects</div>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Rare Side Effects</mat-panel-title>
+        </mat-expansion-panel-header>
         <ul class="data-row" *ngFor="let r of d.rareSideEffects">
           <li>{{ prettify(r) }}</li>
         </ul>
-      </div>
-
-      <div>
-        <div class="drug-category-label">Contraindications</div>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Contraindications</mat-panel-title>
+        </mat-expansion-panel-header>
         <ul class="data-row" *ngFor="let c of d.contraindication">
           <li>{{ prettify(c) }}</li>
         </ul>
-      </div>
-
-      <div>
-        <div class="drug-category-label">Black Box Warnings</div>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Black Box Warnings</mat-panel-title>
+        </mat-expansion-panel-header>
         <ul class="data-row" *ngFor="let b of d.blackBoxWarning">
           <li>{{ prettify(b) }}</li>
         </ul>
-      </div>
+      </mat-expansion-panel>
     </mat-card-content>
   </ng-container>
 </mat-card>
