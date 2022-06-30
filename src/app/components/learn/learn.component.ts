@@ -121,7 +121,7 @@ export class LearnComponent implements OnInit {
 
     dialogRef.componentInstance.onNext.subscribe(() => {
       let nextIndex = drug.index + 1;
-      if (nextIndex >= this.drugService.drugListLength) {
+      if (nextIndex === this.drugService.drugListLength) {
         nextIndex = 0;
       }
       drug = this.drugService.drugList[nextIndex];

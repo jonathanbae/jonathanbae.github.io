@@ -180,8 +180,14 @@ export class DrugService {
       const colSplit: string[] = row.split(this.CSV_COLUMN_SPLIT_REGEX);
       const key = colSplit[0];
       this.addDrug(key, colSplit, index);
-      this.drugList.push(this.getDrugRecord()[key]);
-      index++;
+
+      if (index === 0) {
+        this.drugList.push(this.getDrugRecord()[key]);
+        index++;
+      } else if (this.drugList[index - 1].generic !== key) {
+        this.drugList.push(this.getDrugRecord()[key]);
+        index++;
+      }
     }
   }
 
