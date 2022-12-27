@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DrugService } from 'src/app/services/drug.service';
+import { DrugsService } from 'src/app/services/drugs.service';
 import { DrugDetail } from 'src/assets/models/drug-models';
 import { CategoryDialogComponent } from '../common/category-dialog/category-dialog.component';
 import { MetadataCategorySelection } from '../common/category-selector/category-selector.component';
@@ -35,7 +36,11 @@ export class LearnComponent implements OnInit {
   alphabetCategoryMap: Map<string, string[]> | undefined;
   currentCategoryMap: Map<string, string[]> | undefined;
 
-  constructor(private drugService: DrugService, private dialog: MatDialog) {
+  constructor(
+    private drugService: DrugService,
+    private dialog: MatDialog,
+    private drugsService: DrugsService
+  ) {
     this.alphabetDrugMap = this.drugService.getAlphabetDrugMap();
     this.alphabetDrugClassMap = this.drugService.getAlphabetDrugClassMap();
     this.alphabetFormulationMap = this.drugService.getAlphabetFormulationMap();
