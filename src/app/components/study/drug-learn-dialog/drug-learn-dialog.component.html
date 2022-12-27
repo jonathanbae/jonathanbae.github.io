@@ -1,3 +1,17 @@
+<h1 class="drug-title">
+  {{ drug.generic }}
+  <span class="material-symbols-outlined" *ngIf="isFlagged"> flag </span>
+  <span class="material-symbols-outlined" *ngIf="isLearned"> done </span>
+</h1>
+<div class="drug-subtitle">
+  <span class="drug-category-label">Brand Name: </span>
+  {{ drug.info?.brands?.join(", ") }}
+</div>
+<div class="drug-subtitle">
+  <span class="drug-category-label">Associated Course: </span>
+  {{ drug.info?.course }}
+</div>
+<hr class="solid" />
 <mat-dialog-content>
   <drug-learn-card [drug]="drug"></drug-learn-card>
 </mat-dialog-content>

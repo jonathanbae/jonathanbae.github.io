@@ -73,7 +73,7 @@ export class CourseComponent implements OnInit {
   ];
 
   displayedColumns: string[] = ['percentage', 'drugs', 'info'];
-  showCourseDescription = true;
+  showCourseDescription = false;
   constructor(
     private readonly drugsService: DrugsService,
     private dialog: MatDialog

@@ -1,18 +1,4 @@
 <div class="drug-container">
-  <h1 class="drug-title">{{ drug.generic }}
-    <span class="material-symbols-outlined" *ngIf="isFlagged"> flag </span>
-    <span class="material-symbols-outlined" *ngIf="isLearned"> done </span>
-  </h1>
-  <div class="drug-subtitle">
-    <span class="drug-category-label">Brand Name: </span>
-    {{ drug.info?.brands?.join(", ") }}
-  </div>
-  <div class="drug-subtitle">
-    <span class="drug-category-label">Associated Course: </span>
-    {{ drug.info?.course }}
-  </div>
-
-  <hr class="solid" />
   <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>Pharmacologic Class</mat-panel-title>
@@ -39,9 +25,7 @@
   </mat-expansion-panel>
   <mat-expansion-panel class="drug-category-expansion" [expanded]="false">
     <mat-expansion-panel-header>
-      <mat-panel-title
-        >Precautions and Boxed Warnings RAW Text</mat-panel-title
-      >
+      <mat-panel-title>Precautions and Boxed Warnings RAW Text</mat-panel-title>
     </mat-expansion-panel-header>
     <ul class="data-row">
       <li>{{ drug.info?.warns }}</li>
