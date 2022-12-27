@@ -34,7 +34,33 @@
       <li>{{ prettify(contra) }}</li>
     </ul>
   </mat-expansion-panel>
-  <!-- TODO: add warnings precautions and boxed  -->
+  <mat-expansion-panel class="drug-category-expansion" [expanded]="false">
+    <mat-expansion-panel-header>
+      <mat-panel-title
+        >Precautions and Boxed Warnings RAW Text</mat-panel-title
+      >
+    </mat-expansion-panel-header>
+    <ul class="data-row">
+      <li>{{ drug.info?.warns }}</li>
+    </ul>
+  </mat-expansion-panel>
+  <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Precautions</mat-panel-title>
+    </mat-expansion-panel-header>
+    <ul class="data-row" *ngFor="let precaution of drug.info?.precautions">
+      <li>{{ prettify(precaution) }}</li>
+    </ul>
+  </mat-expansion-panel>
+  <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Boxed Warnings</mat-panel-title>
+    </mat-expansion-panel-header>
+    <ul class="data-row" *ngFor="let box of drug.info?.boxed">
+      <li>{{ prettify(box) }}</li>
+    </ul>
+  </mat-expansion-panel>
+
   <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title

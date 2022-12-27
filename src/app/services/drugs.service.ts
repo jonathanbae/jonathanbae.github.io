@@ -26,7 +26,7 @@ export class DrugsService {
   private courseMap: Map<Course, string[]> = new Map<Course, string[]>();
 
   constructor() {
-    for(let val in this.course) {
+    for (let val in this.course) {
       const course = <unknown>val;
       this.courseMap.set(<Course>course, []);
     }
@@ -40,6 +40,7 @@ export class DrugsService {
    * split and create the appropriate data structures.
    *
    * If updates to the CSV are made:
+   * Manually update the boxed warnings/precautions into new columns in SS
    * just copy/paste this method with different list reference
    *
    * Indices
@@ -50,8 +51,10 @@ export class DrugsService {
    * 4: COMMON Route(s) of Administration
    * 5: Contraindications
    * 6: Boxed Warnings And Precautions
-   * 7: Clinically Relevant Adverse Reactions (ADRs)
-   * 8: Counseling Points
+   * 7: Precaution
+   * 8: Boxed Warnings
+   * 9: Clinically Relevant Adverse Reactions (ADRs)
+   * 10: Counseling Points
    */
   private convertDrugListCsvToJsonDec2022(): void {
     const rowSplit: string[] = this.dec2022Drugs.split('\n');
@@ -76,7 +79,7 @@ export class DrugsService {
     // Add the initial record value.
     this.drugRecord[key] = { generic: key, id, info: {} };
 
-    const course: Course = <Course><unknown>drugColSplit[2];
+    const course: Course = <Course>(<unknown>drugColSplit[2]);
     // Fields that contain categories:
     // Course (enum), Class, Administration
     this.drugRecord[key].info = {
@@ -93,13 +96,14 @@ export class DrugsService {
         this.adminstsMap
       ),
       contras: this.semiSplitColumn(drugColSplit[5]),
-      warns: drugColSplit[6], // TODO, split between BW and Precautions
-      adrs: this.semiSplitColumn(drugColSplit[7]),
-      points: this.semiSplitColumn(drugColSplit[8]),
+      warns: drugColSplit[6],
+      precautions: this.semiSplitColumn(drugColSplit[7]),
+      boxed: this.semiSplitColumn(drugColSplit[8]),
+      adrs: this.semiSplitColumn(drugColSplit[9]),
+      points: this.semiSplitColumn(drugColSplit[10]),
     };
 
     this.courseMap.get(course)?.push(key);
-    // buildBoxedWarningOrPrecaution
   }
 
   private buildDrugMaps(
@@ -177,16 +181,19 @@ export class DrugsService {
   // Helper Methods
   // =======================
   private trimReplace(s: string): string {
+    if (s === undefined) return '';
     return s.replaceAll('"', '').trim();
   }
 
   private semiSplitColumn(colString: string): string[] {
+    if (colString === undefined) return [];
     return this.trimReplace(colString)
       .replaceAll('|', ',')
       .split(this.SEMICOLON_SPACE_SPLIT_REGEX);
   }
 
   private semiSplitCategoryColumn(colString: string): string[] {
+    if (colString === undefined) return [];
     return this.trimReplace(colString)
       .replaceAll('|', ';')
       .replaceAll('/', ';')
@@ -194,6 +201,7 @@ export class DrugsService {
   }
 
   private lineSpaceSplitColumn(s: string): string[] {
+    if (s === undefined) return [];
     return this.trimReplace(s).split(this.LINE_SPACE_SPLIT_REGEX);
   }
 }
