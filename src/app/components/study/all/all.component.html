@@ -12,6 +12,7 @@
         mat-button
         *ngFor="let d of getDrugNamesByLetter(letter.key)"
         class="accordian-button"
+        (click)="openDrugDialog(d)"
       >
         <!-- todo: add checks or flags for when the drug is indicated as studied -->
         <!-- <span class="material-symbols-outlined"> prescriptions </span> -->

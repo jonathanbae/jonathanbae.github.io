@@ -34,6 +34,8 @@ import { AllComponent } from './components/study/all/all.component';
 import { CourseComponent } from './components/study/course/course.component';
 import { ClassComponent } from './components/study/class/class.component';
 import { AdministrationComponent } from './components/study/administration/administration.component';
+import { DrugLearnDialogComponent } from './components/study/drug-learn-dialog/drug-learn-dialog.component';
+import { DrugLearnCardComponent } from './components/study/drug-learn-card/drug-learn-card.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { AdministrationComponent } from './components/study/administration/admin
     CourseComponent,
     ClassComponent,
     AdministrationComponent,
+    DrugLearnDialogComponent,
+    DrugLearnCardComponent,
   ],
   imports: [
     BrowserModule,

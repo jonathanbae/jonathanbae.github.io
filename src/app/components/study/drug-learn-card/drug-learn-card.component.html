@@ -1,0 +1,56 @@
+<div class="drug-container">
+  <h1 class="drug-title">{{ drug.generic }}</h1>
+  <div class="drug-subtitle">
+    <span class="drug-category-label">Brand Name: </span>
+    {{ drug.info?.brands?.join(", ") }}
+  </div>
+  <div class="drug-subtitle">
+    <span class="drug-category-label">Associated Course: </span>
+    {{ drug.info?.course }}
+  </div>
+
+  <hr class="solid" />
+  <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Pharmacologic Class</mat-panel-title>
+    </mat-expansion-panel-header>
+    <ul class="data-row" *ngFor="let drugClass of drug.info?.class">
+      <li>{{ prettify(drugClass) }}</li>
+    </ul>
+  </mat-expansion-panel>
+  <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>COMMON Route(s) of Administration</mat-panel-title>
+    </mat-expansion-panel-header>
+    <ul class="data-row" *ngFor="let administ of drug.info?.administs">
+      <li>{{ prettify(administ) }}</li>
+    </ul>
+  </mat-expansion-panel>
+  <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Contraindications</mat-panel-title>
+    </mat-expansion-panel-header>
+    <ul class="data-row" *ngFor="let contra of drug.info?.contras">
+      <li>{{ prettify(contra) }}</li>
+    </ul>
+  </mat-expansion-panel>
+  <!-- TODO: add warnings precautions and boxed  -->
+  <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title
+        >Clinically Relevant Adverse Reactions (ADRs)</mat-panel-title
+      >
+    </mat-expansion-panel-header>
+    <ul class="data-row" *ngFor="let adr of drug.info?.adrs">
+      <li>{{ prettify(adr) }}</li>
+    </ul>
+  </mat-expansion-panel>
+  <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Counseling Points</mat-panel-title>
+    </mat-expansion-panel-header>
+    <ul class="data-row" *ngFor="let point of drug.info?.points">
+      <li>{{ prettify(point) }}</li>
+    </ul>
+  </mat-expansion-panel>
+</div>
