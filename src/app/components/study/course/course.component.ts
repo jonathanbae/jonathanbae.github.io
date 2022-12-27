@@ -103,4 +103,12 @@ export class CourseComponent implements OnInit {
   toggleCourseDescription() {
     this.showCourseDescription = !this.showCourseDescription;
   }
+
+  isImportant(course: Course): boolean {
+    return (
+      course === Course['ICARE-NeuroPsych'] ||
+      course === Course['ICARE-Gen Med II'] ||
+      course === Course['ICARE-SPECIAL POPS']
+    );
+  }
 }

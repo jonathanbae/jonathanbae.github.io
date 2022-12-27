@@ -40,7 +40,7 @@
   <button
     mat-button
     *ngFor="let course of courseMap | keyvalue"
-    class="course-selector-button"
+    [ngClass]="{'course-selector-button': true, 'highlight-button': isImportant(course.key)}"
     (click)="selectCourse(course.key)"
   >
     {{ course.key }}
