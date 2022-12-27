@@ -14,6 +14,18 @@
   grid-template-columns: repeat(4, 25%);
 }
 
+.course-description {
+  margin: 12px;  // display: grid;
+  .course-description-title {
+    font-size: 1.2em;
+    display: grid;
+    grid-template-columns: 80% 20%;
+  }
+}
+
+.show-course-button {
+  font-size: 1.5em;
+}
 
 @media (max-width: 800px) {
   .course-selector {

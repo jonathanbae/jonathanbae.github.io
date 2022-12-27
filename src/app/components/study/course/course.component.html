@@ -1,3 +1,41 @@
+<div class="course-description" *ngIf="showCourseDescription">
+  <div class="course-description-title">
+    <div>
+      The following is the distribution for the drugs that will be tested and
+      prioritized:
+    </div>
+    <button mat-button (click)="toggleCourseDescription()">Hide</button>
+  </div>
+  <table mat-table [dataSource]="descriptionData">
+    <ng-container matColumnDef="percentage">
+      <th mat-header-cell *matHeaderCellDef>Content Tested Percentage</th>
+      <td mat-cell *matCellDef="let element">{{ element.percentage }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="drugs">
+      <th mat-header-cell *matHeaderCellDef>
+        Top Drugs Covered within Courses Listed (% of exam questions)
+      </th>
+      <td mat-cell *matCellDef="let element" [innerHTML]="element.drugs"></td>
+    </ng-container>
+
+    <ng-container matColumnDef="info">
+      <th mat-header-cell *matHeaderCellDef>Information Being Assessed</th>
+      <td mat-cell *matCellDef="let element" [innerHTML]="element.info"></td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <div>
+    **Pharmacologic class is defined as the medication’s specific drug
+    classification, typically based on its mechanism of action. Examples may
+    include: “angiotensin converting enzyme inhibitor” and “selective serotonin
+    reuptake inhibitor”
+  </div>
+</div>
+<div *ngIf="!showCourseDescription" class="show-course-button">
+  <button mat-button (click)="toggleCourseDescription()">Show Course Description</button>
+</div>
 <div class="course-selector">
   <button
     mat-button
@@ -8,7 +46,7 @@
     {{ course.key }}
   </button>
 </div>
-<hr/>
+<hr />
 
 <div class="drug-container" *ngIf="selectedCourse !== undefined">
   <button
