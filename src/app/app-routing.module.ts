@@ -25,6 +25,7 @@ const routes: Routes = [
     path: 'study',
     component: StudyComponent,
     children: [
+      { path: '', redirectTo: 'all', pathMatch: 'full' },
       { path: 'all', component: AllComponent },
       { path: 'course', component: CourseComponent },
       { path: 'class', component: ClassComponent },

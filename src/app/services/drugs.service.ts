@@ -12,7 +12,7 @@ export class DrugsService {
 
   // Data
   private readonly dec2022Drugs = dec2022Drugs;
-
+  private readonly course = Course;
   // Drug Data Structures
   private drugRecord: Record<string, Drug> = {};
   private alphabetDrugMap: Map<string, string[]> = new Map<string, string[]>();
@@ -23,8 +23,13 @@ export class DrugsService {
   >();
   private adminstsMap: Map<string, string[]> = new Map<string, string[]>();
   private alphaAdminstsMap: Map<string, string[]> = new Map<string, string[]>();
+  private courseMap: Map<Course, string[]> = new Map<Course, string[]>();
 
   constructor() {
+    for(let val in this.course) {
+      const course = <unknown>val;
+      this.courseMap.set(<Course>course, []);
+    }
     this.convertDrugListCsvToJsonDec2022();
 
     this.buildAlphabetObjects();
@@ -71,11 +76,12 @@ export class DrugsService {
     // Add the initial record value.
     this.drugRecord[key] = { generic: key, id, info: {} };
 
+    const course: Course = <Course><unknown>drugColSplit[2];
     // Fields that contain categories:
     // Course (enum), Class, Administration
     this.drugRecord[key].info = {
       brands: this.lineSpaceSplitColumn(drugColSplit[1]),
-      course: <Course>drugColSplit[2],
+      course,
       class: this.buildDrugMaps(
         this.semiSplitColumn(drugColSplit[3]),
         key,
@@ -92,6 +98,7 @@ export class DrugsService {
       points: this.semiSplitColumn(drugColSplit[8]),
     };
 
+    this.courseMap.get(course)?.push(key);
     // buildBoxedWarningOrPrecaution
   }
 
@@ -160,6 +167,10 @@ export class DrugsService {
 
   public getAlphabetDrugMap() {
     return this.alphabetDrugMap;
+  }
+
+  public getCourseMap() {
+    return this.courseMap;
   }
 
   // =======================

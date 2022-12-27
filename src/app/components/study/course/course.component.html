@@ -1,1 +1,23 @@
-<p>course works!</p>
+<div class="course-selector">
+  <button
+    mat-button
+    *ngFor="let course of courseMap | keyvalue"
+    class="course-selector-button"
+    (click)="selectCourse(course.key)"
+  >
+    {{ course.key }}
+  </button>
+</div>
+
+<div class="drug-container" *ngIf="selectedCourse !== undefined">
+  <button
+    mat-button
+    *ngFor="let d of getDrugNamesByCourse(selectedCourse)"
+    class="accordian-button"
+    (click)="openDrugDialog(d)"
+  >
+    <!-- todo: add checks or flags for when the drug is indicated as studied -->
+    <!-- <span class="material-symbols-outlined"> prescriptions </span> -->
+    {{ d }}
+  </button>
+</div>

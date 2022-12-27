@@ -1,0 +1,29 @@
+.course-selector {
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+}
+
+.course-selector-button {
+  font-size: 1.3em;
+  margin: 16px 16px 0 16px;
+}
+
+.drug-container {
+  margin: 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+}
+
+
+@media (max-width: 800px) {
+  .course-selector {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+  }
+  
+  .drug-container {
+    margin: 24px;
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+  }  
+}
