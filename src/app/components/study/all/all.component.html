@@ -1,1 +1,22 @@
-<p>all works!</p>
+<mat-accordion *ngFor="let letter of alphabetDrugMap | keyvalue">
+  <mat-expansion-panel
+    class="accordian-expansion"
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title> {{ letter.key }} </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="accordian-button-container">
+      <button
+        mat-button
+        *ngFor="let d of getDrugNamesByLetter(letter.key)"
+        class="accordian-button"
+      >
+        <!-- todo: add checks or flags for when the drug is indicated as studied -->
+        <!-- <span class="material-symbols-outlined"> prescriptions </span> -->
+        {{ d }}
+      </button>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

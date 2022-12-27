@@ -1,0 +1,24 @@
+.accordian-button-container {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.accordian-button {
+    margin-right: 64px;
+    margin-bottom: 8px;
+}
+
+@media(max-width: 800px) {
+    .accordian-button-container {
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+}
+
+@media(max-width: 600px) {
+    .accordian-button-container {
+        display: grid;
+        grid-template-columns: 100%;
+    }
+    
+}

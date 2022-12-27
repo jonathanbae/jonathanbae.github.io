@@ -54,7 +54,7 @@ export class DrugsService {
     let index = 0;
     for (let row of rowSplit) {
       const drugColSplit: string[] = row.split(this.CSV_COLUMN_SPLIT_REGEX);
-      const key = drugColSplit[0];
+      const key = drugColSplit[0].replaceAll('|', ',');
       this.createDrugRecord(index, drugColSplit, key);
     }
   }
@@ -141,10 +141,6 @@ export class DrugsService {
         this.alphaAdminstsMap.set(letter, adminstsKeys);
       }
     }
-
-    console.log(this.alphabetDrugMap);
-    console.log(this.alphaAdminstsMap);
-    console.log(this.alphaDrugClassMap);
   }
 
   // =======================
@@ -160,6 +156,10 @@ export class DrugsService {
 
   public getAdminstsMap() {
     return this.adminstsMap;
+  }
+
+  public getAlphabetDrugMap() {
+    return this.alphabetDrugMap;
   }
 
   // =======================
