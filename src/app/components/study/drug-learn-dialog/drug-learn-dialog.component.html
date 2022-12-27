@@ -2,5 +2,17 @@
   <drug-learn-card [drug]="drug"></drug-learn-card>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
+  <button mat-button (click)="onClearDrug()">
+    <span class="material-symbols-outlined"> backspace </span>
+    Clear
+  </button>
+  <button mat-button (click)="onFlagDrug()">
+    <span class="material-symbols-outlined"> flag </span>
+    Flag
+  </button>
+  <button mat-button (click)="onLearnedDrug()">
+    <span class="material-symbols-outlined"> done </span>
+    Learned
+  </button>
   <button mat-button mat-dialog-close>Close</button>
 </mat-dialog-actions>

@@ -31,5 +31,25 @@ export class AllComponent {
     });
 
     dialogRef.afterClosed().subscribe(() => {});
+
+    dialogRef.componentInstance.flagDrug.subscribe(() => {
+      this.drugsService.flagDrug(drugKey);
+    });
+
+    dialogRef.componentInstance.learnedDrug.subscribe(() => {
+      this.drugsService.learnedDrug(drugKey);
+    });
+
+    dialogRef.componentInstance.clearDrug.subscribe(() => {
+      this.drugsService.clearDrug(drugKey);
+    })
+  }
+
+  isFlagged(drugKey: string): boolean {
+    return this.drugsService.flaggedDrugs[drugKey] === true;
+  }
+
+  isLearned(drugKey: string): boolean {
+    return this.drugsService.learnedDrugs[drugKey] === true;
   }
 }

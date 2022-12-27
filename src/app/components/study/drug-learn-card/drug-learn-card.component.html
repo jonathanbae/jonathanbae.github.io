@@ -1,5 +1,8 @@
 <div class="drug-container">
-  <h1 class="drug-title">{{ drug.generic }}</h1>
+  <h1 class="drug-title">{{ drug.generic }}
+    <span class="material-symbols-outlined" *ngIf="isFlagged"> flag </span>
+    <span class="material-symbols-outlined" *ngIf="isLearned"> done </span>
+  </h1>
   <div class="drug-subtitle">
     <span class="drug-category-label">Brand Name: </span>
     {{ drug.info?.brands?.join(", ") }}

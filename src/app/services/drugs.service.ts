@@ -10,6 +10,9 @@ export class DrugsService {
   private readonly SEMICOLON_SPACE_SPLIT_REGEX = /\s*;\s*/;
   private readonly LINE_SPACE_SPLIT_REGEX = /\s*\|\s*/;
 
+  // Study Sources
+  flaggedDrugs: { [key: string]: boolean } = {};
+  learnedDrugs: { [key: string]: boolean } = {};
   // Data
   private readonly dec2022Drugs = dec2022Drugs;
   private readonly course = Course;
@@ -33,6 +36,17 @@ export class DrugsService {
     this.convertDrugListCsvToJsonDec2022();
 
     this.buildAlphabetObjects();
+
+    this.initializeLocallyStoredFlaggedAndLearned();
+  }
+
+  private initializeLocallyStoredFlaggedAndLearned(): void {
+    if (localStorage.getItem('flaggedDrugs') !== null) {
+      this.flaggedDrugs = JSON.parse(localStorage.getItem('flaggedDrugs')!);
+    }
+    if (localStorage.getItem('learnedDrugs') !== null) {
+      this.learnedDrugs = JSON.parse(localStorage.getItem('learnedDrugs')!);
+    }
   }
 
   /**
@@ -154,6 +168,27 @@ export class DrugsService {
     }
   }
 
+  public flagDrug(drugKey: string) {
+    this.flaggedDrugs[drugKey] = true;
+    this.learnedDrugs[drugKey] = false;
+
+    localStorage.setItem('flaggedDrugs', JSON.stringify(this.flaggedDrugs));
+    localStorage.setItem('learnedDrugs', JSON.stringify(this.learnedDrugs));
+  }
+
+  public learnedDrug(drugKey: string) {
+    this.flaggedDrugs[drugKey] = false;
+    this.learnedDrugs[drugKey] = true;
+    localStorage.setItem('flaggedDrugs', JSON.stringify(this.flaggedDrugs));
+    localStorage.setItem('learnedDrugs', JSON.stringify(this.learnedDrugs));
+  }
+
+  public clearDrug(drugKey: string) {
+    delete this.flaggedDrugs[drugKey];
+    delete this.learnedDrugs[drugKey];
+    localStorage.setItem('flaggedDrugs', JSON.stringify(this.flaggedDrugs));
+    localStorage.setItem('learnedDrugs', JSON.stringify(this.learnedDrugs));
+  }
   // =======================
   // GETTER/SETTER Methods
   // =======================

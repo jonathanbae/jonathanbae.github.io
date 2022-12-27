@@ -34,13 +34,18 @@
   </div>
 </div>
 <div *ngIf="!showCourseDescription" class="show-course-button">
-  <button mat-button (click)="toggleCourseDescription()">Show Info on Exam Material</button>
+  <button mat-button (click)="toggleCourseDescription()">
+    Show Info on Exam Material
+  </button>
 </div>
 <div class="course-selector">
   <button
     mat-button
     *ngFor="let course of courseMap | keyvalue"
-    [ngClass]="{'course-selector-button': true, 'highlight-button': isImportant(course.key)}"
+    [ngClass]="{
+      'course-selector-button': true,
+      'highlight-button': isImportant(course.key)
+    }"
     (click)="selectCourse(course.key)"
   >
     {{ course.key }}
@@ -55,8 +60,8 @@
     class="accordian-button"
     (click)="openDrugDialog(d)"
   >
-    <!-- todo: add checks or flags for when the drug is indicated as studied -->
-    <!-- <span class="material-symbols-outlined"> prescriptions </span> -->
+    <span class="material-symbols-outlined" *ngIf="isFlagged(d)"> flag </span>
+    <span class="material-symbols-outlined" *ngIf="isLearned(d)"> done </span>
     {{ d }}
   </button>
 </div>
