@@ -25,6 +25,7 @@ import { DrugDialogComponent } from './components/common/drug-dialog/drug-dialog
 import { CategoryDialogComponent } from './components/common/category-dialog/category-dialog.component';
 import { NodeStoneComponent } from './nodestone-components/nodestone.component';
 import { StudyMainComponent } from './components/study-main/study-main.component';
+import { StudyComponent } from './components/study/study.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { StudyMainComponent } from './components/study-main/study-main.component
     CategoryDialogComponent,
     NodeStoneComponent,
     StudyMainComponent,
+    StudyComponent,
   ],
   imports: [
     BrowserModule,
