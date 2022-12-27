@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DrugsService } from 'src/app/services/drugs.service';
 
 @Component({
   selector: 'app-study',
   templateUrl: './study.component.html',
-  styleUrls: ['./study.component.scss']
+  styleUrls: ['./study.component.scss'],
 })
 export class StudyComponent implements OnInit {
+  constructor(private readonly drugsService: DrugsService) {}
 
-  constructor(private readonly drugsService: DrugsService) { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

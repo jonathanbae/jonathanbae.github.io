@@ -30,6 +30,10 @@ import { NodeStoneComponent } from './nodestone-components/nodestone.component';
 import { StudyMainComponent } from './components/study-main/study-main.component';
 import { StudyComponent } from './components/study/study.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { AllComponent } from './components/study/all/all.component';
+import { CourseComponent } from './components/study/course/course.component';
+import { ClassComponent } from './components/study/class/class.component';
+import { AdministrationComponent } from './components/study/administration/administration.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +49,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     NodeStoneComponent,
     StudyMainComponent,
     StudyComponent,
+    AllComponent,
+    CourseComponent,
+    ClassComponent,
+    AdministrationComponent,
   ],
   imports: [
     BrowserModule,
