@@ -6,8 +6,8 @@
     </mat-expansion-panel-header>
     <ul class="data-row" *ngFor="let drugClass of drug.info?.class">
       <li
-        [ngClass]="{ 'redacted-text': isRedacted(drugClass, 'class') }"
-        (click)="removeRedact(drugClass, 'class')"
+        [ngClass]="{ 'redacted-text': isRedacted('class', drugClass) }"
+        (click)="removeRedact('class', drugClass)"
       >
         {{ prettify(drugClass) }}
       </li>
@@ -22,7 +22,12 @@
       <mat-panel-title>COMMON Route(s) of Administration</mat-panel-title>
     </mat-expansion-panel-header>
     <ul class="data-row" *ngFor="let administ of drug.info?.administs">
-      <li>{{ prettify(administ) }}</li>
+      <li
+        [ngClass]="{ 'redacted-text': isRedacted('administs', administ) }"
+        (click)="removeRedact('administs', administ)"
+      >
+        {{ prettify(administ) }}
+      </li>
     </ul>
   </mat-expansion-panel>
   <mat-expansion-panel
@@ -34,7 +39,12 @@
       <mat-panel-title>Contraindications</mat-panel-title>
     </mat-expansion-panel-header>
     <ul class="data-row" *ngFor="let contra of drug.info?.contras">
-      <li>{{ prettify(contra) }}</li>
+      <li
+        [ngClass]="{ 'redacted-text': isRedacted('contras', contra) }"
+        (click)="removeRedact('contras', contra)"
+      >
+        {{ prettify(contra) }}
+      </li>
     </ul>
   </mat-expansion-panel>
   <mat-expansion-panel
@@ -46,7 +56,9 @@
       <mat-panel-title>Precautions and Boxed Warnings RAW Text</mat-panel-title>
     </mat-expansion-panel-header>
     <ul class="data-row">
-      <li>{{ drug.info?.warns }}</li>
+      <li>
+        {{ drug.info?.warns }}
+      </li>
     </ul>
   </mat-expansion-panel>
   <mat-expansion-panel
@@ -58,7 +70,12 @@
       <mat-panel-title>Precautions</mat-panel-title>
     </mat-expansion-panel-header>
     <ul class="data-row" *ngFor="let precaution of drug.info?.precautions">
-      <li>{{ prettify(precaution) }}</li>
+      <li
+        [ngClass]="{ 'redacted-text': isRedacted('precautions', precaution) }"
+        (click)="removeRedact('precautions', precaution)"
+      >
+        {{ prettify(precaution) }}
+      </li>
     </ul>
   </mat-expansion-panel>
   <mat-expansion-panel
@@ -70,7 +87,12 @@
       <mat-panel-title>Boxed Warnings</mat-panel-title>
     </mat-expansion-panel-header>
     <ul class="data-row" *ngFor="let box of drug.info?.boxed">
-      <li>{{ prettify(box) }}</li>
+      <li
+        [ngClass]="{ 'redacted-text': isRedacted('boxed', box) }"
+        (click)="removeRedact('boxed', box)"
+      >
+        {{ prettify(box) }}
+      </li>
     </ul>
   </mat-expansion-panel>
 
@@ -85,7 +107,12 @@
       >
     </mat-expansion-panel-header>
     <ul class="data-row" *ngFor="let adr of drug.info?.adrs">
-      <li>{{ prettify(adr) }}</li>
+      <li
+        [ngClass]="{ 'redacted-text': isRedacted('adrs', adr) }"
+        (click)="removeRedact('adrs', adr)"
+      >
+        {{ prettify(adr) }}
+      </li>
     </ul>
   </mat-expansion-panel>
   <mat-expansion-panel
@@ -97,7 +124,12 @@
       <mat-panel-title>Counseling Points</mat-panel-title>
     </mat-expansion-panel-header>
     <ul class="data-row" *ngFor="let point of drug.info?.points">
-      <li>{{ prettify(point) }}</li>
+      <li
+        [ngClass]="{ 'redacted-text': isRedacted('points', point) }"
+        (click)="removeRedact('points', point)"
+      >
+        {{ prettify(point) }}
+      </li>
     </ul>
   </mat-expansion-panel>
 </div>

@@ -1,12 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Course, Drug } from 'src/assets/models/drug-models';
-import * as _ from "lodash";
+import * as _ from 'lodash';
 
 interface RedactedText {
   class: string[];
   administs: string[];
   contras: string[];
-  warns: string;
   boxed: string[];
   precautions: string[];
   adrs: string[];
@@ -26,7 +25,6 @@ export class DrugLearnCardComponent implements OnInit {
     class: [],
     administs: [],
     contras: [],
-    warns: '',
     boxed: [],
     precautions: [],
     adrs: [],
@@ -57,7 +55,6 @@ export class DrugLearnCardComponent implements OnInit {
       class: info.class!,
       administs: info.administs!,
       contras: info.contras!,
-      warns: info.warns!,
       boxed: info.boxed!,
       precautions: info.precautions!,
       adrs: info.adrs!,
@@ -65,20 +62,54 @@ export class DrugLearnCardComponent implements OnInit {
     };
   }
 
-  isRedacted(text: string, field: string): boolean {
+  isRedacted(field: string, text?: string): boolean {
+    if (!text) return false;
     switch (field) {
       case 'class':
         return this.redactedTexts.class.includes(text);
+      case 'administs':
+        return this.redactedTexts.administs.includes(text);
+      case 'contras':
+        return this.redactedTexts.contras.includes(text);
+      case 'boxed':
+        return this.redactedTexts.boxed.includes(text);
+      case 'precautions':
+        return this.redactedTexts.precautions.includes(text);
+      case 'adrs':
+        return this.redactedTexts.adrs.includes(text);
+      case 'points':
+        return this.redactedTexts.points.includes(text);
       default:
         return false;
     }
   }
 
-  removeRedact(text: string, field: string) {
+  removeRedact(field: string, text?: string) {
+    if (!text) return;
     switch (field) {
       case 'class':
         this.updateRedactList(this.redactedTexts.class, text);
         break;
+      case 'administs':
+        this.updateRedactList(this.redactedTexts.administs, text);
+        break;
+      case 'contras':
+        this.updateRedactList(this.redactedTexts.contras, text);
+        break;
+      case 'boxed':
+        this.updateRedactList(this.redactedTexts.boxed, text);
+        break;
+      case 'precautions':
+        this.updateRedactList(this.redactedTexts.precautions, text);
+        break;
+      case 'adrs':
+        this.updateRedactList(this.redactedTexts.adrs, text);
+        break;
+      case 'points':
+        this.updateRedactList(this.redactedTexts.points, text);
+        break;
+      default:
+        return;
     }
   }
 
