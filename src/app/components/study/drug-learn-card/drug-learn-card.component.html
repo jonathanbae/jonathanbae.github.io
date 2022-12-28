@@ -1,13 +1,23 @@
 <div class="drug-container">
+  <button mat-button (click)="redactAllFields()">Black out all fields</button>
   <mat-expansion-panel class="drug-category-expansion" [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>Pharmacologic Class</mat-panel-title>
     </mat-expansion-panel-header>
     <ul class="data-row" *ngFor="let drugClass of drug.info?.class">
-      <li>{{ prettify(drugClass) }}</li>
+      <li
+        [ngClass]="{ 'redacted-text': isRedacted(drugClass, 'class') }"
+        (click)="removeRedact(drugClass, 'class')"
+      >
+        {{ prettify(drugClass) }}
+      </li>
     </ul>
   </mat-expansion-panel>
-  <mat-expansion-panel class="drug-category-expansion" [expanded]="true" *ngIf="isNewContent">
+  <mat-expansion-panel
+    class="drug-category-expansion"
+    [expanded]="true"
+    *ngIf="isNewContent"
+  >
     <mat-expansion-panel-header>
       <mat-panel-title>COMMON Route(s) of Administration</mat-panel-title>
     </mat-expansion-panel-header>
@@ -15,7 +25,11 @@
       <li>{{ prettify(administ) }}</li>
     </ul>
   </mat-expansion-panel>
-  <mat-expansion-panel class="drug-category-expansion" [expanded]="true" *ngIf="isNewContent">
+  <mat-expansion-panel
+    class="drug-category-expansion"
+    [expanded]="true"
+    *ngIf="isNewContent"
+  >
     <mat-expansion-panel-header>
       <mat-panel-title>Contraindications</mat-panel-title>
     </mat-expansion-panel-header>
@@ -23,7 +37,11 @@
       <li>{{ prettify(contra) }}</li>
     </ul>
   </mat-expansion-panel>
-  <mat-expansion-panel class="drug-category-expansion" [expanded]="false" *ngIf="isNewContent">
+  <mat-expansion-panel
+    class="drug-category-expansion"
+    [expanded]="false"
+    *ngIf="isNewContent"
+  >
     <mat-expansion-panel-header>
       <mat-panel-title>Precautions and Boxed Warnings RAW Text</mat-panel-title>
     </mat-expansion-panel-header>
@@ -31,7 +49,11 @@
       <li>{{ drug.info?.warns }}</li>
     </ul>
   </mat-expansion-panel>
-  <mat-expansion-panel class="drug-category-expansion" [expanded]="true" *ngIf="isNewContent">
+  <mat-expansion-panel
+    class="drug-category-expansion"
+    [expanded]="true"
+    *ngIf="isNewContent"
+  >
     <mat-expansion-panel-header>
       <mat-panel-title>Precautions</mat-panel-title>
     </mat-expansion-panel-header>
@@ -39,7 +61,11 @@
       <li>{{ prettify(precaution) }}</li>
     </ul>
   </mat-expansion-panel>
-  <mat-expansion-panel class="drug-category-expansion" [expanded]="true" *ngIf="isNewContent">
+  <mat-expansion-panel
+    class="drug-category-expansion"
+    [expanded]="true"
+    *ngIf="isNewContent"
+  >
     <mat-expansion-panel-header>
       <mat-panel-title>Boxed Warnings</mat-panel-title>
     </mat-expansion-panel-header>
@@ -48,7 +74,11 @@
     </ul>
   </mat-expansion-panel>
 
-  <mat-expansion-panel class="drug-category-expansion" [expanded]="true" *ngIf="isNewContent">
+  <mat-expansion-panel
+    class="drug-category-expansion"
+    [expanded]="true"
+    *ngIf="isNewContent"
+  >
     <mat-expansion-panel-header>
       <mat-panel-title
         >Clinically Relevant Adverse Reactions (ADRs)</mat-panel-title
@@ -58,7 +88,11 @@
       <li>{{ prettify(adr) }}</li>
     </ul>
   </mat-expansion-panel>
-  <mat-expansion-panel class="drug-category-expansion" [expanded]="true" *ngIf="isNewContent">
+  <mat-expansion-panel
+    class="drug-category-expansion"
+    [expanded]="true"
+    *ngIf="isNewContent"
+  >
     <mat-expansion-panel-header>
       <mat-panel-title>Counseling Points</mat-panel-title>
     </mat-expansion-panel-header>
