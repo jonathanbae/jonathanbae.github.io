@@ -16,6 +16,12 @@
   <drug-learn-card [drug]="drug"></drug-learn-card>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
+  <button mat-button (click)="onPreviousDrug()">
+    <span class="material-symbols-outlined"> arrow_back </span> Previous
+  </button>
+  <button mat-button (click)="onNextDrug()">
+    Next <span class="material-symbols-outlined"> arrow_forward </span>
+  </button>
   <button mat-button (click)="onClearDrug()">
     <span class="material-symbols-outlined"> backspace </span>
     Clear

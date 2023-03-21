@@ -12,6 +12,8 @@ export class DrugLearnDialogComponent implements OnInit {
   flagDrug = new EventEmitter();
   learnedDrug = new EventEmitter();
   clearDrug = new EventEmitter();
+  nextDrug = new EventEmitter();
+  previousDrug = new EventEmitter();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public drug: Drug,
@@ -19,6 +21,14 @@ export class DrugLearnDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+
+  onNextDrug() {
+    this.nextDrug.emit();
+  }
+
+  onPreviousDrug() {
+    this.previousDrug.emit();
+  }
 
   onFlagDrug() {
     this.flagDrug.emit();

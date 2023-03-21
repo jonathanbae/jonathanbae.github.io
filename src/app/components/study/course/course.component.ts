@@ -85,6 +85,7 @@ export class CourseComponent implements OnInit {
 
   selectCourse(course: Course) {
     this.selectedCourse = course;
+    console.log(this.courseMap.get(course));
   }
 
   getDrugNamesByCourse(course: Course): string[] {
@@ -92,22 +93,38 @@ export class CourseComponent implements OnInit {
   }
 
   openDrugDialog(drugKey: string) {
-    let drug: Drug = this.drugsService.getDrugs()[drugKey];
+    let drugKeyCurrent = drugKey;
+    let drug: Drug = this.drugsService.getDrugs()[drugKeyCurrent];
     const dialogRef = this.dialog.open(DrugLearnDialogComponent, {
       data: drug,
     });
 
     dialogRef.componentInstance.flagDrug.subscribe(() => {
-      this.drugsService.flagDrug(drugKey);
+      this.drugsService.flagDrug(drugKeyCurrent);
     });
 
     dialogRef.componentInstance.learnedDrug.subscribe(() => {
-      this.drugsService.learnedDrug(drugKey);
+      this.drugsService.learnedDrug(drugKeyCurrent);
     });
 
     dialogRef.componentInstance.clearDrug.subscribe(() => {
-      this.drugsService.clearDrug(drugKey);
+      this.drugsService.clearDrug(drugKeyCurrent);
     });
+
+    dialogRef.componentInstance.nextDrug.subscribe(() => {
+      const nextDrug = this.drugsService.getNextCourseDrug(drugKeyCurrent, this.selectedCourse);
+      if(nextDrug === null) return;
+      dialogRef.componentInstance.drug = nextDrug;
+      drugKeyCurrent = nextDrug.generic;
+    });
+
+    dialogRef.componentInstance.previousDrug.subscribe(() => {
+      const previousDrug = this.drugsService.getPreviousCourseDrug(drugKeyCurrent, this.selectedCourse);
+      if(previousDrug === null) return;
+      dialogRef.componentInstance.drug = previousDrug;
+      drugKeyCurrent = previousDrug.generic;
+    });
+
   }
 
   isFlagged(drugKey: string): boolean {

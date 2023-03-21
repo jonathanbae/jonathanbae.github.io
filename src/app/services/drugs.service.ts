@@ -17,6 +17,7 @@ export class DrugsService {
   private readonly dec2022Drugs = dec2022Drugs;
   private readonly course = Course;
   // Drug Data Structures
+  private sortedDrugNames: string[];
   private drugRecord: Record<string, Drug> = {};
   private alphabetDrugMap: Map<string, string[]> = new Map<string, string[]>();
   private drugClassMap: Map<string, string[]> = new Map<string, string[]>();
@@ -38,6 +39,16 @@ export class DrugsService {
     this.buildAlphabetObjects();
 
     this.initializeLocallyStoredFlaggedAndLearned();
+
+    this.sortedDrugNames = this.recordKeys(this.drugRecord).sort();
+
+    for (let [key, value] of this.courseMap) {
+      this.courseMap.get(key)!.sort();
+    }
+
+    for (let [key, value] of this.alphabetDrugMap) {
+      this.alphabetDrugMap.get(key)!.sort();
+    }
   }
 
   private initializeLocallyStoredFlaggedAndLearned(): void {
@@ -189,6 +200,51 @@ export class DrugsService {
     localStorage.setItem('flaggedDrugs', JSON.stringify(this.flaggedDrugs));
     localStorage.setItem('learnedDrugs', JSON.stringify(this.learnedDrugs));
   }
+
+  public getNextAlphabeticDrug(drugKey: string): Drug {
+    let index = this.sortedDrugNames.indexOf(drugKey);
+    if (index >= this.sortedDrugNames.length - 1) {
+      index = -1;
+    }
+    const nextDrugKey = this.sortedDrugNames[index + 1];
+    return this.drugRecord[nextDrugKey];
+  }
+
+  public getPreviousAlphabeticDrug(drugKey: string) {
+    let index = this.sortedDrugNames.indexOf(drugKey);
+    if (index === 0) {
+      index = this.sortedDrugNames.length;
+    }
+    const previousDrugKey = this.sortedDrugNames[index - 1];
+    return this.drugRecord[previousDrugKey];
+  }
+
+  public getNextCourseDrug(drugKey: string, course: Course | undefined) {
+    if (course === undefined) {
+      return null;
+    }
+    const courseList = this.courseMap.get(course);
+    let index = courseList!.indexOf(drugKey);
+    if (index >= courseList!.length - 1) {
+      index = -1;
+    }
+    const nextDrugKey = courseList![index + 1];
+    return this.drugRecord[nextDrugKey];
+  }
+
+  public getPreviousCourseDrug(drugKey: string, course: Course | undefined) {
+    if (course === undefined) {
+      return null;
+    }
+    const courseList = this.courseMap.get(course);
+    let index = courseList!.indexOf(drugKey);
+    if (index === 0) {
+      index = courseList!.length;
+    }
+    const previousDrugKey = courseList![index - 1];
+    return this.drugRecord[previousDrugKey];
+  }
+
   // =======================
   // GETTER/SETTER Methods
   // =======================
@@ -238,5 +294,9 @@ export class DrugsService {
   private lineSpaceSplitColumn(s: string): string[] {
     if (s === undefined) return [];
     return this.trimReplace(s).split(this.LINE_SPACE_SPLIT_REGEX);
+  }
+
+  private recordKeys<K extends PropertyKey, T>(object: Record<K, T>) {
+    return Object.keys(object) as K[];
   }
 }

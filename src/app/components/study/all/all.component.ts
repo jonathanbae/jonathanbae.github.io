@@ -25,7 +25,8 @@ export class AllComponent {
   }
 
   openDrugDialog(drugKey: string) {
-    let drug: Drug = this.drugsService.getDrugs()[drugKey];
+    let drugKeyCurrent = drugKey;
+    let drug: Drug = this.drugsService.getDrugs()[drugKeyCurrent];
     const dialogRef = this.dialog.open(DrugLearnDialogComponent, {
       data: drug,
     });
@@ -33,16 +34,32 @@ export class AllComponent {
     dialogRef.afterClosed().subscribe(() => {});
 
     dialogRef.componentInstance.flagDrug.subscribe(() => {
-      this.drugsService.flagDrug(drugKey);
+      this.drugsService.flagDrug(drugKeyCurrent);
     });
 
     dialogRef.componentInstance.learnedDrug.subscribe(() => {
-      this.drugsService.learnedDrug(drugKey);
+      this.drugsService.learnedDrug(drugKeyCurrent);
     });
 
     dialogRef.componentInstance.clearDrug.subscribe(() => {
-      this.drugsService.clearDrug(drugKey);
-    })
+      this.drugsService.clearDrug(drugKeyCurrent);
+    });
+
+    dialogRef.componentInstance.nextDrug.subscribe(() => {
+      const nextDrug = this.drugsService.getNextAlphabeticDrug(drugKeyCurrent);
+      dialogRef.componentInstance.drug = nextDrug;
+      drugKeyCurrent = nextDrug.generic;
+    });
+
+    dialogRef.componentInstance.previousDrug.subscribe(() => {
+      const previousDrug = this.drugsService.getPreviousAlphabeticDrug(drugKeyCurrent);
+      dialogRef.componentInstance.drug = previousDrug;
+      drugKeyCurrent = previousDrug.generic;
+    });
+  }
+
+  recordEntries<K extends PropertyKey, T>(object: Record<K, T>) {
+    return Object.entries(object) as [K, T][];
   }
 
   isFlagged(drugKey: string): boolean {
