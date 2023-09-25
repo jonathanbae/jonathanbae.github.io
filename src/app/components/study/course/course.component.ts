@@ -85,7 +85,6 @@ export class CourseComponent implements OnInit {
 
   selectCourse(course: Course) {
     this.selectedCourse = course;
-    console.log(this.courseMap.get(course));
   }
 
   getDrugNamesByCourse(course: Course): string[] {

@@ -46,7 +46,8 @@ export class DrugLearnCardComponent implements OnInit {
   }
 
   get isNewContent() {
-    return this.newCourses.has(this.drug.info!.course!);
+    return true;
+    // return this.newCourses.has(this.drug.info!.course!);
   }
 
   redactAllFields() {
