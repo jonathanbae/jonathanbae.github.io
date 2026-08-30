@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { listAllRequests } from '../lib/admin.ts';
+import { listAllRequests, sheetLinksFor } from '../lib/admin.ts';
 import type { SavedRequest, Status } from '../lib/api.ts';
 import { groupForSheet, toTSV } from '../lib/sheet.ts';
 
@@ -31,9 +31,11 @@ export default function AdminQueue() {
   }
 
   async function copyRows() {
-    const rowsOut = selected
-      .flatMap((r) => groupForSheet(r))
-      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    setBusy(true);
+    const rowsOut = [];
+    for (const r of selected) rowsOut.push(...groupForSheet(r, await sheetLinksFor(r)));
+    rowsOut.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    setBusy(false);
     try {
       await navigator.clipboard.writeText(toTSV(rowsOut));
       setCopied(`${rowsOut.length} row${rowsOut.length === 1 ? '' : 's'} copied — paste into the tracker.`);
@@ -97,7 +99,7 @@ export default function AdminQueue() {
           <div className="card submit-bar">
             <div>
               <span className="muted">{selected.length} selected</span>
-              <span className="hint">Receipt and Expense links fill in once Drive sync is wired up.</span>
+              <span className="hint">Receipt and Expense columns get shareable links that do not expire.</span>
             </div>
             <button type="button" disabled={selected.length === 0} onClick={copyRows}>
               Copy sheet rows

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
-  getRequest, listCategories, saveRequest, signedReceiptUrl, uploadReceipts, validateFile,
+  errMessage, getRequest, listCategories, saveRequest, signedReceiptUrl, uploadReceipts, validateFile,
   type SavedItem, type SavedRequest,
 } from '../lib/api';
 import { MAX_DESCRIPTION, RECEIPT_MODE_LABELS, type Category, type ReceiptMode } from '../lib/types';
 import BackLink from '../components/BackLink.tsx';
+import { prepareFiles } from '../lib/compress.ts';
 
 export default function RequestDetail() {
   const { id } = useParams<{ id: string }>();
@@ -36,7 +37,10 @@ export default function RequestDetail() {
     if (url) window.open(url, '_blank', 'noopener');
   }
 
-  async function attach(item: SavedItem, files: File[]) {
+  async function attach(item: SavedItem, chosen: File[]) {
+    setBusy(true);
+    const files = (await prepareFiles(chosen)).map((p) => p.file);
+    setBusy(false);
     const bad = files.map(validateFile).find(Boolean);
     if (bad) return setError(bad);
     setBusy(true); setError(null);
@@ -45,7 +49,7 @@ export default function RequestDetail() {
       setReq(await getRequest(req!.id));
       setStatus('Receipt attached.');
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Upload failed.');
+      setError(errMessage(e, 'Upload failed.'));
     } finally { setBusy(false); }
   }
 
@@ -57,7 +61,7 @@ export default function RequestDetail() {
       setReq(await getRequest(req!.id));
       setStatus('Changes saved.');
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Could not save.');
+      setError(errMessage(e, 'Could not save.'));
     } finally { setBusy(false); }
   }
 

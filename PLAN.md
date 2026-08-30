@@ -82,15 +82,12 @@ Verified against a hand-filled sample. Coordinates still need one calibration pa
 - All values ASCII -> Helvetica; no Korean font embedding.
 - **>4 line items => split into 2+ standalone forms** (4 items each). Each form is self-contained: its own payee/requester header and its own Total. Filenames get `-1of2`, `-2of2`; all forms share one request id and the same Expense Link set.
 
-## 6. Google Drive
+## 6. File storage and the tracker
 
-Service account, files written into existing folders:
-
-- root `19slSTc9Zn1p4S5SClInmdKOsrqaaMLBr`
-- expense forms `1iK543scU7xKkEzkNIA0xUc0_gGgdaS73`
-- receipts `1dXdRFMiXW1S9UxDKC9XMkvU8iJtlWe0R`
-
-Naming: `<YYYY-MM>-<payee>-<request-id>.pdf`; receipts `…-r<n>.<ext>`. Store returned Drive links on the row.
+**Shipping design: Supabase Storage.** Receipts and generated forms live in the
+private `receipts` bucket. Photos are downscaled in the browser (2000px long edge,
+JPEG q0.82) before upload, so an 8 MB phone photo stores as ~400 KB. The 1 GB free
+tier covers thousands of receipts.
 
 **Sheet:** manual paste. Admin UI emits TSV, columns:
 `Name | Date | Amount | Item | Code | Description | Receipt Link | Expense Link`
@@ -100,7 +97,33 @@ Row grouping (fewest rows that stay correct):
 - `Amount` = sum of the group. `Item` = distinct category names, comma-joined. `Description` = each line item's description, newline-joined. `Receipt Link` = newline-joined. `Date` = the shared spend date, else the earliest.
 - `Expense Link` = the generated form PDF (same for every row from one request).
 
-**Multi-select:** admin queue supports checkbox-selecting many requests -> one Copy that emits all their grouped rows together, sorted by date.
+Receipt and Expense columns get Supabase signed URLs with a **10-year lifetime**
+(`SHEET_LINK_TTL`). A spreadsheet is permanent, so a short signature would rot;
+these behave like a Drive "anyone with the link" share. Rotating the project's JWT
+secret would invalidate every link ever issued.
+
+**Multi-select:** admin queue supports checkbox-selecting many requests -> one Copy
+that emits all their grouped rows together, sorted by date.
+
+### Google Drive — deferred
+
+Not built. Blocked on Google OAuth publishing: an app left in *Testing* issues
+refresh tokens that expire every 7 days, which would break the sync silently and
+weekly. Supabase links work today and cost nothing, so Drive buys convenience, not
+capability.
+
+Groundwork already in place, if it is picked up later:
+- `scripts/google-auth.mjs` — one-time consent flow that mints a refresh token and
+  probes all three folders for writability before you trust it.
+- Folder ids: root `19slSTc9Zn1p4S5SClInmdKOsrqaaMLBr`,
+  forms `1iK543scU7xKkEzkNIA0xUc0_gGgdaS73`,
+  receipts `1dXdRFMiXW1S9UxDKC9XMkvU8iJtlWe0R`.
+- Service accounts are **not** an option: they have no Drive storage quota, so
+  uploads into a personal My Drive folder fail. OAuth refresh token is the route.
+
+Migration path when it happens: a script walks existing storage objects, uploads
+each to Drive, and rewrites `receipts.drive_link` / `requests.drive_form_links`.
+Nothing in the schema needs to change — those columns already exist and are unused.
 
 ---
 
@@ -156,8 +179,8 @@ Dependencies: A→C/F, D independent, E after A.
 | P1 Skeleton | **done** — login, guards, RLS verified |
 | P2 Submit | **done** — verified end-to-end against the real project |
 | P3 Admin | **code done**, needs a run-through in the browser |
-| P4 Drive | not started |
-| P5 Harden | not started |
+| P4 Drive | **deferred** — see S6; Supabase links ship instead |
+| P5 Harden | in progress |
 
 Built so far: the PDF fill engine (`src/form/`, single source shared by the browser
 and the Node calibration harness) plus `form/calibrate.mjs`; `supabase/schema.sql`;
@@ -167,6 +190,6 @@ generate, and grouped TSV copy. `npm test` covers the sheet-row grouping rules.
 GitHub Pages build to `docs/` with SPA 404 fallback.
 The Angular study app was removed — it remains in git history at `7c37e57`.
 
-Deferred to P4: Receipt Link and Expense Link in the TSV stay blank, because the
-only URLs available today are short-lived signed links that would rot inside a
-permanent spreadsheet. Drive gives them stable hrefs.
+Receipt and Expense links in the TSV are long-lived Supabase signed URLs.
+Browser-side image compression keeps phone photos small enough that the 1 GB
+free tier is not a near-term concern.

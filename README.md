@@ -3,7 +3,8 @@
 Web form for Chara EM reimbursement requests. Submitters file receipts; the finance
 team reviews them and generates the church's Payment Request Form as a filled PDF.
 
-Deployed to GitHub Pages at <https://jonathanbae.github.io/docs/>.
+Deployed to GitHub Pages at <https://jonathanbae.github.io/>.
+Pages publishes the `/docs` folder, so `docs/` is the site root — hence `base: '/'`.
 
 ## Setup
 
@@ -14,7 +15,8 @@ Deployed to GitHub Pages at <https://jonathanbae.github.io/docs/>.
 
 ## Supabase
 
-Run `supabase/schema.sql` in the SQL editor. Then, under Authentication → Users,
+Run `supabase/schema.sql` in the SQL editor, then `supabase/hardening.sql`
+(server-side rate limits, upload size/type caps, append-only audit log). Then, under Authentication → Users,
 create the three shared logins and add a matching row to `public.profiles`:
 
 | email | role |
@@ -50,4 +52,4 @@ on conflict (id) do update set role = excluded.role;
 
 ## Deploy
 
-`npm run build` writes to `docs/`, which is what Pages serves. Commit `docs/`.
+`npm run build` writes to `docs/`, which is what Pages publishes. Commit `docs/` and push.

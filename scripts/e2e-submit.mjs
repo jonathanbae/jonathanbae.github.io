@@ -87,6 +87,13 @@ if (items.data?.length) {
   ok('signed URL', !!signed.data?.signedUrl, signed.error?.message ?? '');
 }
 
+// These only pass once supabase/hardening.sql has been run.
+const badType = await step('reject a disallowed file type', () => sb.storage.from('receipts')
+  .upload(`${requestId}/blocked.txt`, new Blob(['nope'], { type: 'text/plain' }),
+          { contentType: 'text/plain' }));
+ok('disallowed file type is rejected', !!badType.error,
+   badType.error?.message ?? 'UPLOAD SUCCEEDED — run supabase/hardening.sql');
+
 const back = await step('look up by email', () => sb.from('requests')
   .select('id, payee_name, line_items(id, amount, receipts(id))').eq('submitter_email', email));
 const found = back.data?.[0];

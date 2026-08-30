@@ -1,6 +1,21 @@
 import { supabase } from './supabase';
 import { ALLOWED_TYPES, MAX_FILE_BYTES, type Category, type DraftItem } from './types';
 
+/**
+ * Pull a human-readable message off whatever supabase-js threw. Postgrest and
+ * Storage errors are plain objects, so `instanceof Error` misses them and the
+ * caller would show a generic failure instead of the real reason — including
+ * our own rate-limit messages, which are written for the submitter to read.
+ */
+export function errMessage(e: unknown, fallback = 'Something went wrong.'): string {
+  if (typeof e === 'object' && e !== null) {
+    const o = e as { message?: unknown; error_description?: unknown };
+    if (typeof o.message === 'string' && o.message) return o.message;
+    if (typeof o.error_description === 'string' && o.error_description) return o.error_description;
+  }
+  return fallback;
+}
+
 export async function listCategories(): Promise<Category[]> {
   const { data, error } = await supabase.from('categories').select('name, code').order('name');
   if (error) throw error;
@@ -137,12 +152,13 @@ export type SavedRequest = {
   payee_address: string | null;
   requester_name: string | null;
   requested_date: string | null;
+  form_pdf_paths: string[];
   created_at: string;
   line_items: SavedItem[];
 };
 
 const REQUEST_SELECT =
-  'id, submitter_email, status, payee_name, payee_address, requester_name, requested_date, created_at, ' +
+  'id, submitter_email, status, payee_name, payee_address, requester_name, requested_date, form_pdf_paths, created_at, ' +
   'line_items(id, position, item_category, code, account_number, description, vendor, amount, spend_date, receipt_mode, ' +
   'receipts(id, storage_path, mime))';
 
@@ -162,9 +178,15 @@ export async function getRequest(id: string): Promise<SavedRequest> {
   return data as unknown as SavedRequest;
 }
 
-/** Short-lived URL for a private receipt; the bucket itself is never public. */
-export async function signedReceiptUrl(path: string): Promise<string | null> {
-  const { data } = await supabase.storage.from('receipts').createSignedUrl(path, 300);
+/** Seconds. Used for links pasted into the tracker, which must outlive the session. */
+export const SHEET_LINK_TTL = 10 * 365 * 24 * 60 * 60;
+
+/**
+ * URL for a private receipt; the bucket itself is never public. Default is
+ * short-lived for on-screen viewing — pass SHEET_LINK_TTL for spreadsheet links.
+ */
+export async function signedReceiptUrl(path: string, expiresIn = 300): Promise<string | null> {
+  const { data } = await supabase.storage.from('receipts').createSignedUrl(path, expiresIn);
   return data?.signedUrl ?? null;
 }
 

@@ -1,12 +1,15 @@
 import templateUrl from '../assets/template-p1.pdf?url';
 import { fillForm, type FormRequest } from '../form/fill.ts';
 import { supabase } from './supabase.ts';
-import { getRequest, signedReceiptUrl, type SavedItem, type SavedRequest, type Status } from './api.ts';
+import {
+  SHEET_LINK_TTL, getRequest, signedReceiptUrl,
+  type SavedItem, type SavedRequest, type Status,
+} from './api.ts';
 
 export async function listAllRequests(status?: Status | 'all'): Promise<SavedRequest[]> {
   let q = supabase
     .from('requests')
-    .select('id, submitter_email, status, payee_name, payee_address, requester_name, requested_date, created_at, ' +
+    .select('id, submitter_email, status, payee_name, payee_address, requester_name, requested_date, form_pdf_paths, created_at, ' +
             'line_items(id, position, item_category, code, account_number, description, vendor, amount, spend_date, ' +
             'receipt_mode, receipts(id, storage_path, mime))')
     .order('created_at', { ascending: false });
@@ -114,18 +117,30 @@ export async function setStatus(id: string, status: Status) {
   await supabase.from('audit_log').insert({ action: `request.${status}`, request_id: id });
 }
 
-/** Signed links for every receipt, keyed by line item — used to fill the sheet columns. */
-export async function receiptLinksByItem(req: SavedRequest): Promise<Record<string, string[]>> {
-  const out: Record<string, string[]> = {};
+/**
+ * Long-lived links for the tracker's Receipt and Expense columns. These outlive
+ * the browser session on purpose — a spreadsheet is permanent, so a 5-minute
+ * signature would rot within the hour.
+ *
+ * Anyone holding the URL can fetch the file, exactly like a Drive "anyone with
+ * the link" share. The bucket stays private; only these URLs are shareable.
+ */
+export async function sheetLinksFor(req: SavedRequest) {
+  const receiptsByItem: Record<string, string[]> = {};
   for (const it of req.line_items) {
     const urls: string[] = [];
     for (const r of it.receipts) {
-      const u = await signedReceiptUrl(r.storage_path);
+      const u = await signedReceiptUrl(r.storage_path, SHEET_LINK_TTL);
       if (u) urls.push(u);
     }
-    out[it.id] = urls;
+    receiptsByItem[it.id] = urls;
   }
-  return out;
+  const expenseLinks: string[] = [];
+  for (const p of req.form_pdf_paths ?? []) {
+    const u = await signedReceiptUrl(p, SHEET_LINK_TTL);
+    if (u) expenseLinks.push(u);
+  }
+  return { receiptsByItem, expenseLinks };
 }
 
 export { getRequest };

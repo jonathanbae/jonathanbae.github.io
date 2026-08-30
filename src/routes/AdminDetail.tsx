@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
-  adminSaveRequest, buildFormPdf, generateForm, getRequest, missingForPdf, setStatus,
+  adminSaveRequest, buildFormPdf, generateForm, getRequest, missingForPdf, setStatus, sheetLinksFor,
 } from '../lib/admin.ts';
-import { listCategories, signedReceiptUrl, type SavedItem, type SavedRequest } from '../lib/api.ts';
+import { errMessage, listCategories, signedReceiptUrl, type SavedItem, type SavedRequest } from '../lib/api.ts';
 import { groupForSheet, toTSV } from '../lib/sheet.ts';
 import { RECEIPT_MODE_LABELS, type Category, type ReceiptMode } from '../lib/types.ts';
 import BackLink from '../components/BackLink.tsx';
@@ -36,7 +36,7 @@ export default function AdminDetail() {
   async function run(label: string, fn: () => Promise<void>) {
     setBusy(true); setError(null); setNote(null);
     try { await fn(); setNote(label); }
-    catch (e) { setError(e instanceof Error ? e.message : 'Something went wrong.'); }
+    catch (e) { setError(errMessage(e)); }
     finally { setBusy(false); }
   }
 
@@ -181,8 +181,9 @@ export default function AdminDetail() {
             Generate form &amp; mark reviewed
           </button>
           <button type="button" className="button secondary" disabled={busy}
-            onClick={() => run('Sheet row copied.', async () => {
-              await navigator.clipboard.writeText(toTSV(groupForSheet(req)));
+            onClick={() => run('Sheet rows copied.', async () => {
+              const links = await sheetLinksFor(req);
+              await navigator.clipboard.writeText(toTSV(groupForSheet(req, links)));
             })}>
             Copy sheet rows
           </button>

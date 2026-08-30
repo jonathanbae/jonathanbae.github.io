@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// GitHub Pages serves this repo at jonathanbae.github.io, and the built app
-// lives under /docs/ — matching how the site was already deployed.
+// Pages is configured to publish the /docs folder, so docs/ IS the site root:
+// the app lives at https://jonathanbae.github.io/ and assets at /assets/.
+// (Publishing from /docs is not the same as serving the app under /docs/.)
 export default defineConfig({
-  base: '/docs/',
+  base: '/',
   plugins: [react()],
   build: { outDir: 'docs', emptyOutDir: true },
 });

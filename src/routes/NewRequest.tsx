@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getSubmitter, listCategories, submitRequest, validateFile } from '../lib/api';
+import { errMessage, getSubmitter, listCategories, submitRequest, validateFile } from '../lib/api';
+import { formatBytes, prepareFiles } from '../lib/compress.ts';
 import {
   MAX_DESCRIPTION, RECEIPT_MODE_LABELS,
   type Category, type DraftItem, type ReceiptMode,
@@ -23,6 +24,8 @@ export default function NewRequest() {
   const [items, setItems] = useState<DraftItem[]>([blankItem()]);
   const [errors, setErrors] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
+  const [shrinking, setShrinking] = useState<Set<string>>(new Set());
+
 
   useEffect(() => { listCategories().then(setCategories).catch(() => {}); }, []);
 
@@ -40,6 +43,13 @@ export default function NewRequest() {
 
   const patch = (key: string, next: Partial<DraftItem>) =>
     setItems((xs) => xs.map((x) => (x.key === key ? { ...x, ...next } : x)));
+  async function pickFiles(key: string, chosen: File[]) {
+    if (!chosen.length) return patch(key, { files: [] });
+    setShrinking((s) => new Set(s).add(key));
+    const prepared = await prepareFiles(chosen);
+    patch(key, { files: prepared.map((p) => p.file) });
+    setShrinking((s) => { const n = new Set(s); n.delete(key); return n; });
+  }
 
   const total = items.reduce((s, i) => s + (Number(i.amount) || 0), 0);
 
@@ -71,7 +81,7 @@ export default function NewRequest() {
       await submitRequest({ submitter_email: email, payee_name: payee, payee_address: address, items });
       nav(`/view?email=${encodeURIComponent(email.trim().toLowerCase())}&submitted=1`);
     } catch (err) {
-      setErrors([err instanceof Error ? err.message : 'Could not submit. Please try again.']);
+      setErrors([errMessage(err, 'Could not submit. Please try again.')]);
     } finally {
       setBusy(false);
     }
@@ -169,11 +179,13 @@ export default function NewRequest() {
           <label>
             Attach the receipt
             <input type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.heic"
-              onChange={(e) => patch(it.key, { files: Array.from(e.target.files ?? []) })} />
+              onChange={(e) => pickFiles(it.key, Array.from(e.target.files ?? []))} />
             <span className="hint">
-              {it.files.length > 0
-                ? it.files.map((f) => f.name).join(', ')
-                : 'Required — a photo is fine, even if you are handing in the paper receipt.'}
+              {shrinking.has(it.key)
+                ? 'Resizing photo…'
+                : it.files.length > 0
+                  ? it.files.map((f) => `${f.name} (${formatBytes(f.size)})`).join(', ')
+                  : 'Required — a photo is fine, even if you are handing in the paper receipt.'}
             </span>
           </label>
         </div>
