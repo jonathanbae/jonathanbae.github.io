@@ -1,23 +1,53 @@
-# Top 300 Study (Jonathan Bae's Website)
+# Chara Reimbursement Form
 
-## Current
-Main content will be an Angular app that hosts a top 300 study tool for my girlfriend. 
+Web form for Chara EM reimbursement requests. Submitters file receipts; the finance
+team reviews them and generates the church's Payment Request Form as a filled PDF.
 
-# To publish to prod
+Deployed to GitHub Pages at <https://jonathanbae.github.io/docs/>.
+
+## Setup
+
+1. `npm install`
+2. `cp .env.example .env.local` and fill in `VITE_SUPABASE_ANON_KEY`
+   (Supabase → Project Settings → API → anon/public key).
+3. `npm run dev`
+
+## Supabase
+
+Run `supabase/schema.sql` in the SQL editor. Then, under Authentication → Users,
+create the three shared logins and add a matching row to `public.profiles`:
+
+| email | role |
+|---|---|
+| `finance.user@characommunity.org` | `user` |
+| `finance.pastor@characommunity.org` | `pastor` |
+| `finance.admin@characommunity.org` | `admin` |
+
+These are identifiers, not mailboxes — nothing is ever sent, as long as you create
+each user with **Auto Confirm User** checked. The domain must match
+`VITE_LOGIN_DOMAIN` (default `characommunity.org`).
+
+Also turn **off** Authentication → Providers → Email → "Allow new users to sign up".
+Without that, anyone holding the anon key from the JS bundle could self-register and
+read every request, since RLS grants reads to any authenticated session.
+
+```sql
+insert into public.profiles (id, email, role)
+select id, email,
+       case when email like 'finance.admin@%'  then 'admin'
+            when email like 'finance.pastor@%' then 'pastor'
+            else 'user' end
+from auth.users
+on conflict (id) do update set role = excluded.role;
 ```
-ng build --configuration "production" --base-href "https://jonathanbae.github.io/docs"
-copy docs/index.html docs/404.html
-```
 
+## Layout
 
-# To Do
-Learn Section:
-* type to learn sections
-Practice section:
-* all the details will be given, need to type name or choose multiple choice of the drug
-* Choose a drug name, and then add the properties of the drug
-* Quiz portion (need to double check how the format is on this)
+- `src/` — Vite + React app.
+- `form/` — PDF fill engine and its calibration harness. See `form/README.md`.
+- `supabase/schema.sql` — tables, RLS, seed categories, storage bucket.
+- `PLAN.md` — the project plan and what is built vs. pending.
 
+## Deploy
 
-UX:
-* animate the buttons to move to the left (per michael ahn's request, reach out to him for another description)
+`npm run build` writes to `docs/`, which is what Pages serves. Commit `docs/`.

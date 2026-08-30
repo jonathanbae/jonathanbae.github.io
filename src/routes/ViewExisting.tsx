@@ -1,0 +1,93 @@
+import { useEffect, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { listRequestsByEmail, type SavedRequest } from '../lib/api';
+
+const money = (n: number) => `$${n.toFixed(2)}`;
+const totalOf = (r: SavedRequest) => r.line_items.reduce((s, i) => s + Number(i.amount), 0);
+
+export default function ViewExisting() {
+  const [params, setParams] = useSearchParams();
+  const justSubmitted = params.get('submitted') === '1';
+  const [email, setEmail] = useState(params.get('email') ?? '');
+  const [rows, setRows] = useState<SavedRequest[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+
+  async function search(value: string) {
+    if (!value.includes('@')) return;
+    setBusy(true); setError(null);
+    try {
+      setRows(await listRequestsByEmail(value));
+    } catch {
+      setError('Could not load your requests. Try again in a moment.');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  // Deep-linked from a fresh submission, or revisited with ?email=
+  useEffect(() => {
+    const e = params.get('email');
+    if (e) search(e);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div className="stack">
+      {justSubmitted && (
+        <div className="card notice">
+          <strong>Request submitted.</strong>
+          <p className="muted">
+            Come back to this page with the same email any time to check on it or make changes,
+            up until the finance team starts reviewing it.
+          </p>
+        </div>
+      )}
+
+      <form
+        className="card stack-sm"
+        onSubmit={(e) => { e.preventDefault(); setParams({ email }); search(email); }}
+      >
+        <h2>Find my requests</h2>
+        <label>
+          Your email
+          <input type="email" value={email} autoComplete="email"
+            onChange={(e) => setEmail(e.target.value)} />
+        </label>
+        <button disabled={busy || !email.includes('@')}>{busy ? 'Looking…' : 'Look up'}</button>
+        {error && <p className="error">{error}</p>}
+      </form>
+
+      {rows && rows.length === 0 && (
+        <div className="card">
+          <p className="muted">No requests found for that email.</p>
+        </div>
+      )}
+
+      {rows && rows.length > 0 && (
+        <div className="card scroll">
+          <table className="list">
+            <thead>
+              <tr>
+                <th>Submitted</th><th>Paid to</th><th>Receipts</th>
+                <th className="num">Total</th><th>Status</th><th />
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr key={r.id}>
+                  <td>{new Date(r.created_at).toLocaleDateString()}</td>
+                  <td>{r.payee_name}</td>
+                  <td className="num">{r.line_items.length}</td>
+                  <td className="num">{money(totalOf(r))}</td>
+                  <td><span className={`pill ${r.status}`}>{r.status}</span></td>
+                  <td><Link to={`/request/${r.id}`}>{r.status === 'requested' ? 'Edit' : 'View'}</Link></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}

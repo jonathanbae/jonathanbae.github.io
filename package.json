@@ -1,43 +1,27 @@
 {
-  "name": "my-app",
+  "name": "chara-reimbursement",
   "version": "1.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
-  },
   "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build && cp docs/index.html docs/404.html",
+    "preview": "vite preview",
+    "calibrate": "node form/calibrate.mjs",
+    "test": "node --test scripts/test-sheet.mjs"
+  },
   "dependencies": {
-    "@angular-devkit/build-angular": "^14.2.10",
-    "@angular/animations": "~14.2.12",
-    "@angular/cdk": "^14.2.7",
-    "@angular/common": "~14.2.12",
-    "@angular/compiler": "~14.2.12",
-    "@angular/core": "~14.2.12",
-    "@angular/flex-layout": "^14.0.0-beta.41",
-    "@angular/forms": "~14.2.12",
-    "@angular/material": "^14.2.7",
-    "@angular/platform-browser": "~14.2.12",
-    "@angular/platform-browser-dynamic": "~14.2.12",
-    "@angular/router": "~14.2.12",
-    "lodash": "^4.17.21",
-    "rxjs": "~7.4.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.11.4"
+    "@supabase/supabase-js": "^2.45.4",
+    "pdf-lib": "^1.17.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2"
   },
   "devDependencies": {
-    "@angular/cli": "~14.2.10",
-    "@angular/compiler-cli": "~14.2.12",
-    "@types/jasmine": "~3.10.0",
-    "@types/lodash": "^4.14.191",
-    "@types/node": "^12.11.1",
-    "jasmine-core": "~3.10.0",
-    "karma": "~6.3.16",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage": "~2.1.0",
-    "karma-jasmine": "~4.0.0",
-    "karma-jasmine-html-reporter": "~1.7.0"
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.2",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8"
   }
 }
