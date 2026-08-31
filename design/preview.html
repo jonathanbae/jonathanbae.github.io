@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design preview</title>
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body>
+  <header class="bar">
+    <div class="bar-left">
+      <a href="#" class="brand"><img src="/src/assets/logo-mark.png" alt="" /><span>Chara Reimbursement</span></a>
+    </div>
+    <div class="bar-right">
+      <button class="link">Jonathan Bae</button>
+      <button class="link">Sign out</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidenav">
+      <a class="navlink" href="#">Overview</a>
+      <a class="navlink on" href="#">New request</a>
+      <a class="navlink" href="#">My requests</a>
+      <a class="navlink" href="#">Finance queue</a>
+    </nav>
+
+    <main class="wrap">
+      <div class="stack">
+        <div class="card">
+          <h2>Finance queue</h2>
+          <p class="muted">Review requests, fill the form, mark them paid.</p>
+          <div class="tabs">
+            <button class="tab on">requested</button>
+            <button class="tab">reviewed</button>
+            <button class="tab">paid</button>
+            <button class="tab">rejected</button>
+          </div>
+        </div>
+
+        <div class="card scroll">
+          <table class="list">
+            <thead><tr><th></th><th>Submitted</th><th>Paid to</th><th class="num">Total</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              <tr><td><input type="checkbox" /></td><td>8/30/2026</td>
+                <td>Sarah Bae <span class="pill warn">needs category</span></td>
+                <td class="num">$232.84</td><td><span class="pill requested">requested</span></td><td><a href="#">Open</a></td></tr>
+              <tr class="picked"><td><input type="checkbox" checked /></td><td>8/28/2026</td>
+                <td>Grace Kim <span class="pill ok">signed</span></td>
+                <td class="num">$1,327.75</td><td><span class="pill reviewed">reviewed</span></td><td><a href="#">Open</a></td></tr>
+              <tr><td><input type="checkbox" /></td><td>8/24/2026</td><td>Daniel Cho</td>
+                <td class="num">$61.34</td><td><span class="pill paid">paid</span></td><td><a href="#">Open</a></td></tr>
+            </tbody>
+          </table>
+          <div class="pager">
+            <span class="hint">1–3 of 47</span>
+            <div class="pager-buttons">
+              <button class="button secondary" disabled>Previous</button>
+              <button class="button secondary">Next</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bulkbar">
+          <span class="muted">2 selected</span>
+          <div class="actions">
+            <button class="button secondary">Copy sheet rows</button>
+            <button class="button secondary">Open 2026 tracker</button>
+            <button class="button danger">Reject</button>
+          </div>
+        </div>
+
+        <div class="card stack-sm">
+          <h2>Receipt 1</h2>
+          <label>Category <span class="optional">optional</span>
+            <select><option>Communion</option></select>
+            <span class="hint">Not sure? Leave this blank and write a clear description.</span>
+          </label>
+          <div class="pair">
+            <label>Date<input type="date" value="2026-08-02" /></label>
+            <label>Amount<input type="number" value="5.04" /></label>
+          </div>
+          <fieldset class="modes">
+            <legend>The receipt itself</legend>
+            <label class="radio"><input type="radio" checked /> I will also hand in the paper receipt</label>
+            <label class="radio"><input type="radio" /> Please print my receipt for me</label>
+          </fieldset>
+          <div class="field">
+            <span class="field-label">Attach the receipt</span>
+            <div class="pickers">
+              <button class="button secondary">📷 Take photo</button>
+              <button class="button secondary">Choose file</button>
+            </div>
+            <ul class="thumbs">
+              <li><span class="thumb-doc">PDF</span>
+                <div class="thumb-meta"><span class="thumb-name">receipt-giant.pdf</span><span class="hint">412 KB</span></div>
+                <button class="thumb-x">×</button></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card warnbox"><strong>Fill these in before generating the form:</strong>
+          <ul><li>Name of requester</li><li>Receipt 1: account code</li></ul></div>
+        <div class="card errors"><strong>Please fix these first:</strong>
+          <ul><li>Receipt 1: attach a photo or PDF of the receipt.</li></ul></div>
+        <div class="card notice">3 rows copied — paste into the 2026 tracker.</div>
+
+        <div class="card submit-bar">
+          <div><span class="muted">Total</span><strong class="total">$232.84</strong></div>
+          <button>Submit request</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

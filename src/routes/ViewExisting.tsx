@@ -42,10 +42,11 @@ export default function ViewExisting() {
     <div className="stack">
       {justSubmitted && (
         <div className="card notice">
-          <strong>Request submitted.</strong>
+          <strong>Request submitted. Thank you!</strong>
           <p className="muted">
-            Come back to this page with the same email any time to check on it or make changes,
-            up until the finance team starts reviewing it.
+            The finance team will be in touch if they have any questions. You can come back to
+            this page with the same email any time to check on it or make changes, up until
+            they start reviewing it.
           </p>
         </div>
       )}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mobile preview</title><link rel="stylesheet" href="/src/styles.css" /></head>
+<body>
+<header class="bar">
+  <div class="bar-left">
+    <button class="hamburger"><img src="/src/assets/logo-mark.png" alt="" />
+      <svg viewBox="0 0 20 14" width="18" height="13"><line x1="1" y1="2" x2="19" y2="2"/><line x1="1" y1="7" x2="19" y2="7"/><line x1="1" y1="12" x2="19" y2="12"/></svg>
+    </button>
+    <a href="#" class="brand"><img src="/src/assets/logo-mark.png" alt="" /><span>Chara Reimbursement</span></a>
+  </div>
+  <div class="bar-right"><button class="link">Sign out</button></div>
+</header>
+<div class="layout"><nav class="sidenav"><a class="navlink on" href="#">Overview</a></nav>
+<main class="wrap"><div class="stack">
+  <div class="card"><h2>Finance queue</h2><p class="muted">Review requests, mark them paid.</p>
+    <div class="tabs"><button class="tab on">requested</button><button class="tab">reviewed</button><button class="tab">paid</button></div></div>
+  <div class="card scroll"><table class="list">
+    <thead><tr><th></th><th>Submitted</th><th>Paid to</th><th class="num">Total</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      <tr><td data-label=""><input type="checkbox" /></td><td data-label="Submitted">8/30/2026</td>
+      <td data-label="Paid to">Sarah Bae</td><td data-label="Total" class="num">$232.84</td>
+      <td data-label="Status"><span class="pill requested">requested</span></td><td data-label=""><a href="#">Open</a></td></tr>
+      <tr class="picked"><td data-label=""><input type="checkbox" checked /></td><td data-label="Submitted">8/28/2026</td>
+      <td data-label="Paid to">Grace Kim</td><td data-label="Total" class="num">$1,327.75</td>
+      <td data-label="Status"><span class="pill reviewed">reviewed</span></td><td data-label=""><a href="#">Open</a></td></tr>
+    </tbody></table>
+    <div class="pager"><span class="hint">1–2 of 47</span><div class="pager-buttons">
+      <button class="button secondary" disabled>Previous</button><button class="button secondary">Next</button></div></div>
+  </div>
+  <div class="card stack-sm"><h2>Receipt 1</h2>
+    <label>What was it for?<input value="Communion" /></label>
+    <div class="field"><span class="field-label">Attach the receipt</span>
+      <div class="pickers"><button class="button secondary">📷 Take photo</button><button class="button secondary">Choose file</button></div>
+      <ul class="thumbs"><li><span class="thumb-doc">PDF</span><div class="thumb-meta"><span class="thumb-name">receipt.pdf</span><span class="hint">412 KB</span></div><button class="thumb-x">×</button></li></ul>
+    </div>
+  </div>
+  <div class="card bulkbar"><span class="muted">2 selected</span>
+    <div class="actions"><button class="button secondary">Copy rows</button><button class="danger">Reject</button></div></div>
+</div></main></div>
+</body></html>
+</body></html>

@@ -6,6 +6,7 @@ import {
 } from '../lib/api';
 import { MAX_DESCRIPTION, RECEIPT_MODE_LABELS, type Category, type ReceiptMode } from '../lib/types';
 import BackLink from '../components/BackLink.tsx';
+import { FilePickButtons } from '../components/ReceiptPicker.tsx';
 import { prepareFiles } from '../lib/compress.ts';
 
 export default function RequestDetail() {
@@ -182,8 +183,7 @@ export default function RequestDetail() {
               ))}
             </ul>
             {editable && (
-              <input type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.heic"
-                onChange={(e) => { const f = Array.from(e.target.files ?? []); if (f.length) attach(it, f); }} />
+              <FilePickButtons busy={busy} onPick={(files) => attach(it, files)} />
             )}
           </div>
         </div>

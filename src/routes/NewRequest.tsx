@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { errMessage, getSubmitter, listCategories, submitRequest, validateFile } from '../lib/api';
-import { formatBytes, prepareFiles } from '../lib/compress.ts';
+import { FilePickButtons, ReceiptThumbs, appendPrepared } from '../components/ReceiptPicker.tsx';
 import {
   MAX_DESCRIPTION, RECEIPT_MODE_LABELS,
   type Category, type DraftItem, type ReceiptMode,
@@ -44,12 +44,15 @@ export default function NewRequest() {
   const patch = (key: string, next: Partial<DraftItem>) =>
     setItems((xs) => xs.map((x) => (x.key === key ? { ...x, ...next } : x)));
   async function pickFiles(key: string, chosen: File[]) {
-    if (!chosen.length) return patch(key, { files: [] });
     setShrinking((s) => new Set(s).add(key));
-    const prepared = await prepareFiles(chosen);
-    patch(key, { files: prepared.map((p) => p.file) });
+    const current = items.find((x) => x.key === key)?.files ?? [];
+    patch(key, { files: await appendPrepared(current, chosen) });
     setShrinking((s) => { const n = new Set(s); n.delete(key); return n; });
   }
+
+  const removeFile = (key: string, index: number) =>
+    setItems((xs) => xs.map((x) =>
+      x.key === key ? { ...x, files: x.files.filter((_, i) => i !== index) } : x));
 
   const total = items.reduce((s, i) => s + (Number(i.amount) || 0), 0);
 
@@ -176,18 +179,17 @@ export default function NewRequest() {
             ))}
           </fieldset>
 
-          <label>
-            Attach the receipt
-            <input type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.heic"
-              onChange={(e) => pickFiles(it.key, Array.from(e.target.files ?? []))} />
+          <div className="field">
+            <span className="field-label">Attach the receipt</span>
+            <FilePickButtons busy={shrinking.has(it.key)}
+              onPick={(files) => pickFiles(it.key, files)} />
             <span className="hint">
               {shrinking.has(it.key)
                 ? 'Resizing photo…'
-                : it.files.length > 0
-                  ? it.files.map((f) => `${f.name} (${formatBytes(f.size)})`).join(', ')
-                  : 'Required — a photo is fine, even if you are handing in the paper receipt.'}
+                : 'Required — a photo is fine, even if you are handing in the paper receipt.'}
             </span>
-          </label>
+            <ReceiptThumbs files={it.files} onRemove={(i) => removeFile(it.key, i)} />
+          </div>
         </div>
       ))}
 
