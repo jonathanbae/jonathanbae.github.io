@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { groupForSheet, toTSV } from '../src/lib/sheet.ts';
+import { SHEET_HEADERS, groupForSheet, toTSV } from '../src/lib/sheet.ts';
 
 const item = (o) => ({
   id: o.id, position: 0, item_category: o.cat ?? null, code: o.code ?? null,
@@ -56,11 +56,26 @@ test('multi-line cells are quoted so a paste stays in one cell', () => {
     item({ id: '2', code: '106', desc: 'B', vendor: 'Y', amount: 2 }),
   ]));
   const tsv = toTSV(rows);
-  assert.equal(tsv.split('\t').length, 8);
+  assert.equal(tsv.split('\t').length, SHEET_HEADERS.length);
   assert.match(tsv, /"A - X\nB - Y"/);
 });
 
 test('header row is emitted on request', () => {
   const tsv = toTSV(groupForSheet(req([item({ id: '1', code: '103', desc: 'A', amount: 1 })])), true);
   assert.equal(tsv.split('\n')[0].split('\t')[0], 'Name');
+});
+
+test('Check Received is blank until the request is paid', () => {
+  const items = [item({ id: '1', code: '103', desc: 'A', amount: 1 })];
+  assert.equal(groupForSheet(req(items))[0].checkReceived, '');
+  assert.equal(groupForSheet({ ...req(items), status: 'paid' })[0].checkReceived, 'Yes');
+});
+
+test('columns land in the sheet order', () => {
+  const rows = groupForSheet(req([item({ id: '1', code: '103', desc: 'A', vendor: 'X', amount: 5 })]));
+  const cells = toTSV(rows).split('\t');
+  assert.equal(cells.length, SHEET_HEADERS.length);
+  assert.deepEqual(
+    [cells[0], cells[2], cells[4], cells[8]],
+    ['Sarah Bae', '$5.00', '103', '']);
 });

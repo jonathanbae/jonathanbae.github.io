@@ -3,10 +3,12 @@ import type { SavedItem, SavedRequest } from './api.ts';
 export type SheetRow = {
   name: string; date: string; amount: string; item: string;
   code: string; description: string; receiptLink: string; expenseLink: string;
+  checkReceived: string;
 };
 
 export const SHEET_HEADERS = [
-  'Name', 'Date', 'Amount', 'Item', 'Code', 'Description', 'Receipt Link', 'Expense Link',
+  'Name', 'Date', 'Amount', 'Item', 'Code', 'Description',
+  'Receipt Link', 'Expense Link', 'Check Received',
 ] as const;
 
 const usd = (n: number) => `$${n.toFixed(2)}`;
@@ -25,7 +27,10 @@ const describe = (it: SavedItem) =>
  */
 export function groupForSheet(
   req: SavedRequest,
-  links: { receiptsByItem?: Record<string, string[]>; expenseLinks?: string[] } = {},
+  links: {
+    receiptsByItem?: Record<string, string[]>;
+    expenseLinks?: string[];
+  } = {},
 ): SheetRow[] {
   const groups = new Map<string, SavedItem[]>();
   for (const it of req.line_items) {
@@ -46,6 +51,9 @@ export function groupForSheet(
       description: items.map(describe).join('\n'),
       receiptLink: receipts.join('\n'),
       expenseLink: (links.expenseLinks ?? []).join('\n'),
+      // Finance ticks this when the check is handed over, which is the same
+      // moment the request is marked paid.
+      checkReceived: req.status === 'paid' ? 'Yes' : '',
     };
   });
 }
@@ -54,7 +62,8 @@ export function groupForSheet(
 export function toTSV(rows: SheetRow[], includeHeaders = false): string {
   const cell = (v: string) => (/[\t\n"]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v);
   const body = rows.map((r) =>
-    [r.name, r.date, r.amount, r.item, r.code, r.description, r.receiptLink, r.expenseLink]
+    [r.name, r.date, r.amount, r.item, r.code, r.description,
+     r.receiptLink, r.expenseLink, r.checkReceived]
       .map(cell).join('\t'));
   return (includeHeaders ? [SHEET_HEADERS.join('\t'), ...body] : body).join('\n');
 }

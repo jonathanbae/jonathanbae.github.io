@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, NavLink, Outlet, Route, Routes, Link, useNavigate } from 'react-router-dom';
+import logoMark from './assets/logo-mark.png';
 import { AuthProvider, useAuth } from './lib/auth.tsx';
 import Login from './routes/Login.tsx';
 import Home from './routes/Home.tsx';
@@ -30,7 +31,10 @@ function Header() {
   const nav = useNavigate();
   return (
     <header className="bar">
-      <Link to="/" className="brand">Chara Reimbursement</Link>
+      <Link to="/" className="brand">
+        <img src={logoMark} alt="" />
+        <span>Chara Reimbursement</span>
+      </Link>
       <div className="bar-right">
         {role && <span className="dim">{role}</span>}
         <button className="link" onClick={async () => { await signOut(); nav('/login', { replace: true }); }}>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logoFull from '../assets/logo-full.png';
 import { useAuth } from '../lib/auth';
 import { ROLE_EMAILS, ROLE_LABELS, type Role } from '../lib/roles';
 
@@ -41,7 +42,8 @@ export default function Login() {
   return (
     <div className="center">
       <form className="card login" onSubmit={submit}>
-        <h1>Chara Reimbursement</h1>
+        <img className="login-logo" src={logoFull} alt="Chara Community" />
+        <h1>Reimbursement</h1>
         <p className="muted">Sign in to submit or review a reimbursement request.</p>
 
         <label>
