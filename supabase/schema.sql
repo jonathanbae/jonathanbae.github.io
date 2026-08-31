@@ -123,6 +123,22 @@ drop trigger if exists requests_touch on public.requests;
 create trigger requests_touch before update on public.requests
   for each row execute function public.touch_updated_at();
 
+-- ---------------------------------------------------------------- upgrades
+-- `create table if not exists` will not add columns to a table that already
+-- exists, so later additions live here. Re-run this file to pick them up.
+
+-- Requests can now be turned down outright.
+alter table public.requests drop constraint if exists requests_status_check;
+alter table public.requests add constraint requests_status_check
+  check (status in ('requested','reviewed','paid','rejected'));
+
+-- Pastor sign-off. The signature is a PNG data URL drawn in the browser and
+-- stamped into the form's Minister Signature box.
+alter table public.requests add column if not exists pastor_name      text;
+alter table public.requests add column if not exists pastor_signature text;
+alter table public.requests add column if not exists pastor_signed_at timestamptz;
+alter table public.requests add column if not exists rejected_reason  text;
+
 -- ---------------------------------------------------------------- RLS
 alter table public.profiles    enable row level security;
 alter table public.categories  enable row level security;
@@ -156,7 +172,7 @@ create policy requests_insert on public.requests for insert to authenticated
 drop policy if exists requests_update on public.requests;
 create policy requests_update on public.requests for update to authenticated
   using (status = 'requested' or public.is_admin())
-  with check (public.is_admin() or status = 'requested');
+  with check (public.is_admin() or status in ('requested','rejected'));
 
 drop policy if exists requests_delete on public.requests;
 create policy requests_delete on public.requests for delete to authenticated using (public.is_admin());

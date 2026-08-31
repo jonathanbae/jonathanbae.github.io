@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { listRequestsByEmail, type SavedRequest } from '../lib/api';
+import { PAGE_SIZE, listRequestsByEmail, type SavedRequest } from '../lib/api';
+import Pagination from '../components/Pagination.tsx';
 
 const money = (n: number) => `$${n.toFixed(2)}`;
 const totalOf = (r: SavedRequest) => r.line_items.reduce((s, i) => s + Number(i.amount), 0);
@@ -10,14 +11,19 @@ export default function ViewExisting() {
   const justSubmitted = params.get('submitted') === '1';
   const [email, setEmail] = useState(params.get('email') ?? '');
   const [rows, setRows] = useState<SavedRequest[] | null>(null);
+  const [count, setCount] = useState(0);
+  const [page, setPage] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  async function search(value: string) {
+  async function search(value: string, p = 0) {
     if (!value.includes('@')) return;
     setBusy(true); setError(null);
     try {
-      setRows(await listRequestsByEmail(value));
+      const res = await listRequestsByEmail(value, p);
+      setRows(res.rows);
+      setCount(res.total);
+      setPage(p);
     } catch {
       setError('Could not load your requests. Try again in a moment.');
     } finally {
@@ -46,7 +52,7 @@ export default function ViewExisting() {
 
       <form
         className="card stack-sm"
-        onSubmit={(e) => { e.preventDefault(); setParams({ email }); search(email); }}
+        onSubmit={(e) => { e.preventDefault(); setParams({ email }); search(email, 0); }}
       >
         <h2>Find my requests</h2>
         <label>
@@ -76,16 +82,18 @@ export default function ViewExisting() {
             <tbody>
               {rows.map((r) => (
                 <tr key={r.id}>
-                  <td>{new Date(r.created_at).toLocaleDateString()}</td>
-                  <td>{r.payee_name}</td>
-                  <td className="num">{r.line_items.length}</td>
-                  <td className="num">{money(totalOf(r))}</td>
-                  <td><span className={`pill ${r.status}`}>{r.status}</span></td>
-                  <td><Link to={`/request/${r.id}`}>{r.status === 'requested' ? 'Edit' : 'View'}</Link></td>
+                  <td data-label="Submitted">{new Date(r.created_at).toLocaleDateString()}</td>
+                  <td data-label="Paid to">{r.payee_name}</td>
+                  <td data-label="Receipts" className="num">{r.line_items.length}</td>
+                  <td data-label="Total" className="num">{money(totalOf(r))}</td>
+                  <td data-label="Status"><span className={`pill ${r.status}`}>{r.status}</span></td>
+                  <td data-label=""><Link to={`/request/${r.id}`}>{r.status === 'requested' ? 'Edit' : 'View'}</Link></td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <Pagination page={page} pageSize={PAGE_SIZE} total={count}
+            onPage={(p) => search(email, p)} busy={busy} />
         </div>
       )}
     </div>

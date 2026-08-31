@@ -82,6 +82,30 @@ create trigger receipts_cap
   before insert on public.receipts
   for each row execute function public.enforce_receipt_cap();
 
+-- ---------------------------------------------------------------- signatures
+-- Only the pastor login may add or alter a signature. Admins may edit every
+-- other field on a request, but signing is not theirs to do — and the UI hiding
+-- the button is not a control, so it is enforced here.
+create or replace function public.enforce_pastor_signature()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if (new.pastor_signature is distinct from old.pastor_signature
+      or new.pastor_name    is distinct from old.pastor_name
+      or new.pastor_signed_at is distinct from old.pastor_signed_at)
+     and auth.uid() is not null
+     and public.role_of(auth.uid()) is distinct from 'pastor'
+  then
+    raise exception 'Only the pastor login may sign a request.'
+      using errcode = 'insufficient_privilege';
+  end if;
+  return new;
+end $$;
+
+drop trigger if exists requests_pastor_signature on public.requests;
+create trigger requests_pastor_signature
+  before update on public.requests
+  for each row execute function public.enforce_pastor_signature();
+
 -- ---------------------------------------------------------------- integrity
 -- Amounts must be sane: positive is already checked, this bounds the top end so
 -- a fat-fingered entry cannot silently become a five-figure claim.
@@ -93,3 +117,9 @@ alter table public.line_items add constraint line_items_amount_ceiling
 drop policy if exists audit_no_update on public.audit_log;
 drop policy if exists audit_no_delete on public.audit_log;
 revoke update, delete on public.audit_log from authenticated, anon;
+
+-- An audit row with no actor is nearly worthless, and the app silently wrote
+-- NULLs for every admin action until this was caught. Make that impossible.
+update public.audit_log set actor = 'admin (unnamed)' where actor is null;
+alter table public.audit_log alter column actor set default 'unknown';
+alter table public.audit_log alter column actor set not null;

@@ -178,9 +178,11 @@ Dependencies: A→C/F, D independent, E after A.
 | P0 PDF spike | **done** — calibrated against the hand-filled scan |
 | P1 Skeleton | **done** — login, guards, RLS verified |
 | P2 Submit | **done** — verified end-to-end against the real project |
-| P3 Admin | **code done**, needs a run-through in the browser |
+| P3 Admin | **done** — needs a browser run-through of PDF preview |
 | P4 Drive | **deferred** — see S6; Supabase links ship instead |
-| P5 Harden | in progress |
+| P5 Harden | **done** — server-side limits, caps, audit actor; see SECURITY.md |
+| Pastor sign-off | **done** — drawn signature stamped into the form |
+| Bulk + paging | **done** — select-all, bulk paid/reject, 25/page |
 
 Built so far: the PDF fill engine (`src/form/`, single source shared by the browser
 and the Node calibration harness) plus `form/calibrate.mjs`; `supabase/schema.sql`;

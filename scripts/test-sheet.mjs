@@ -79,3 +79,14 @@ test('columns land in the sheet order', () => {
     [cells[0], cells[2], cells[4], cells[8]],
     ['Sarah Bae', '$5.00', '103', '']);
 });
+
+test('tracker picks the sheet for the year, and falls back to the newest', async () => {
+  const { trackerFor, trackerYears } = await import('../src/lib/trackers.ts');
+  assert.equal(trackerFor(2026).year, '2026');
+  assert.equal(trackerFor(2025).year, '2025');
+  // A year with no sheet yet keeps using the most recent one rather than breaking.
+  assert.equal(trackerFor(2027).year, '2026');
+  // Before the earliest sheet, fall back to the oldest we have.
+  assert.equal(trackerFor(2019).year, '2025');
+  assert.deepEqual(trackerYears(), ['2026', '2025']);
+});

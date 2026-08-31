@@ -3,18 +3,32 @@ import { useParams } from 'react-router-dom';
 import {
   adminSaveRequest, buildFormPdf, generateForm, getRequest, missingForPdf, setStatus, sheetLinksFor,
 } from '../lib/admin.ts';
-import { errMessage, listCategories, signedReceiptUrl, type SavedItem, type SavedRequest } from '../lib/api.ts';
+import {
+  errMessage, listCategories, signedReceiptUrl,
+  type SavedItem, type SavedRequest, type Status,
+} from '../lib/api.ts';
 import { groupForSheet, toTSV } from '../lib/sheet.ts';
 import { RECEIPT_MODE_LABELS, type Category, type ReceiptMode } from '../lib/types.ts';
 import BackLink from '../components/BackLink.tsx';
+import { trackerFor } from '../lib/trackers.ts';
 
 const ACCOUNTS = ['6060', '6070'];
+
+const STATUS_HELP: Record<string, string> = {
+  requested: 'Open. The submitter can still edit it.',
+  reviewed: 'Finance has filled the form. Locked to the submitter.',
+  paid: 'The check has been handed over.',
+  rejected: 'Turned down. The reason is shown to the submitter.',
+};
+const STATUSES = Object.keys(STATUS_HELP) as Status[];
 
 export default function AdminDetail() {
   const { id } = useParams<{ id: string }>();
   const [req, setReq] = useState<SavedRequest | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [note, setNote] = useState<string | null>(null);
+  const [nextStatus, setNextStatus] = useState<Status | ''>('');
+  const [reason, setReason] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -61,6 +75,49 @@ export default function AdminDetail() {
           <ul>{gaps.map((g, i) => <li key={i}>{g}</li>)}</ul>
         </div>
       )}
+
+      {req.status === 'rejected' && req.rejected_reason && (
+        <div className="card warnbox">
+          <strong>Rejected:</strong> {req.rejected_reason}
+        </div>
+      )}
+
+      <div className="card stack-sm">
+        <h2>Status</h2>
+        <p className="muted">
+          Currently <strong>{req.status}</strong>. {STATUS_HELP[req.status]}
+        </p>
+        <div className="pair">
+          <label>
+            Move to
+            <select value={nextStatus} onChange={(e) => setNextStatus(e.target.value as Status)}>
+              <option value="">— pick a state —</option>
+              {STATUSES.filter((st) => st !== req.status).map((st) => (
+                <option key={st} value={st}>{st}</option>
+              ))}
+            </select>
+            {nextStatus && <span className="hint">{STATUS_HELP[nextStatus]}</span>}
+          </label>
+          {nextStatus === 'rejected' && (
+            <label>
+              Reason
+              <input value={reason} placeholder="Shown to the submitter"
+                onChange={(e) => setReason(e.target.value)} />
+            </label>
+          )}
+        </div>
+        <div className="actions">
+          <button type="button" className="button secondary"
+            disabled={busy || !nextStatus || (nextStatus === 'rejected' && !reason.trim())}
+            onClick={() => run(`Moved to ${nextStatus}.`, async () => {
+              await setStatus(req.id, nextStatus as Status, reason);
+              setNextStatus(''); setReason('');
+              setReq(await getRequest(req.id));
+            })}>
+            Change status
+          </button>
+        </div>
+      </div>
 
       <div className="card stack-sm">
         <h2>Form header</h2>
@@ -187,14 +244,10 @@ export default function AdminDetail() {
             })}>
             Copy sheet rows
           </button>
-          {req.status === 'reviewed' && (
-            <button type="button" className="button secondary" disabled={busy}
-              onClick={() => run('Marked paid.', async () => {
-                await setStatus(req.id, 'paid');
-                setReq(await getRequest(req.id));
-              })}>
-              Mark paid
-            </button>
+          {trackerFor() && (
+            <a className="button secondary" href={trackerFor()!.url} target="_blank" rel="noopener noreferrer">
+              Open {trackerFor()!.year} tracker
+            </a>
           )}
         </div>
       </div>

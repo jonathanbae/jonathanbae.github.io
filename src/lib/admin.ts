@@ -1,22 +1,51 @@
 import templateUrl from '../assets/template-p1.pdf?url';
 import { fillForm, type FormRequest } from '../form/fill.ts';
 import { supabase } from './supabase.ts';
+import { auditActor } from './operator.ts';
 import {
-  SHEET_LINK_TTL, getRequest, signedReceiptUrl,
-  type SavedItem, type SavedRequest, type Status,
+  PAGE_SIZE, SHEET_LINK_TTL, getRequest, signedReceiptUrl,
+  type Page, type SavedItem, type SavedRequest, type Status,
 } from './api.ts';
 
-export async function listAllRequests(status?: Status | 'all'): Promise<SavedRequest[]> {
+const ADMIN_SELECT =
+  'id, submitter_email, status, payee_name, payee_address, requester_name, requested_date, form_pdf_paths, ' +
+  'pastor_name, pastor_signature, pastor_signed_at, rejected_reason, created_at, ' +
+  'line_items(id, position, item_category, code, account_number, description, vendor, amount, spend_date, ' +
+  'receipt_mode, receipts(id, storage_path, mime))';
+
+export async function listAllRequests(
+  status?: Status | 'all', page = 0, pageSize = PAGE_SIZE,
+): Promise<Page<SavedRequest>> {
+  const from = page * pageSize;
   let q = supabase
     .from('requests')
-    .select('id, submitter_email, status, payee_name, payee_address, requester_name, requested_date, form_pdf_paths, created_at, ' +
-            'line_items(id, position, item_category, code, account_number, description, vendor, amount, spend_date, ' +
-            'receipt_mode, receipts(id, storage_path, mime))')
-    .order('created_at', { ascending: false });
+    .select(ADMIN_SELECT, { count: 'exact' })
+    .order('created_at', { ascending: false })
+    .range(from, from + pageSize - 1);
   if (status && status !== 'all') q = q.eq('status', status);
-  const { data, error } = await q;
+  const { data, error, count } = await q;
   if (error) throw error;
-  return (data ?? []) as unknown as SavedRequest[];
+  return { rows: (data ?? []) as unknown as SavedRequest[], total: count ?? 0, page, pageSize };
+}
+
+/** Apply a status to many requests at once. Returns how many actually changed. */
+export async function bulkSetStatus(ids: string[], status: Status, reason?: string) {
+  if (!ids.length) return 0;
+  const patch: Record<string, unknown> = { status };
+  if (status === 'rejected') patch.rejected_reason = reason?.trim() || null;
+  const { data, error } = await supabase
+    .from('requests').update(patch).in('id', ids).select('id');
+  if (error) throw error;
+
+  await supabase.from('audit_log').insert(
+    (data ?? []).map((r) => ({
+      actor: auditActor(),
+      action: `request.${status}`,
+      request_id: r.id,
+      payload: { bulk: ids.length, ...(reason ? { reason } : {}) },
+    })),
+  );
+  return data?.length ?? 0;
 }
 
 /** Finance may override anything, including fields the submitter could not set. */
@@ -44,6 +73,7 @@ export async function adminSaveRequest(req: SavedRequest) {
     if (e) throw e;
   }
   await supabase.from('audit_log').insert({
+    actor: auditActor(),
     action: 'request.admin_edited', request_id: req.id, payload: { items: req.line_items.length },
   });
 }
@@ -66,6 +96,7 @@ export function missingForPdf(req: SavedRequest): string[] {
 
 const toFormRequest = (req: SavedRequest): FormRequest => ({
   educationDept: 'CHARA EM',
+  ministerSignature: req.pastor_signature,
   payee: req.payee_name,
   address: req.payee_address ?? '',
   requester: req.requester_name ?? '',
@@ -106,15 +137,29 @@ export async function generateForm(req: SavedRequest): Promise<Blob> {
   if (error) throw error;
 
   await supabase.from('audit_log').insert({
+    actor: auditActor(),
     action: 'request.reviewed', request_id: req.id, payload: { path },
   });
   return blob;
 }
 
-export async function setStatus(id: string, status: Status) {
-  const { error } = await supabase.from('requests').update({ status }).eq('id', id);
+/**
+ * Move a request to any state. Transitions are deliberately unconstrained —
+ * finance sometimes has to walk one backwards, e.g. returning a `reviewed`
+ * request to `requested` so the submitter can fix it. Every move is logged.
+ */
+export async function setStatus(id: string, status: Status, reason?: string) {
+  const patch: Record<string, unknown> = { status };
+  // Keep the reason attached to the rejection, and clear it on the way back out.
+  patch.rejected_reason = status === 'rejected' ? (reason?.trim() || null) : null;
+  const { error } = await supabase.from('requests').update(patch).eq('id', id);
   if (error) throw error;
-  await supabase.from('audit_log').insert({ action: `request.${status}`, request_id: id });
+  await supabase.from('audit_log').insert({
+    actor: auditActor(),
+    action: `request.${status}`,
+    request_id: id,
+    payload: reason ? { reason } : null,
+  });
 }
 
 /**

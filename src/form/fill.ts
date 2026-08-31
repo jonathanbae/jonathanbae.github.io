@@ -15,6 +15,8 @@ export type FormLineItem = {
 
 export type FormRequest = {
   educationDept: string;
+  /** PNG data URL of the pastor's drawn signature, if they have signed. */
+  ministerSignature?: string | null;
   payee: string;
   address?: string;
   requester?: string;
@@ -45,6 +47,11 @@ export async function fillForm(
   const bold = await out.embedFont(StandardFonts.HelveticaBold);
   const tpl = await PDFDocument.load(templateBytes);
 
+  // Embed once and reuse across pages rather than per page.
+  const signature = req.ministerSignature
+    ? await out.embedPng(req.ministerSignature).catch(() => null)
+    : null;
+
   for (const items of pages) {
     const [page] = await out.copyPages(tpl, [0]);
     // The blank form ships with /Square markup annotations that white out the stale
@@ -72,6 +79,23 @@ export async function fillForm(
     };
 
     centered(req.educationDept, L.deptCell, (L.deptCell.y0 + L.deptCell.y1) / 2 - 4, 11, bold);
+
+    if (signature) {
+      // Fit inside the signature box, preserving aspect ratio.
+      const box = L.ministerSignCell;
+      const pad = 4;
+      const maxW = box.x1 - box.x0 - pad * 2;
+      const maxH = box.y1 - box.y0 - pad * 2;
+      const scale = Math.min(maxW / signature.width, maxH / signature.height);
+      const w = signature.width * scale;
+      const h = signature.height * scale;
+      page.drawImage(signature, {
+        x: box.x0 + (box.x1 - box.x0 - w) / 2,
+        y: box.y0 + (box.y1 - box.y0 - h) / 2,
+        width: w,
+        height: h,
+      });
+    }
 
     items.forEach((it, i) => {
       const [top, bot] = L.rows[i];

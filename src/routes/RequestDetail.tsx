@@ -76,13 +76,26 @@ export default function RequestDetail() {
         <p className="muted">
           Submitted {new Date(req.created_at).toLocaleDateString()} by {req.submitter_email}.
         </p>
-        {!editable && (
+        {!editable && req.status !== 'rejected' && (
           <p className="muted">
             The finance team has started on this one, so it can no longer be edited here.
             Contact them if something needs to change.
           </p>
         )}
+        {req.pastor_signed_at && (
+          <p className="muted">
+            Signed off by {req.pastor_name ?? 'the pastor'} on{' '}
+            {new Date(req.pastor_signed_at).toLocaleDateString()}.
+          </p>
+        )}
       </div>
+
+      {req.status === 'rejected' && (
+        <div className="card warnbox">
+          <strong>This request was turned down.</strong>
+          <p className="muted">{req.rejected_reason || 'No reason was recorded.'}</p>
+        </div>
+      )}
 
       <div className="card stack-sm">
         <label>

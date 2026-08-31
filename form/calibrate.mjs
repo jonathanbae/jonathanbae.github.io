@@ -17,12 +17,19 @@ const base = {
   requestedDate: new Date(2026, 7, 30),
 };
 
+const signature = 'data:image/png;base64,' +
+  fs.readFileSync('form/fixtures/signature.png').toString('base64');
+
 const cases = {
   // mirrors the hand-filled form we calibrated against
   sample: { ...base, lineItems: [
     mk("Women's Retreat", "TRADER JOE'S", 107.08, '106'),
     mk("Women's Retreat", 'GIANT', 64.42, '106'),
     mk('Book Club', 'COSTCO', 61.34, '106'),
+  ]},
+  // pastor sign-off stamped into the Minister Signature box
+  signed: { ...base, ministerSignature: signature, lineItems: [
+    mk('Communion', 'GIANT', 5.04, '103'),
   ]},
   overflow: { ...base, address: '123 Pilgrim Way, Beltsville, MD 20705', lineItems: [
     mk('Communion', 'GIANT', 5.04, '103'),

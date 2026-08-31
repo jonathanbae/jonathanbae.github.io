@@ -49,6 +49,7 @@ on conflict (id) do update set role = excluded.role;
 - `form/` — PDF fill engine and its calibration harness. See `form/README.md`.
 - `supabase/schema.sql` — tables, RLS, seed categories, storage bucket.
 - `PLAN.md` — the project plan and what is built vs. pending.
+- `SECURITY.md` — injection audit, what enforces what, and the accepted trade-offs.
 
 ## Deploy
 

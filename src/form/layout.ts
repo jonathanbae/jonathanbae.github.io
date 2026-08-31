@@ -5,6 +5,8 @@ export const MAX_ROWS = 4;
 
 export const L = {
   deptCell:   { x0: 132.1, x1: 202.1, y0: 638.3, y1: 690.3 },
+  // "담당 사역자 서명 (Minister Signature)" — the pastor's drawn signature goes here.
+  ministerSignCell: { x0: 289.6, x1: 375.2, y0: 638.3, y1: 690.3 },
   cols: {
     desc: { x0: 59.2,  x1: 231.2 },
     acct: { x0: 231.2, x1: 342.0 },
