@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getOperator, setOperator } from '../lib/operator.ts';
 
 /**
@@ -8,6 +8,33 @@ import { getOperator, setOperator } from '../lib/operator.ts';
 export default function OperatorGate({ children }: { children: React.ReactNode }) {
   const [name, setName] = useState(getOperator());
   const [draft, setDraft] = useState('');
+  const dialog = useRef<HTMLFormElement>(null);
+
+  // A blocking dialog that a keyboard user can tab out of is not blocking.
+  // Cycle Tab within the dialog for as long as it is up.
+  useEffect(() => {
+    if (name) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || !dialog.current) return;
+      const focusable = dialog.current.querySelectorAll<HTMLElement>(
+        'input, button, select, textarea, a[href]',
+      );
+      const list = [...focusable].filter((el) => !el.hasAttribute('disabled'));
+      if (!list.length) return;
+      const first = list[0];
+      const last = list[list.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || !dialog.current.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [name]);
 
   if (name) return <>{children}</>;
 
@@ -16,6 +43,7 @@ export default function OperatorGate({ children }: { children: React.ReactNode }
   return (
     <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="who-title">
       <form
+        ref={dialog}
         className="card modal stack-sm"
         onSubmit={(e) => {
           e.preventDefault();

@@ -153,6 +153,9 @@ export type SavedRequest = {
   requester_name: string | null;
   requested_date: string | null;
   form_pdf_paths: string[];
+  reviewed_at: string | null;
+  paid_at: string | null;
+  note_to_submitter: string | null;
   pastor_name: string | null;
   pastor_signature: string | null;
   pastor_signed_at: string | null;
@@ -163,11 +166,13 @@ export type SavedRequest = {
 
 const REQUEST_SELECT =
   'id, submitter_email, status, payee_name, payee_address, requester_name, requested_date, form_pdf_paths, ' +
-  'pastor_name, pastor_signature, pastor_signed_at, rejected_reason, created_at, ' +
+  'pastor_name, pastor_signature, pastor_signed_at, rejected_reason, ' +
+  'reviewed_at, paid_at, note_to_submitter, created_at, ' +
   'line_items(id, position, item_category, code, account_number, description, vendor, amount, spend_date, receipt_mode, ' +
   'receipts(id, storage_path, mime))';
 
 export const PAGE_SIZE = 25;
+
 
 export type Page<T> = { rows: T[]; total: number; page: number; pageSize: number };
 

@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build && cp docs/index.html docs/404.html",
     "preview": "vite preview",
     "calibrate": "node form/calibrate.mjs",
-    "test": "node --test scripts/test-sheet.mjs"
+    "test": "node --test scripts/test-sheet.mjs scripts/test-zip.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",

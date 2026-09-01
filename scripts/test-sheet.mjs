@@ -90,3 +90,18 @@ test('tracker picks the sheet for the year, and falls back to the newest', async
   assert.equal(trackerFor(2019).year, '2025');
   assert.deepEqual(trackerYears(), ['2026', '2025']);
 });
+
+test('search terms cannot inject extra PostgREST filter conditions', async () => {
+  const { sanitizeSearch } = await import('../src/lib/search.ts');
+  // commas and parens are the filter grammar; they must not survive
+  assert.equal(sanitizeSearch('sarah,status.eq.paid'), 'sarahstatus.eq.paid');
+  assert.equal(sanitizeSearch('a),or(id.gt.0'), 'aorid.gt.0');
+  // what matters is that the grammar characters are gone
+  assert.ok(!/[,()%*]/.test(sanitizeSearch('a),or(id.gt.0,status.eq.paid)')));
+  // wildcards would turn any search into a full scan
+  assert.equal(sanitizeSearch('%%%'), '');
+  // ordinary searches survive intact, emails included
+  assert.equal(sanitizeSearch('  Sarah Bae '), 'Sarah Bae');
+  assert.equal(sanitizeSearch('sarah.bae@characommunity.org'), 'sarah.bae@characommunity.org');
+  assert.equal(sanitizeSearch('x'.repeat(200)).length, 60);
+});

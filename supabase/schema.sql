@@ -139,6 +139,41 @@ alter table public.requests add column if not exists pastor_signature text;
 alter table public.requests add column if not exists pastor_signed_at timestamptz;
 alter table public.requests add column if not exists rejected_reason  text;
 
+-- When each stage happened. Set by trigger below so every path — single edit,
+-- bulk action, direct SQL — records them, not just the buttons that remember to.
+alter table public.requests add column if not exists reviewed_at timestamptz;
+alter table public.requests add column if not exists paid_at     timestamptz;
+
+-- Finance can hand a request back to the submitter with a note instead of
+-- either rejecting it outright or silently fixing it themselves.
+alter table public.requests add column if not exists note_to_submitter text;
+
+create or replace function public.stamp_status_times()
+returns trigger language plpgsql as $$
+begin
+  if new.status is distinct from old.status then
+    if new.status = 'reviewed' and new.reviewed_at is null then new.reviewed_at = now(); end if;
+    if new.status = 'paid'     and new.paid_at     is null then new.paid_at     = now(); end if;
+  end if;
+  return new;
+end $$;
+
+drop trigger if exists requests_stamp_times on public.requests;
+create trigger requests_stamp_times
+  before update on public.requests
+  for each row execute function public.stamp_status_times();
+
+-- Totals for the queue header. security invoker, so RLS still applies.
+create or replace function public.queue_summary()
+returns table (status text, requests bigint, total numeric)
+language sql stable as $$
+  select r.status, count(distinct r.id),
+         coalesce(sum(li.amount), 0)
+    from public.requests r
+    left join public.line_items li on li.request_id = r.id
+   group by r.status
+$$;
+
 -- ---------------------------------------------------------------- RLS
 alter table public.profiles    enable row level security;
 alter table public.categories  enable row level security;

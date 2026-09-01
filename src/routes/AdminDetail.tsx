@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
-  adminSaveRequest, buildFormPdf, generateForm, getRequest, missingForPdf, setStatus, sheetLinksFor,
+  adminSaveRequest, buildFormPdf, downloadRequestZip, generateForm, getRequest,
+  missingForPdf, sendBack, setStatus, sheetLinksFor,
 } from '../lib/admin.ts';
 import {
-  errMessage, listCategories, signedReceiptUrl,
+  errMessage, listCategories,
   type SavedItem, type SavedRequest, type Status,
 } from '../lib/api.ts';
 import { groupForSheet, toTSV } from '../lib/sheet.ts';
 import { RECEIPT_MODE_LABELS, type Category, type ReceiptMode } from '../lib/types.ts';
 import BackLink from '../components/BackLink.tsx';
+import ReceiptGallery from '../components/ReceiptGallery.tsx';
 import { trackerFor } from '../lib/trackers.ts';
 
 const ACCOUNTS = ['6060', '6070'];
@@ -196,16 +198,7 @@ export default function AdminDetail() {
 
           <div>
             <span className="hint">Receipts</span>
-            {it.receipts.length === 0
-              ? <p className="error small">Nothing attached — the form ticks "Attached", so this must be resolved first.</p>
-              : <ul className="files">{it.receipts.map((r) => (
-                  <li key={r.id}>
-                    <button type="button" className="link" onClick={async () => {
-                      const u = await signedReceiptUrl(r.storage_path);
-                      if (u) window.open(u, '_blank', 'noopener');
-                    }}>{r.storage_path.split('/').pop()}</button>
-                  </li>))}
-                </ul>}
+            <ReceiptGallery receipts={it.receipts} />
           </div>
         </div>
       ))}
@@ -236,6 +229,24 @@ export default function AdminDetail() {
               setReq(await getRequest(req.id));
             })}>
             Generate form &amp; mark reviewed
+          </button>
+          <button type="button" className="button secondary" disabled={busy}
+            onClick={() => run('Download started.', async () => {
+              const n = await downloadRequestZip(req);
+              setNote(`${n} file${n === 1 ? '' : 's'} downloaded.`);
+            })}>
+            Download files
+          </button>
+          <button type="button" className="button secondary" disabled={busy}
+            onClick={() => {
+              const note = window.prompt('What does the submitter need to change?');
+              if (note === null || !note.trim()) return;
+              run('Sent back to the submitter.', async () => {
+                await sendBack(req.id, note);
+                setReq(await getRequest(req.id));
+              });
+            }}>
+            Send back for changes
           </button>
           <button type="button" className="button secondary" disabled={busy}
             onClick={() => run('Sheet rows copied.', async () => {

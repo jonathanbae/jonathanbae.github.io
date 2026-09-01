@@ -91,6 +91,13 @@ export default function RequestDetail() {
         )}
       </div>
 
+      {req.note_to_submitter && req.status === 'requested' && (
+        <div className="card warnbox">
+          <strong>The finance team asked for a change:</strong>
+          <p className="muted">{req.note_to_submitter}</p>
+        </div>
+      )}
+
       {req.status === 'rejected' && (
         <div className="card warnbox">
           <strong>This request was turned down.</strong>

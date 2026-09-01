@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { bulkSetStatus, listAllRequests, sheetLinksFor } from '../lib/admin.ts';
+import { bulkSetStatus, listAllRequests, queueSummary, sheetLinksFor, type QueueSummary } from '../lib/admin.ts';
 import { PAGE_SIZE, type SavedRequest, type Status } from '../lib/api.ts';
 import { groupForSheet, toTSV } from '../lib/sheet.ts';
 import Pagination from '../components/Pagination.tsx';
@@ -19,11 +19,14 @@ export default function AdminQueue() {
   const [note, setNote] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(true);
+  const [search, setSearch] = useState('');
+  const [applied, setApplied] = useState('');
+  const [summary, setSummary] = useState<QueueSummary[]>([]);
 
-  async function load(f: Status | 'all', p: number) {
+  async function load(f: Status | 'all', p: number, term = applied) {
     setBusy(true);
     try {
-      const res = await listAllRequests(f, p);
+      const res = await listAllRequests(f, p, term);
       setRows(res.rows);
       setCount(res.total);
       setPicked(new Set());
@@ -34,7 +37,17 @@ export default function AdminQueue() {
     }
   }
 
-  useEffect(() => { load(filter, page); }, [filter, page]);
+  useEffect(() => { load(filter, page); }, [filter, page, applied]);
+  useEffect(() => { queueSummary().then(setSummary).catch(() => {}); }, []);
+
+  const money = (n: number) => `$${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const statOf = (st: Status | 'all') => {
+    if (st === 'all') {
+      return summary.reduce((a, s) => ({ requests: a.requests + s.requests, total: a.total + s.total }),
+        { requests: 0, total: 0 });
+    }
+    return summary.find((s) => s.status === st) ?? { requests: 0, total: 0 };
+  };
 
   const selected = useMemo(() => rows.filter((r) => picked.has(r.id)), [rows, picked]);
   const allOnPage = rows.length > 0 && rows.every((r) => picked.has(r.id));
@@ -46,7 +59,12 @@ export default function AdminQueue() {
 
   async function act(label: string, fn: () => Promise<unknown>) {
     setBusy(true); setError(null); setNote(null);
-    try { await fn(); setNote(label); await load(filter, page); }
+    try {
+      await fn();
+      setNote(label);
+      await load(filter, page);
+      queueSummary().then(setSummary).catch(() => {});
+    }
     catch (e) { setError(e instanceof Error ? e.message : 'That did not work.'); setBusy(false); }
   }
 
@@ -76,6 +94,24 @@ export default function AdminQueue() {
             <button key={f} type="button" className={`tab ${filter === f ? 'on' : ''}`}
               onClick={() => { setFilter(f); setPage(0); }}>{f}</button>
           ))}
+        </div>
+
+        <div className="stat-row">
+          <div className="stat">
+            <span className="stat-label">{filter === 'all' ? 'All requests' : filter}</span>
+            <strong className="stat-value">{money(statOf(filter).total)}</strong>
+            <span className="hint">{statOf(filter).requests} request{statOf(filter).requests === 1 ? '' : 's'}</span>
+          </div>
+          <form className="searchbar" onSubmit={(e) => { e.preventDefault(); setPage(0); setApplied(search); }}>
+            <input type="search" value={search} placeholder="Search name or email"
+              aria-label="Search by payee name or submitter email"
+              onChange={(e) => setSearch(e.target.value)} />
+            <button type="submit" className="button secondary" disabled={busy}>Search</button>
+            {applied && (
+              <button type="button" className="link"
+                onClick={() => { setSearch(''); setApplied(''); setPage(0); }}>Clear</button>
+            )}
+          </form>
         </div>
       </div>
 

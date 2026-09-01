@@ -6,15 +6,18 @@ import {
   PAGE_SIZE, SHEET_LINK_TTL, getRequest, signedReceiptUrl,
   type Page, type SavedItem, type SavedRequest, type Status,
 } from './api.ts';
+import { sanitizeSearch } from './search.ts';
+import { makeZip, zipSafe, type ZipEntry } from './zip.ts';
 
 const ADMIN_SELECT =
   'id, submitter_email, status, payee_name, payee_address, requester_name, requested_date, form_pdf_paths, ' +
-  'pastor_name, pastor_signature, pastor_signed_at, rejected_reason, created_at, ' +
+  'pastor_name, pastor_signature, pastor_signed_at, rejected_reason, ' +
+  'reviewed_at, paid_at, note_to_submitter, created_at, ' +
   'line_items(id, position, item_category, code, account_number, description, vendor, amount, spend_date, ' +
   'receipt_mode, receipts(id, storage_path, mime))';
 
 export async function listAllRequests(
-  status?: Status | 'all', page = 0, pageSize = PAGE_SIZE,
+  status?: Status | 'all', page = 0, search = '', pageSize = PAGE_SIZE,
 ): Promise<Page<SavedRequest>> {
   const from = page * pageSize;
   let q = supabase
@@ -23,9 +26,37 @@ export async function listAllRequests(
     .order('created_at', { ascending: false })
     .range(from, from + pageSize - 1);
   if (status && status !== 'all') q = q.eq('status', status);
+
+  const term = sanitizeSearch(search);
+  if (term) q = q.or(`payee_name.ilike.*${term}*,submitter_email.ilike.*${term}*`);
+
   const { data, error, count } = await q;
   if (error) throw error;
   return { rows: (data ?? []) as unknown as SavedRequest[], total: count ?? 0, page, pageSize };
+}
+
+export type QueueSummary = { status: Status; requests: number; total: number };
+
+/** Per-status counts and money, for the queue header. */
+export async function queueSummary(): Promise<QueueSummary[]> {
+  const { data, error } = await supabase.rpc('queue_summary');
+  if (error) throw error;
+  return (data ?? []).map((r: { status: string; requests: number; total: string | number }) => ({
+    status: r.status as Status,
+    requests: Number(r.requests),
+    total: Number(r.total),
+  }));
+}
+
+/** Hand a request back to the submitter with a note, reopening it for edits. */
+export async function sendBack(id: string, note: string) {
+  const { error } = await supabase.from('requests')
+    .update({ status: 'requested', note_to_submitter: note.trim() || null })
+    .eq('id', id);
+  if (error) throw error;
+  await supabase.from('audit_log').insert({
+    actor: auditActor(), action: 'request.sent_back', request_id: id, payload: { note },
+  });
 }
 
 /** Apply a status to many requests at once. Returns how many actually changed. */
@@ -160,6 +191,57 @@ export async function setStatus(id: string, status: Status, reason?: string) {
     request_id: id,
     payload: reason ? { reason } : null,
   });
+}
+
+function triggerDownload(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  // Give the browser a moment to start the download before revoking.
+  setTimeout(() => URL.revokeObjectURL(url), 10_000);
+}
+
+/**
+ * Everything belonging to one request, as a zip: the generated form plus every
+ * receipt. Supabase Storage is currently the only copy of these files, so this
+ * is the escape hatch that lets the church keep records of their own.
+ */
+export async function downloadRequestZip(req: SavedRequest) {
+  const entries: ZipEntry[] = [];
+
+  for (const [i, item] of req.line_items.entries()) {
+    for (const [n, r] of item.receipts.entries()) {
+      const { data } = await supabase.storage.from('receipts').download(r.storage_path);
+      if (!data) continue;
+      const ext = r.storage_path.includes('.') ? r.storage_path.split('.').pop()! : 'bin';
+      const label = zipSafe(item.description || `receipt ${i + 1}`);
+      entries.push({
+        name: `receipts/${String(i + 1).padStart(2, '0')}-${n + 1} ${label}.${ext}`,
+        data: new Uint8Array(await data.arrayBuffer()),
+      });
+    }
+  }
+
+  for (const [i, path] of (req.form_pdf_paths ?? []).entries()) {
+    const { data } = await supabase.storage.from('receipts').download(path);
+    if (!data) continue;
+    entries.push({
+      name: `payment-request-form${i ? `-${i + 1}` : ''}.pdf`,
+      data: new Uint8Array(await data.arrayBuffer()),
+    });
+  }
+
+  if (!entries.length) throw new Error('There are no files attached to this request yet.');
+
+  triggerDownload(
+    new Blob([makeZip(entries) as unknown as BlobPart], { type: 'application/zip' }),
+    `${zipSafe(req.payee_name)} ${req.created_at.slice(0, 10)}.zip`,
+  );
+  return entries.length;
 }
 
 /**
